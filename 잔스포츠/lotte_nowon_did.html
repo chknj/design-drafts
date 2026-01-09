@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lotte Nowon DID | Video Preview</title>
+    <style>
+      :root {
+        --bg-1: #f6efe3;
+        --bg-2: #f2d4b4;
+        --bg-3: #cfd4cc;
+        --ink: #151515;
+        --muted: #4b4b4b;
+        --accent: #d24a2e;
+        --accent-2: #0f4c5c;
+        --card: rgba(255, 255, 255, 0.72);
+        --stroke: rgba(21, 21, 21, 0.12);
+        --shadow: 0 24px 60px rgba(16, 28, 34, 0.16);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --font-display: "Bodoni MT", "Didot", "Playfair Display", serif;
+        --font-body: "Avenir Next", "Gill Sans", "Helvetica Neue", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--font-body);
+        color: var(--ink);
+        background: linear-gradient(140deg, var(--bg-1), var(--bg-2)) fixed;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      body::before {
+        background:
+          radial-gradient(circle at 18% 22%, rgba(210, 74, 46, 0.16), transparent 45%),
+          radial-gradient(circle at 75% 18%, rgba(15, 76, 92, 0.18), transparent 48%),
+          radial-gradient(circle at 72% 75%, rgba(22, 24, 25, 0.1), transparent 52%),
+          radial-gradient(circle at 16% 78%, rgba(120, 104, 84, 0.14), transparent 46%);
+      }
+
+      body::after {
+        z-index: -1;
+        opacity: 0.18;
+        background-image: repeating-linear-gradient(
+          130deg,
+          rgba(15, 15, 15, 0.08),
+          rgba(15, 15, 15, 0.08) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+        mix-blend-mode: multiply;
+      }
+
+      main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 56px 24px 90px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+        gap: 32px;
+        align-items: end;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        font-size: 0.72rem;
+        color: var(--muted);
+        margin: 0 0 12px;
+      }
+
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        margin: 0 0 14px;
+        letter-spacing: 0.02em;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .stats {
+        display: grid;
+        gap: 14px;
+        align-self: stretch;
+      }
+
+      .stat-card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .stat-label {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.62rem;
+        color: var(--muted);
+      }
+
+      .stat-value {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 28px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: 18px;
+        animation: rise 0.7s ease both;
+        animation-delay: calc(var(--i, 0) * 140ms);
+        backdrop-filter: blur(8px);
+      }
+
+      .card-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 18px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-title {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .card-meta {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .video-frame {
+        border-radius: 22px;
+        background: #101010;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      }
+
+      .video-frame[data-fit="cover"] video {
+        object-fit: cover;
+      }
+
+      .video-frame[data-fit="contain"] video {
+        object-fit: contain;
+      }
+
+      .video-frame video {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        border-radius: 14px;
+        display: block;
+        background: #0b0b0b;
+      }
+
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn {
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--ink);
+        font-size: 0.85rem;
+        padding: 10px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(20, 24, 26, 0.16);
+      }
+
+      .btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .btn.ghost {
+        background: transparent;
+        border-color: rgba(21, 21, 21, 0.22);
+      }
+
+      .note {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 960px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 40px 18px 70px;
+        }
+
+        .card {
+          padding: 18px;
+        }
+
+        .card-title {
+          font-size: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero" style="--i: 0">
+        <div>
+          <p class="eyebrow">Video Preview Board</p>
+          <h1>Lotte Nowon DID</h1>
+          <p>
+            Local preview page for DID assets in the <strong>video</strong> folder. Add new
+            files to the list in the script to expand the gallery.
+          </p>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-label">Total Files</div>
+            <div class="stat-value" id="videoCount">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Playback</div>
+            <div class="stat-value">Fit / Fill</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gallery" id="gallery"></section>
+
+      <p class="note">
+        Tip: If a video does not autoplay, click play. Some browsers block autoplay for sound.
+      </p>
+    </main>
+
+    <template id="video-card">
+      <article class="card">
+        <div class="card-head">
+          <h2 class="card-title"></h2>
+          <div class="card-meta"></div>
+        </div>
+        <div class="video-frame" data-fit="contain">
+          <video controls playsinline preload="metadata"></video>
+        </div>
+        <div class="card-actions">
+          <button class="btn active" type="button" data-fit="contain">Fit</button>
+          <button class="btn" type="button" data-fit="cover">Fill</button>
+          <a class="btn ghost" download>Download</a>
+        </div>
+      </article>
+    </template>
+
+    <script>
+      const videos = [
+        {
+          src: "video/lotte_nowon_did_01.mov",
+          title: "Lotte Nowon DID 01",
+        },
+      ];
+
+      const gallery = document.getElementById("gallery");
+      const template = document.getElementById("video-card");
+      const count = document.getElementById("videoCount");
+
+      count.textContent = String(videos.length);
+
+      videos.forEach((item, index) => {
+        const node = template.content.cloneNode(true);
+        const card = node.querySelector(".card");
+        const title = node.querySelector(".card-title");
+        const meta = node.querySelector(".card-meta");
+        const video = node.querySelector("video");
+        const frame = node.querySelector(".video-frame");
+        const download = node.querySelector("a");
+        const buttons = node.querySelectorAll("button[data-fit]");
+
+        card.style.setProperty("--i", index + 1);
+        title.textContent = item.title || item.src.split("/").pop();
+        meta.textContent = item.src.split("/").pop();
+        video.src = item.src;
+        download.href = item.src;
+        download.textContent = "Download";
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const fit = button.getAttribute("data-fit");
+            frame.setAttribute("data-fit", fit);
+            buttons.forEach((btn) => btn.classList.toggle("active", btn === button));
+          });
+        });
+
+        gallery.appendChild(node);
+      });
+    </script>
+  </body>
+</html>
