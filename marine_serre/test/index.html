@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Leadvault 선택 페이지</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <style>
+            :root {
+                color-scheme: light;
+                --bg-1: #f3f4f5;
+                --bg-2: #e6eaee;
+                --bg-3: #d7dde3;
+                --ink: #151515;
+                --muted: #8c9199;
+                --track: #cfd4d9;
+                --pill: #ffffff;
+                --pill-shadow: 0 10px 30px rgba(12, 16, 25, 0.08);
+                --accent: #0a0a0a;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                font-family: "Space Grotesk", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+                color: var(--ink);
+                background: radial-gradient(1200px 800px at 50% -20%, #ffffff 0%, var(--bg-1) 45%, var(--bg-2) 75%, var(--bg-3) 100%);
+                display: flex;
+                justify-content: center;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23n)' opacity='0.03'/></svg>") repeat;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            main {
+                width: min(560px, 92vw);
+                display: grid;
+                gap: 26px;
+                padding: 46px 0 80px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .logo {
+                text-align: center;
+                letter-spacing: 0.12em;
+                font-weight: 700;
+                font-size: 32px;
+            }
+
+            .status {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .back {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: none;
+                background: #ffffff;
+                box-shadow: 0 6px 18px rgba(15, 20, 30, 0.08);
+                display: grid;
+                place-items: center;
+                cursor: pointer;
+                transition:
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+            }
+
+            .back:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .back:hover:not(:disabled) {
+                transform: translateY(-1px);
+                box-shadow: 0 10px 20px rgba(15, 20, 30, 0.12);
+            }
+
+            .bar {
+                height: 20px;
+                background: var(--track);
+                border-radius: 999px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .bar__fill {
+                height: 100%;
+                width: 30%;
+                border-radius: 999px;
+                background: #ffffff;
+                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+                transition: width 0.4s ease;
+            }
+
+            .bar__thumb {
+                position: absolute;
+                left: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: #ffffff;
+                box-shadow: 0 8px 16px rgba(15, 20, 30, 0.1);
+                opacity: 0;
+            }
+
+            .question {
+                text-align: center;
+                font-size: 20px;
+                font-weight: 500;
+                margin-top: 8px;
+            }
+
+            .choices {
+                display: grid;
+                gap: 18px;
+                margin-top: 8px;
+            }
+
+            .choice {
+                border: none;
+                padding: 20px 24px;
+                border-radius: 999px;
+                font-size: 18px;
+                font-weight: 500;
+                background: var(--pill);
+                color: var(--ink);
+                box-shadow: var(--pill-shadow);
+                cursor: pointer;
+                transition:
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+            }
+
+            .choice:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 16px 36px rgba(12, 16, 25, 0.12);
+            }
+
+            .footer-copy {
+                text-align: center;
+                font-size: 13px;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+                margin-top: -8px;
+            }
+
+            .hero-image {
+                position: relative;
+                margin: 10px auto 0;
+                width: min(520px, 90vw);
+                aspect-ratio: 4 / 5;
+                display: grid;
+                align-items: end;
+            }
+
+            .hero-image svg {
+                width: 100%;
+                height: auto;
+                filter: drop-shadow(0 40px 50px rgba(15, 18, 28, 0.15));
+            }
+
+            .screen {
+                display: grid;
+                gap: 20px;
+                animation: fadeIn 0.6s ease;
+            }
+
+            .screen.fade-out {
+                animation: fadeOut 0.35s ease;
+            }
+
+            .choices button {
+                animation: slideUp 0.6s ease;
+            }
+
+            .choices button:nth-child(2) {
+                animation-delay: 0.05s;
+            }
+
+            .choices button:nth-child(3) {
+                animation-delay: 0.1s;
+            }
+
+            .result {
+                text-align: center;
+                font-size: 22px;
+                font-weight: 600;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @media (max-width: 520px) {
+                main {
+                    padding: 36px 0 64px;
+                }
+
+                .logo {
+                    font-size: 28px;
+                }
+
+                .question {
+                    font-size: 18px;
+                }
+
+                .choice {
+                    font-size: 16px;
+                    padding: 18px 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="logo">LEADVAULT</div>
+            <div class="status">
+                <button class="back" id="backBtn" aria-label="뒤로">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M15 5l-7 7 7 7" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <div class="bar" aria-hidden="true">
+                    <div class="bar__fill" id="barFill"></div>
+                </div>
+            </div>
+
+            <section class="screen" id="screen">
+                <div class="question" id="question">고민 중인 캐리어 크기는 무엇인가요?</div>
+                <div class="choices" id="choices"></div>
+            </section>
+
+            <div class="hero-image" aria-hidden="true">
+                <svg viewBox="0 0 520 640" xmlns="http://www.w3.org/2000/svg" role="img">
+                    <defs>
+                        <linearGradient id="case" x1="0" x2="1">
+                            <stop offset="0" stop-color="#b6bcc5" />
+                            <stop offset="1" stop-color="#d2d7dd" />
+                        </linearGradient>
+                        <linearGradient id="case-dark" x1="0" x2="1">
+                            <stop offset="0" stop-color="#8f96a1" />
+                            <stop offset="1" stop-color="#b0b6be" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="40" y="120" width="440" height="150" rx="18" fill="url(#case)" />
+                    <rect x="65" y="152" width="390" height="14" rx="7" fill="#a1a8b1" />
+                    <rect x="120" y="80" width="110" height="40" rx="12" fill="#a7adb7" />
+                    <rect x="310" y="80" width="110" height="40" rx="12" fill="#a7adb7" />
+                    <rect x="60" y="280" width="400" height="150" rx="18" fill="url(#case-dark)" />
+                    <rect x="85" y="318" width="350" height="12" rx="6" fill="#7d8692" />
+                    <rect x="110" y="250" width="90" height="34" rx="10" fill="#9aa2ad" />
+                    <rect x="320" y="250" width="90" height="34" rx="10" fill="#9aa2ad" />
+                    <rect x="30" y="440" width="460" height="170" rx="18" fill="url(#case)" />
+                    <rect x="60" y="490" width="400" height="14" rx="7" fill="#a1a8b1" />
+                    <rect x="200" y="420" width="120" height="46" rx="12" fill="#9aa2ad" />
+                    <circle cx="80" cy="604" r="16" fill="#7a828d" />
+                    <circle cx="440" cy="604" r="16" fill="#7a828d" />
+                </svg>
+            </div>
+
+            <div class="footer-copy">LEADVAULT SELECTION FLOW</div>
+        </main>
+
+        <script>
+            const steps = [
+                {
+                    question: "고민 중인 캐리어 크기는 무엇인가요?",
+                    options: ["20인치 or 24인치", "24인치 or 28(29)인치", "28(29)인치 or 20인치"],
+                },
+                {
+                    question: "선호하는 소재는 무엇인가요?",
+                    options: ["하드 케이스", "소프트 케이스", "상관없어요"],
+                },
+                {
+                    question: "예상 예산대는 얼마인가요?",
+                    options: ["10만원 이하", "10-20만원", "20만원 이상"],
+                },
+            ];
+
+            const state = {
+                index: 0,
+                answers: [],
+            };
+
+            const questionEl = document.getElementById("question");
+            const choicesEl = document.getElementById("choices");
+            const backBtn = document.getElementById("backBtn");
+            const barFill = document.getElementById("barFill");
+            const screen = document.getElementById("screen");
+
+            function renderStep() {
+                const step = steps[state.index];
+                backBtn.disabled = state.index === 0;
+                barFill.style.width = `${((state.index + 1) / steps.length) * 100}%`;
+
+                if (!step) {
+                    questionEl.textContent = "선택이 완료되었습니다.";
+                    choicesEl.innerHTML = "<div class='result'>맞춤 추천 페이지로 이동합니다.</div>";
+                    return;
+                }
+
+                questionEl.textContent = step.question;
+                choicesEl.innerHTML = step.options.map((option) => `<button class="choice" type="button">${option}</button>`).join("");
+            }
+
+            function handleChoice(event) {
+                const target = event.target.closest("button");
+                if (!target) return;
+
+                const selected = target.textContent.trim();
+                state.answers[state.index] = selected;
+
+                screen.classList.add("fade-out");
+                setTimeout(() => {
+                    state.index += 1;
+                    screen.classList.remove("fade-out");
+                    renderStep();
+                }, 220);
+            }
+
+            function handleBack() {
+                if (state.index === 0) return;
+                screen.classList.add("fade-out");
+                setTimeout(() => {
+                    state.index -= 1;
+                    screen.classList.remove("fade-out");
+                    renderStep();
+                }, 220);
+            }
+
+            choicesEl.addEventListener("click", handleChoice);
+            backBtn.addEventListener("click", handleBack);
+
+            renderStep();
+        </script>
+    </body>
+</html>
