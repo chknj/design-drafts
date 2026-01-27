@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Champion Promo | Hero Carousel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #101010;
+        --muted: #5b5b5b;
+        --accent: #ff3d1f;
+        --surface: #ffffff;
+        --surface-alt: #f6f1ea;
+        --line: rgba(0, 0, 0, 0.08);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+        --radius-lg: 28px;
+        --radius-md: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", "Segoe UI", sans-serif;
+        background: #ffffff;
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        width: 100vw;
+        height: 800px;
+        --slide-width: 20vw;
+        background: #f7edcd;
+        display: flex;
+        align-items: center;
+      }
+
+      .track {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        width: max-content;
+        animation: scroll 45s linear infinite;
+      }
+
+      .carousel:hover .track {
+        animation-play-state: paused;
+      }
+
+      .carousel:hover .slide img {
+        animation-play-state: paused;
+      }
+
+      .slide {
+        flex: 0 0 auto;
+        width: var(--slide-width);
+        height: 100%;
+      }
+
+      .slide img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        animation: floatY 3s ease-in-out infinite;
+      }
+
+      .slide:nth-child(5n + 1) img {
+        animation-duration: 3.5s;
+        animation-delay: -0.5s;
+      }
+
+      .slide:nth-child(5n + 2) img {
+        animation-duration: 4s;
+        animation-delay: -1s;
+      }
+
+      .slide:nth-child(5n + 3) img {
+        animation-duration: 3.25s;
+        animation-delay: -0.75s;
+      }
+
+      .slide:nth-child(5n + 4) img {
+        animation-duration: 3.75s;
+        animation-delay: -1.25s;
+      }
+
+      .slide:nth-child(5n + 5) img {
+        animation-duration: 4.5s;
+        animation-delay: -1.5s;
+      }
+
+      @keyframes floatY {
+        0%,
+        100% {
+          transform: translateY(-12px);
+        }
+        50% {
+          transform: translateY(12px);
+        }
+      }
+
+      @keyframes scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .carousel {
+          --slide-width: 33.333vw;
+          height: min(70vh, 520px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel" aria-label="프로모션 이미지 캐러셀">
+      <div class="track">
+        <div class="slide"><img src="images/1.png" alt="프로모션 이미지 1" /></div>
+        <div class="slide"><img src="images/2.png" alt="프로모션 이미지 2" /></div>
+        <div class="slide"><img src="images/3.png" alt="프로모션 이미지 3" /></div>
+        <div class="slide"><img src="images/4.png" alt="프로모션 이미지 4" /></div>
+        <div class="slide"><img src="images/5.png" alt="프로모션 이미지 5" /></div>
+        <div class="slide"><img src="images/1.png" alt="프로모션 이미지 1" /></div>
+        <div class="slide"><img src="images/2.png" alt="프로모션 이미지 2" /></div>
+        <div class="slide"><img src="images/3.png" alt="프로모션 이미지 3" /></div>
+        <div class="slide"><img src="images/4.png" alt="프로모션 이미지 4" /></div>
+        <div class="slide"><img src="images/5.png" alt="프로모션 이미지 5" /></div>
+      </div>
+    </div>
+  </body>
+</html>
