@@ -345,7 +345,7 @@
           <div class="setting">
             <label for="paletteSize">컬러 팔레트 수</label>
             <div class="slider-row">
-              <input id="paletteSize" type="range" min="8" max="128" value="128" />
+              <input id="paletteSize" type="range" min="8" max="256" value="128" />
               <span id="paletteValue">128</span>
             </div>
             <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다.</small>
@@ -443,7 +443,7 @@
             if (hasOption) formatSelect.value = prefs.format;
           }
           if (Number.isFinite(prefs?.palette)) {
-            const value = Math.min(128, Math.max(8, Number(prefs.palette)));
+            const value = Math.min(256, Math.max(8, Number(prefs.palette)));
             paletteSlider.value = String(value);
           }
           if (Number.isFinite(prefs?.quality)) {
