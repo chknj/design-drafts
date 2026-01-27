@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>이미지 최적화 | 컬러 통합 압축</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #121212;
+        --muted: #4b4b4b;
+        --surface: #ffffff;
+        --surface-alt: #f7f3ee;
+        --accent: #ff6b35;
+        --accent-dark: #c93e0d;
+        --accent-soft: #ffd2c3;
+        --line: #dad4cc;
+        --success: #1a7f37;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        --radius-lg: 28px;
+        --radius-md: 16px;
+        --radius-sm: 10px;
+        --max-width: 1160px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, #fff4ec 0%, #f4efe7 40%, #efe9df 100%);
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 48px 24px 20px;
+      }
+
+      .wrap {
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+      }
+
+      h1 {
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        font-size: clamp(2rem, 3.5vw, 3.6rem);
+        margin: 0;
+        letter-spacing: -0.02em;
+      }
+
+      .hero p {
+        margin: 0;
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 640px;
+        line-height: 1.6;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        background: var(--accent-soft);
+        color: var(--accent-dark);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      main {
+        padding: 0 24px 60px;
+      }
+
+      .panel {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 26px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+      }
+
+      .layout {
+        display: grid;
+        gap: 22px;
+      }
+
+      @media (min-width: 900px) {
+        .layout {
+          grid-template-columns: 1.2fr 0.8fr;
+          align-items: start;
+        }
+      }
+
+      .dropzone {
+        background: linear-gradient(135deg, #fff 0%, #fff6f1 100%);
+        border: 2px dashed var(--line);
+        border-radius: var(--radius-md);
+        padding: 32px;
+        text-align: center;
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+      }
+
+      .dropzone.active {
+        border-color: var(--accent);
+        box-shadow: 0 16px 32px rgba(255, 107, 53, 0.18);
+        transform: translateY(-2px);
+      }
+
+      .dropzone h2 {
+        font-family: "Space Grotesk", sans-serif;
+        margin: 0 0 10px;
+        font-size: 1.6rem;
+      }
+
+      .dropzone p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .setting .actions {
+        justify-content: flex-start;
+      }
+
+      .actions.actions-inline {
+        width: 100%;
+      }
+
+      button,
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 10px 18px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 12px 24px rgba(255, 107, 53, 0.3);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+      }
+
+      .btn-ghost {
+        background: #f0e8df;
+        color: var(--ink);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--line);
+      }
+
+      .settings {
+        display: grid;
+        gap: 18px;
+      }
+
+      .setting {
+        background: var(--surface-alt);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+      }
+
+      .setting label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .setting small {
+        color: var(--muted);
+        display: block;
+        margin-top: 6px;
+      }
+
+      .slider-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      select,
+      input[type="number"] {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        font-size: 0.95rem;
+        background: white;
+      }
+
+      .status {
+        margin-top: 16px;
+        font-weight: 600;
+        color: var(--accent-dark);
+      }
+
+      .results {
+        margin-top: 24px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .result-card {
+        background: white;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line);
+        padding: 14px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .result-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .result-top strong {
+        font-size: 0.95rem;
+      }
+
+      .result-meta {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .result-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap hero">
+        <h1>이미지 최적화</h1>
+        <!-- <div class="pill-row">
+          <span class="pill">폴더 재귀 처리</span>
+          <span class="pill">PNG · JPG · WebP · AVIF 출력</span>
+          <span class="pill">메타데이터 제거</span>
+        </div> -->
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap layout panel">
+        <section>
+          <div class="dropzone" id="dropzone">
+            <h2>이미지를 여기에 놓으세요</h2>
+            <p>파일/폴더 드래그앤드롭, 또는 선택 버튼을 눌러 업로드합니다.</p>
+            <div class="actions">
+              <button class="btn btn-primary" id="pickFiles">파일 선택</button>
+              <button class="btn btn-ghost" id="pickFolder">폴더 선택</button>
+              <button class="btn btn-outline" id="clearList">비우기</button>
+            </div>
+            <input id="fileInput" type="file" accept="image/*" multiple class="hidden" />
+            <input
+              id="folderInput"
+              type="file"
+              accept="image/*"
+              multiple
+              webkitdirectory
+              class="hidden"
+            />
+            <div class="status" id="status">대기 중…</div>
+          </div>
+
+          <div class="results" id="results"></div>
+          <div class="note">
+            AVIF는 브라우저 지원 여부에 따라 자동으로 WebP/PNG로 대체될 수
+            있습니다. PNG는 무손실 포맷이라 컬러 통합 효과가 크지만,
+            압축률은 이미지 종류에 따라 달라집니다.
+          </div>
+        </section>
+
+        <aside class="settings">
+          <div class="setting">
+            <label for="formatSelect">출력 포맷</label>
+            <select id="formatSelect">
+              <option value="image/png">PNG</option>
+              <option value="image/jpeg" selected>JPG</option>
+              <option value="image/webp">WebP</option>
+              <option value="image/avif">AVIF</option>
+            </select>
+            <small>원본과 다른 포맷으로 변환하면 용량 절감 폭이 큽니다.</small>
+          </div>
+
+          <div class="setting">
+            <label for="paletteSize">컬러 팔레트 수</label>
+            <div class="slider-row">
+              <input id="paletteSize" type="range" min="8" max="128" value="80" />
+              <span id="paletteValue">80</span>
+            </div>
+            <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다.</small>
+          </div>
+
+          <div class="setting">
+            <label for="quality">출력 품질 (JPG/WebP/AVIF)</label>
+            <div class="slider-row">
+              <input id="quality" type="range" min="0.3" max="1" step="0.01" value="0.8" />
+              <span id="qualityValue">80%</span>
+            </div>
+            <small>PNG는 무시됩니다.</small>
+          </div>
+
+          <div class="setting">
+            <label for="ditherToggle">디더링 (밴딩 완화)</label>
+            <div class="slider-row">
+              <input id="ditherToggle" type="checkbox" checked />
+              <span>활성화</span>
+            </div>
+            <small>미세 노이즈로 밴딩을 줄입니다. PNG는 용량이 조금 늘 수 있습니다.</small>
+          </div>
+
+          <div class="setting">
+            <label>처리 시작</label>
+            <div class="actions actions-inline">
+              <button class="btn btn-primary" id="startOptimize">최적화 실행</button>
+              <button class="btn btn-ghost" id="downloadAll" disabled>개별 저장</button>
+              <button class="btn btn-outline" id="saveFolder" disabled>폴더로 저장</button>
+            </div>
+            <small>큰 이미지는 처리 시간이 다소 걸릴 수 있습니다.</small>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      const dropzone = document.getElementById("dropzone");
+      const fileInput = document.getElementById("fileInput");
+      const folderInput = document.getElementById("folderInput");
+      const pickFiles = document.getElementById("pickFiles");
+      const pickFolder = document.getElementById("pickFolder");
+      const clearList = document.getElementById("clearList");
+      const resultsEl = document.getElementById("results");
+      const statusEl = document.getElementById("status");
+      const paletteSlider = document.getElementById("paletteSize");
+      const paletteValue = document.getElementById("paletteValue");
+      const qualitySlider = document.getElementById("quality");
+      const qualityValue = document.getElementById("qualityValue");
+      const formatSelect = document.getElementById("formatSelect");
+      const startOptimize = document.getElementById("startOptimize");
+      const downloadAll = document.getElementById("downloadAll");
+      const saveFolder = document.getElementById("saveFolder");
+      const ditherToggle = document.getElementById("ditherToggle");
+
+      const state = {
+        files: [],
+        results: [],
+      };
+
+      const supportedExt = ["jpg", "jpeg", "png", "webp", "avif"];
+
+      function setStatus(text, tone = "default") {
+        statusEl.textContent = text;
+        statusEl.style.color = tone === "success" ? "var(--success)" : "var(--accent-dark)";
+      }
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes)) return "-";
+        const units = ["B", "KB", "MB", "GB"];
+        let idx = 0;
+        let value = bytes;
+        while (value >= 1024 && idx < units.length - 1) {
+          value /= 1024;
+          idx += 1;
+        }
+        return `${value.toFixed(value < 10 ? 2 : 1)} ${units[idx]}`;
+      }
+
+      function sanitizeFiles(files) {
+        return files.filter((item) => {
+          const ext = item.name.split(".").pop()?.toLowerCase() || "";
+          return item.file.type.startsWith("image/") || supportedExt.includes(ext);
+        });
+      }
+
+      function updateCounters() {
+        setStatus(
+          state.files.length
+            ? `${state.files.length}개 파일 준비됨`
+            : "대기 중…"
+        );
+      }
+
+      function resetResults() {
+        state.results = [];
+        resultsEl.innerHTML = "";
+        downloadAll.disabled = true;
+        saveFolder.disabled = true;
+      }
+
+      pickFiles.addEventListener("click", () => fileInput.click());
+      pickFolder.addEventListener("click", () => folderInput.click());
+      clearList.addEventListener("click", () => {
+        state.files = [];
+        resetResults();
+        updateCounters();
+      });
+
+      paletteSlider.addEventListener("input", () => {
+        paletteValue.textContent = paletteSlider.value;
+      });
+
+      const updateQualityLabel = () => {
+        const value = Number(qualitySlider.value);
+        qualityValue.textContent = `${Math.round(value * 100)}%`;
+      };
+
+      qualitySlider.addEventListener("input", updateQualityLabel);
+      updateQualityLabel();
+
+      fileInput.addEventListener("change", () => {
+        const files = Array.from(fileInput.files || []).map((file) => ({
+          file,
+          name: file.name,
+          relPath: file.name,
+        }));
+        state.files = sanitizeFiles(files);
+        resetResults();
+        updateCounters();
+      });
+
+      folderInput.addEventListener("change", () => {
+        const files = Array.from(folderInput.files || []).map((file) => ({
+          file,
+          name: file.name,
+          relPath: file.webkitRelativePath || file.name,
+        }));
+        state.files = sanitizeFiles(files);
+        resetResults();
+        updateCounters();
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.add("active");
+        });
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.remove("active");
+        });
+      });
+
+      dropzone.addEventListener("drop", async (event) => {
+        const collected = await readDropItems(event.dataTransfer);
+        state.files = sanitizeFiles(collected);
+        resetResults();
+        updateCounters();
+      });
+
+      document.addEventListener("dragover", (event) => {
+        event.preventDefault();
+      });
+
+      document.addEventListener("drop", async (event) => {
+        event.preventDefault();
+        if (dropzone.contains(event.target)) return;
+        const collected = await readDropItems(event.dataTransfer);
+        if (!collected.length) return;
+        state.files = sanitizeFiles(collected);
+        resetResults();
+        updateCounters();
+        dropzone.classList.remove("active");
+      });
+
+      async function readDropItems(dataTransfer) {
+        if (!dataTransfer) return [];
+        const items = dataTransfer.items;
+        const files = dataTransfer.files;
+
+        const entries = [];
+        if (items && items.length) {
+          for (const item of items) {
+            if (item.webkitGetAsEntry) {
+              const entry = item.webkitGetAsEntry();
+              if (entry) entries.push(entry);
+            } else if (item.getAsFile) {
+              const file = item.getAsFile();
+              if (file) {
+                entries.push({
+                  isFile: true,
+                  isDirectory: false,
+                  file: (cb) => cb(file),
+                  fullPath: file.name,
+                });
+              }
+            }
+          }
+        } else if (files && files.length) {
+          for (const file of files) {
+            entries.push({
+              isFile: true,
+              isDirectory: false,
+              file: (cb) => cb(file),
+              fullPath: file.name,
+            });
+          }
+        }
+
+        const collected = [];
+        for (const entry of entries) {
+          const sub = await collectEntries(entry);
+          collected.push(...sub);
+        }
+        return collected;
+      }
+
+      async function collectEntries(entry) {
+        if (entry.isFile) {
+          const file = await new Promise((resolve) => entry.file(resolve));
+          return [
+            {
+              file,
+              name: file.name,
+              relPath: entry.fullPath?.replace(/^\//, "") || file.name,
+            },
+          ];
+        }
+        if (!entry.isDirectory) return [];
+
+        const reader = entry.createReader();
+        const results = [];
+        const readBatch = () =>
+          new Promise((resolve) => reader.readEntries(resolve));
+
+        let batch = await readBatch();
+        while (batch.length) {
+          for (const item of batch) {
+            const sub = await collectEntries(item);
+            results.push(...sub);
+          }
+          batch = await readBatch();
+        }
+        return results;
+      }
+
+      startOptimize.addEventListener("click", async () => {
+        if (!state.files.length) {
+          setStatus("먼저 파일이나 폴더를 선택하세요.");
+          return;
+        }
+        resetResults();
+        setStatus("최적화 진행 중...");
+        startOptimize.disabled = true;
+        pickFiles.disabled = true;
+        pickFolder.disabled = true;
+
+        const paletteSize = Number(paletteSlider.value);
+        const quality = Number(qualitySlider.value);
+        const targetType = formatSelect.value;
+        const dither = ditherToggle.checked;
+
+        for (let i = 0; i < state.files.length; i += 1) {
+          const item = state.files[i];
+          try {
+            const result = await optimizeFile(item, {
+              paletteSize,
+              quality,
+              targetType,
+              dither,
+            });
+            state.results.push(result);
+            renderResult(result);
+            setStatus(`진행 ${i + 1}/${state.files.length}`);
+          } catch (error) {
+            renderError(item, error);
+          }
+        }
+
+        setStatus("완료!", "success");
+        startOptimize.disabled = false;
+        pickFiles.disabled = false;
+        pickFolder.disabled = false;
+        downloadAll.disabled = state.results.length === 0;
+        saveFolder.disabled =
+          state.results.length === 0 ||
+          !state.results.some((result) => result.outputName.includes("/"));
+      });
+
+      downloadAll.addEventListener("click", () => {
+        state.results.forEach((result) => {
+          triggerDownload(result.blobUrl, result.outputName);
+        });
+      });
+
+      saveFolder.addEventListener("click", () => {
+        saveAllToFolder(state.results);
+      });
+
+      function renderResult(result) {
+        const card = document.createElement("div");
+        card.className = "result-card";
+        card.innerHTML = `
+          <div class="result-top">
+            <strong>${result.outputName}</strong>
+            <span class="result-meta">${result.dimensions}</span>
+          </div>
+          <div class="result-meta">
+            원본 ${formatBytes(result.originalSize)} → 결과 ${formatBytes(
+              result.outputSize
+            )} (${result.savings}% 절감)
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-primary">다운로드</button>
+            <button class="btn btn-outline">미리보기</button>
+          </div>
+        `;
+        const [downloadBtn, previewBtn] = card.querySelectorAll("button");
+        downloadBtn.addEventListener("click", () =>
+          triggerDownload(result.blobUrl, result.outputName)
+        );
+        previewBtn.addEventListener("click", () => window.open(result.blobUrl, "_blank"));
+        resultsEl.appendChild(card);
+      }
+
+      function renderError(item, error) {
+        const card = document.createElement("div");
+        card.className = "result-card";
+        card.innerHTML = `
+          <div class="result-top">
+            <strong>${item.relPath}</strong>
+          </div>
+          <div class="result-meta">처리 실패: ${error.message}</div>
+        `;
+        resultsEl.appendChild(card);
+      }
+
+      function triggerDownload(url, filename) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+
+      async function saveAllToFolder(results) {
+        if (!window.showDirectoryPicker) {
+          setStatus("브라우저가 폴더 저장을 지원하지 않습니다. 개별 다운로드로 전환합니다.");
+          results.forEach((result) => {
+            triggerDownload(result.blobUrl, result.outputName);
+          });
+          return;
+        }
+
+        try {
+          const rootHandle = await window.showDirectoryPicker();
+          for (const result of results) {
+            const parts = result.outputName.split("/");
+            const filename = parts.pop();
+            let currentHandle = rootHandle;
+            for (const part of parts) {
+              currentHandle = await currentHandle.getDirectoryHandle(part, { create: true });
+            }
+            if (!filename) continue;
+            const fileHandle = await currentHandle.getFileHandle(filename, { create: true });
+            const writable = await fileHandle.createWritable();
+            await writable.write(result.blob);
+            await writable.close();
+          }
+          setStatus("폴더 저장 완료!", "success");
+        } catch (error) {
+          if (error?.name === "AbortError") {
+            setStatus("폴더 저장이 취소되었습니다.");
+            return;
+          }
+          setStatus("폴더 저장 실패. 개별 다운로드로 전환합니다.");
+          results.forEach((result) => {
+            triggerDownload(result.blobUrl, result.outputName);
+          });
+        }
+      }
+
+      async function optimizeFile(item, options) {
+        const { paletteSize, quality, targetType, dither } = options;
+        const file = item.file;
+        const bitmap = await loadBitmap(file);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        ctx.drawImage(bitmap, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const palette = buildPalette(imageData.data, paletteSize);
+        applyPalette(imageData.data, palette, canvas.width, canvas.height, dither);
+        ctx.putImageData(imageData, 0, 0);
+
+        const { blob, typeUsed } = await canvasToBlob(canvas, targetType, quality);
+        const outputName = renameFile(item.relPath, typeUsed);
+        const outputSize = blob.size;
+        const originalSize = file.size;
+        const savings = Math.max(
+          0,
+          Math.round(((originalSize - outputSize) / originalSize) * 100)
+        );
+
+        return {
+          blob,
+          blobUrl: URL.createObjectURL(blob),
+          outputName,
+          outputSize,
+          originalSize,
+          savings,
+          dimensions: `${canvas.width}×${canvas.height}`,
+        };
+      }
+
+      function renameFile(path, typeUsed) {
+        const ext = typeUsed.split("/")[1] || "png";
+        const cleanExt = ext === "jpeg" ? "jpg" : ext;
+        const parts = path.split("/");
+        const name = parts.pop() || "image";
+        const base = name.replace(/\.[^/.]+$/, "");
+        parts.push(`${base}.${cleanExt}`);
+        return parts.join("/");
+      }
+
+      async function loadBitmap(file) {
+        if ("createImageBitmap" in window) {
+          return createImageBitmap(file);
+        }
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = URL.createObjectURL(file);
+        });
+      }
+
+      function buildPalette(data, size) {
+        const total = data.length / 4;
+        const targetSamples = Math.min(20000, total);
+        const stride = Math.max(1, Math.floor(Math.sqrt(total / targetSamples)));
+        const samples = [];
+
+        for (let i = 0; i < data.length; i += 4 * stride) {
+          const alpha = data[i + 3];
+          if (alpha < 12) continue;
+          samples.push([data[i], data[i + 1], data[i + 2]]);
+        }
+
+        if (samples.length === 0) return [[0, 0, 0]];
+        const palette = [];
+        for (let i = 0; i < size; i += 1) {
+          const pick = samples[Math.floor(Math.random() * samples.length)];
+          palette.push([...pick]);
+        }
+
+        for (let iter = 0; iter < 8; iter += 1) {
+          const sums = Array.from({ length: size }, () => ({
+            r: 0,
+            g: 0,
+            b: 0,
+            count: 0,
+          }));
+          for (const sample of samples) {
+            const idx = nearestColor(sample, palette);
+            const bucket = sums[idx];
+            bucket.r += sample[0];
+            bucket.g += sample[1];
+            bucket.b += sample[2];
+            bucket.count += 1;
+          }
+          for (let i = 0; i < palette.length; i += 1) {
+            if (sums[i].count > 0) {
+              palette[i][0] = Math.round(sums[i].r / sums[i].count);
+              palette[i][1] = Math.round(sums[i].g / sums[i].count);
+              palette[i][2] = Math.round(sums[i].b / sums[i].count);
+            } else {
+              const pick = samples[Math.floor(Math.random() * samples.length)];
+              palette[i] = [...pick];
+            }
+          }
+        }
+
+        return palette;
+      }
+
+      function nearestColor([r, g, b], palette) {
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i < palette.length; i += 1) {
+          const pr = palette[i][0];
+          const pg = palette[i][1];
+          const pb = palette[i][2];
+          const dr = r - pr;
+          const dg = g - pg;
+          const db = b - pb;
+          const dist = dr * dr * 0.3 + dg * dg * 0.59 + db * db * 0.11;
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestIdx = i;
+          }
+        }
+        return bestIdx;
+      }
+
+      function applyPalette(data, palette, width, height, dither) {
+        if (!dither) {
+          const cache = new Map();
+          for (let i = 0; i < data.length; i += 4) {
+            const alpha = data[i + 3];
+            if (alpha === 0) continue;
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const key = ((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3);
+            let mapped = cache.get(key);
+            if (!mapped) {
+              const idx = nearestColor([r, g, b], palette);
+              mapped = palette[idx];
+              cache.set(key, mapped);
+            }
+            data[i] = mapped[0];
+            data[i + 1] = mapped[1];
+            data[i + 2] = mapped[2];
+          }
+          return;
+        }
+
+        const clamp = (value) => Math.max(0, Math.min(255, value));
+        for (let y = 0; y < height; y += 1) {
+          for (let x = 0; x < width; x += 1) {
+            const idx = (y * width + x) * 4;
+            const alpha = data[idx + 3];
+            if (alpha === 0) continue;
+
+            const oldR = data[idx];
+            const oldG = data[idx + 1];
+            const oldB = data[idx + 2];
+            const paletteIndex = nearestColor([oldR, oldG, oldB], palette);
+            const mapped = palette[paletteIndex];
+
+            data[idx] = mapped[0];
+            data[idx + 1] = mapped[1];
+            data[idx + 2] = mapped[2];
+
+            const errR = oldR - mapped[0];
+            const errG = oldG - mapped[1];
+            const errB = oldB - mapped[2];
+
+            distributeError(x + 1, y, 7 / 16, errR, errG, errB);
+            distributeError(x - 1, y + 1, 3 / 16, errR, errG, errB);
+            distributeError(x, y + 1, 5 / 16, errR, errG, errB);
+            distributeError(x + 1, y + 1, 1 / 16, errR, errG, errB);
+          }
+        }
+
+        function distributeError(nx, ny, factor, errR, errG, errB) {
+          if (nx < 0 || ny < 0 || nx >= width || ny >= height) return;
+          const nIdx = (ny * width + nx) * 4;
+          if (data[nIdx + 3] === 0) return;
+          data[nIdx] = clamp(data[nIdx] + errR * factor);
+          data[nIdx + 1] = clamp(data[nIdx + 1] + errG * factor);
+          data[nIdx + 2] = clamp(data[nIdx + 2] + errB * factor);
+        }
+      }
+
+      async function canvasToBlob(canvas, type, quality) {
+        const tryBlob = (mime) =>
+          new Promise((resolve) => canvas.toBlob(resolve, mime, quality));
+
+        let blob = await tryBlob(type);
+        let typeUsed = type;
+        if (!blob) {
+          const fallback = type === "image/avif" ? "image/webp" : "image/png";
+          blob = await tryBlob(fallback);
+          typeUsed = fallback;
+        }
+        return { blob, typeUsed };
+      }
+    </script>
+  </body>
+</html>
