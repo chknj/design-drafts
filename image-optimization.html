@@ -10,16 +10,16 @@
         <style>
             :root {
                 color-scheme: light;
-                --ink: #121212;
-                --muted: #4b4b4b;
+                --ink: #111111;
+                --muted: #5a5a5a;
                 --surface: #ffffff;
-                --surface-alt: #f7f3ee;
-                --accent: #ff6b35;
-                --accent-dark: #c93e0d;
-                --accent-soft: #ffd2c3;
-                --line: #dad4cc;
+                --surface-alt: #f2f2f2;
+                --accent: #4f4f4f;
+                --accent-dark: #2a2a2a;
+                --accent-soft: #e3e3e3;
+                --line: #d6d6d6;
                 --success: #1a7f37;
-                --shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+                --shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
                 --radius-lg: 28px;
                 --radius-md: 16px;
                 --radius-sm: 10px;
@@ -34,7 +34,7 @@
                 margin: 0;
                 font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
                 color: var(--ink);
-                background: radial-gradient(circle at top, #fff4ec 0%, #f4efe7 40%, #efe9df 100%);
+                background: radial-gradient(circle at top, #f7f7f7 0%, #efefef 45%, #e6e6e6 100%);
                 min-height: 100vh;
             }
 
@@ -107,7 +107,7 @@
             }
 
             .dropzone {
-                background: linear-gradient(135deg, #fff 0%, #fff6f1 100%);
+                background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
                 border: 2px dashed var(--line);
                 border-radius: var(--radius-md);
                 padding: 32px;
@@ -121,7 +121,7 @@
 
             .dropzone.active {
                 border-color: var(--accent);
-                box-shadow: 0 16px 32px rgba(255, 107, 53, 0.18);
+                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16);
                 transform: translateY(-2px);
             }
 
@@ -173,7 +173,7 @@
             .btn-primary {
                 background: var(--accent);
                 color: white;
-                box-shadow: 0 12px 24px rgba(255, 107, 53, 0.3);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
             }
 
             .btn-primary:hover:not(:disabled) {
@@ -181,7 +181,7 @@
             }
 
             .btn-ghost {
-                background: #f0e8df;
+                background: #ededed;
                 color: var(--ink);
             }
 
@@ -239,7 +239,7 @@
 
       .chip.active {
         border-color: var(--accent);
-        box-shadow: 0 10px 18px rgba(255, 107, 53, 0.22);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
         transform: translateY(-1px);
       }
 
@@ -300,12 +300,20 @@
                 flex-wrap: wrap;
             }
 
-            .note {
-                margin-top: 16px;
-                color: var(--muted);
-                font-size: 0.9rem;
-                line-height: 1.5;
-            }
+      .note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .footer-note {
+        margin: 32px auto 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
 
             .hidden {
                 display: none;
@@ -346,12 +354,12 @@
 
                 <aside class="settings">
                     <div class="setting">
-                        <label for="formatSelect">출력 포맷</label>
-                        <select id="formatSelect">
-                            <option value="image/png">PNG</option>
-                            <option value="image/jpeg" selected>JPG</option>
-                            <option value="image/webp">WebP</option>
-                        </select>
+                        <label for="formatButtons">출력 포맷</label>
+                        <div class="quality-grid" id="formatButtons" role="radiogroup" aria-label="출력 포맷 선택">
+                            <button type="button" class="chip" data-format="image/jpeg">JPG</button>
+                            <button type="button" class="chip" data-format="image/png">PNG</button>
+                            <button type="button" class="chip" data-format="image/webp">WebP</button>
+                        </div>
                         <small>원본과 다른 포맷으로 변환하면 용량 절감 폭이 큽니다.</small>
                     </div>
 
@@ -403,6 +411,11 @@
             </div>
         </main>
 
+        <footer class="footer-note">
+          <div>© Musinsa Trading. All rights reserved.</div>
+          <div>Created by hyunkyun.choi@musinsatrading.com</div>
+        </footer>
+
         <script>
             const dropzone = document.getElementById("dropzone");
             const fileInput = document.getElementById("fileInput");
@@ -415,7 +428,7 @@
             const paletteSlider = document.getElementById("paletteSize");
             const paletteValue = document.getElementById("paletteValue");
       const qualityButtons = document.getElementById("qualityButtons");
-            const formatSelect = document.getElementById("formatSelect");
+            const formatButtons = document.getElementById("formatButtons");
             const startOptimize = document.getElementById("startOptimize");
             const downloadAll = document.getElementById("downloadAll");
             const saveFolder = document.getElementById("saveFolder");
@@ -442,16 +455,39 @@
                 });
             };
 
+            const updateFormatButtons = (value) => {
+                const buttons = Array.from(formatButtons.querySelectorAll(".chip"));
+                let matched = false;
+                buttons.forEach((button) => {
+                    const isActive = button.dataset.format === value;
+                    if (isActive) matched = true;
+                    button.classList.toggle("active", isActive);
+                    button.setAttribute("aria-checked", isActive ? "true" : "false");
+                });
+                if (!matched) {
+                    const fallback = buttons.find((button) => button.dataset.format === "image/jpeg");
+                    if (fallback) {
+                        fallback.classList.add("active");
+                        fallback.setAttribute("aria-checked", "true");
+                    }
+                }
+            };
+
             const getSelectedQuality = () => {
                 const active = qualityButtons.querySelector(".chip.active");
                 const value = Number(active?.dataset?.quality);
                 return Number.isFinite(value) ? value : 1;
             };
 
+            const getSelectedFormat = () => {
+                const active = formatButtons.querySelector(".chip.active");
+                return active?.dataset?.format || "image/jpeg";
+            };
+
             const savePrefs = () => {
                 try {
                     const prefs = {
-                        format: formatSelect.value,
+                        format: getSelectedFormat(),
                         palette: Number(paletteSlider.value),
                         quality: getSelectedQuality(),
                     };
@@ -467,8 +503,9 @@
                     if (!raw) return false;
                     const prefs = JSON.parse(raw);
                     if (prefs?.format) {
-                        const hasOption = Array.from(formatSelect.options).some((option) => option.value === prefs.format);
-                        if (hasOption) formatSelect.value = prefs.format;
+                        updateFormatButtons(prefs.format);
+                    } else {
+                        updateFormatButtons("image/jpeg");
                     }
                     if (Number.isFinite(prefs?.palette)) {
                         const value = Math.min(256, Math.max(8, Number(prefs.palette)));
@@ -487,6 +524,9 @@
 
             const hasPrefs = applyPrefs();
             updatePaletteLabel();
+            if (!hasPrefs) {
+                updateFormatButtons("image/jpeg");
+            }
             if (!hasPrefs) {
                 updateQualityButtons(1);
             }
@@ -539,16 +579,23 @@
                 savePrefs();
             });
 
-      qualityButtons.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof HTMLElement)) return;
-        const value = Number(target.dataset.quality);
-        if (!Number.isFinite(value)) return;
-        updateQualityButtons(value);
-        savePrefs();
-      });
+            qualityButtons.addEventListener("click", (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) return;
+                const value = Number(target.dataset.quality);
+                if (!Number.isFinite(value)) return;
+                updateQualityButtons(value);
+                savePrefs();
+            });
 
-      formatSelect.addEventListener("change", savePrefs);
+            formatButtons.addEventListener("click", (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) return;
+                const value = target.dataset.format;
+                if (!value) return;
+                updateFormatButtons(value);
+                savePrefs();
+            });
 
             fileInput.addEventListener("change", () => {
                 const files = Array.from(fileInput.files || []).map((file) => ({
@@ -691,7 +738,7 @@
 
                 const paletteSize = Number(paletteSlider.value);
                 const quality = getSelectedQuality();
-                const targetType = formatSelect.value;
+                const targetType = getSelectedFormat();
                 const dither = ditherToggle.checked;
 
                 for (let i = 0; i < state.files.length; i += 1) {
