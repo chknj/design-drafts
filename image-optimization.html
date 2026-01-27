@@ -407,6 +407,57 @@
       };
 
       const supportedExt = ["jpg", "jpeg", "png", "webp", "avif"];
+      const storageKey = "imageOptimizationPrefs";
+
+      const updatePaletteLabel = () => {
+        paletteValue.textContent = paletteSlider.value;
+      };
+
+      const updateQualityLabel = () => {
+        const value = Number(qualitySlider.value);
+        qualityValue.textContent = `${Math.round(value * 100)}%`;
+      };
+
+      const savePrefs = () => {
+        try {
+          const prefs = {
+            format: formatSelect.value,
+            palette: Number(paletteSlider.value),
+            quality: Number(qualitySlider.value),
+          };
+          localStorage.setItem(storageKey, JSON.stringify(prefs));
+        } catch {
+          // Ignore storage errors (private mode, quota, etc.)
+        }
+      };
+
+      const applyPrefs = () => {
+        try {
+          const raw = localStorage.getItem(storageKey);
+          if (!raw) return;
+          const prefs = JSON.parse(raw);
+          if (prefs?.format) {
+            const hasOption = Array.from(formatSelect.options).some(
+              (option) => option.value === prefs.format
+            );
+            if (hasOption) formatSelect.value = prefs.format;
+          }
+          if (Number.isFinite(prefs?.palette)) {
+            const value = Math.min(128, Math.max(8, Number(prefs.palette)));
+            paletteSlider.value = String(value);
+          }
+          if (Number.isFinite(prefs?.quality)) {
+            const value = Math.min(1, Math.max(0.3, Number(prefs.quality)));
+            qualitySlider.value = String(value);
+          }
+        } catch {
+          localStorage.removeItem(storageKey);
+        }
+      };
+
+      applyPrefs();
+      updatePaletteLabel();
+      updateQualityLabel();
 
       function setStatus(text, tone = "default") {
         statusEl.textContent = text;
@@ -456,16 +507,16 @@
       });
 
       paletteSlider.addEventListener("input", () => {
-        paletteValue.textContent = paletteSlider.value;
+        updatePaletteLabel();
+        savePrefs();
       });
 
-      const updateQualityLabel = () => {
-        const value = Number(qualitySlider.value);
-        qualityValue.textContent = `${Math.round(value * 100)}%`;
-      };
+      qualitySlider.addEventListener("input", () => {
+        updateQualityLabel();
+        savePrefs();
+      });
 
-      qualitySlider.addEventListener("input", updateQualityLabel);
-      updateQualityLabel();
+      formatSelect.addEventListener("change", savePrefs);
 
       fileInput.addEventListener("change", () => {
         const files = Array.from(fileInput.files || []).map((file) => ({
