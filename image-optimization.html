@@ -348,7 +348,7 @@
               <input id="paletteSize" type="range" min="8" max="256" value="128" />
               <span id="paletteValue">128</span>
             </div>
-            <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다.</small>
+            <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다. 256은 색 통합 없음.</small>
           </div>
 
           <div class="setting">
@@ -795,9 +795,11 @@
         ctx.drawImage(bitmap, 0, 0);
 
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const palette = buildPalette(imageData.data, paletteSize);
-        applyPalette(imageData.data, palette, canvas.width, canvas.height, dither);
-        ctx.putImageData(imageData, 0, 0);
+        if (paletteSize < 256) {
+          const palette = buildPalette(imageData.data, paletteSize);
+          applyPalette(imageData.data, palette, canvas.width, canvas.height, dither);
+          ctx.putImageData(imageData, 0, 0);
+        }
 
         const { blob, typeUsed } = await canvasToBlob(canvas, targetType, quality);
         const outputName = renameFile(item.relPath, typeUsed);
