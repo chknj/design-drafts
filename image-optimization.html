@@ -429,7 +429,7 @@
             <div>Created by hyunkyun.choi@musinsatrading.com</div>
         </footer>
 
-        <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.js" onerror="this.onerror=null;this.src='https://unpkg.com/upng-js@2.1.0/UPNG.js'"></script>
         <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
         <script>
             const dropzone = document.getElementById("dropzone");
@@ -456,6 +456,7 @@
 
             const supportedExt = ["jpg", "jpeg", "png", "webp", "avif"];
             const storageKey = "imageOptimizationPrefs";
+            const isUpngReady = () => typeof window.UPNG !== "undefined" && typeof UPNG.encode === "function";
             const updatePaletteLabel = () => {
                 paletteValue.textContent = paletteSlider.value;
             };
@@ -754,6 +755,13 @@
                 const quality = getSelectedQuality();
                 const targetType = getSelectedFormat();
                 const dither = ditherToggle.checked;
+                if (targetType === "image/png" && !isUpngReady()) {
+                    setStatus("PNG 최적화용 UPNG.js를 불러오지 못했습니다. 네트워크/차단 설정을 확인하세요.");
+                    startOptimize.disabled = false;
+                    pickFiles.disabled = false;
+                    pickFolder.disabled = false;
+                    return;
+                }
 
                 for (let i = 0; i < state.files.length; i += 1) {
                     const item = state.files[i];
