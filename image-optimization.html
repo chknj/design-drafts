@@ -215,17 +215,63 @@
                 margin-top: 6px;
             }
 
-            .slider-row {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
+      .slider-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-            .quality-grid {
-                display: grid;
-                grid-template-columns: repeat(5, minmax(0, 1fr));
-                gap: 8px;
-            }
+      .slider-stack {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slider-stack input[type="range"] {
+        width: 100%;
+      }
+
+      #paletteValue {
+        display: inline-block;
+        width: 4ch;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        flex: 0 0 4ch;
+      }
+
+      .slider-ticks {
+        position: relative;
+        height: 20px;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .slider-ticks span {
+        position: absolute;
+        top: 0;
+        padding-top: 8px;
+        transform: translateX(-50%);
+        white-space: nowrap;
+      }
+
+      .slider-ticks span::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 6px;
+        background: var(--line);
+      }
+
+
+      .quality-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
 
             .chip {
                 border: 1px solid var(--line);
@@ -370,10 +416,17 @@
                     <div class="setting">
                         <label for="paletteSize">컬러 팔레트 수</label>
                         <div class="slider-row">
-                            <input id="paletteSize" type="range" min="8" max="256" value="256" />
+                            <div class="slider-stack">
+                                <input id="paletteSize" type="range" min="8" max="1024" value="256" />
+                                <div class="slider-ticks" aria-hidden="true">
+                                    <span data-value="256">256</span>
+                                    <span data-value="512">512</span>
+                                    <span data-value="1024">1024</span>
+                                </div>
+                            </div>
                             <span id="paletteValue">256</span>
                         </div>
-                        <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다. 256은 색 통합 없음.</small>
+                        <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다. 1024는 색 통합 없음.</small>
                     </div>
 
                     <div class="setting">
@@ -446,9 +499,37 @@
 
             const supportedExt = ["jpg", "jpeg", "png", "webp", "avif"];
             const storageKey = "imageOptimizationPrefs";
+            const paletteMarks = [256, 512, 1024];
+            const paletteSnapThreshold = 24;
 
             const updatePaletteLabel = () => {
                 paletteValue.textContent = paletteSlider.value;
+            };
+
+            const positionPaletteTicks = () => {
+                const min = Number(paletteSlider.min);
+                const max = Number(paletteSlider.max);
+                if (!Number.isFinite(min) || !Number.isFinite(max) || max === min) return;
+                const ticks = document.querySelectorAll(".slider-ticks span[data-value]");
+                const sliderWidth = paletteSlider.offsetWidth;
+                const thumbSize = 18;
+                const usableWidth = Math.max(0, sliderWidth - thumbSize);
+                ticks.forEach((tick) => {
+                    const value = Number(tick.dataset.value);
+                    if (!Number.isFinite(value)) return;
+                    const ratio = (value - min) / (max - min);
+                    const left = ratio * usableWidth + thumbSize / 2;
+                    tick.style.left = `${left}px`;
+                });
+            };
+
+            const getSnappedPaletteValue = (value) => {
+                for (const mark of paletteMarks) {
+                    if (Math.abs(value - mark) <= paletteSnapThreshold) {
+                        return mark;
+                    }
+                }
+                return value;
             };
 
             const updateQualityButtons = (value) => {
@@ -513,8 +594,9 @@
                         updateFormatButtons("image/jpeg");
                     }
                     if (Number.isFinite(prefs?.palette)) {
-                        const value = Math.min(256, Math.max(8, Number(prefs.palette)));
-                        paletteSlider.value = String(value);
+                        const value = Math.min(1024, Math.max(8, Number(prefs.palette)));
+                        const snapped = getSnappedPaletteValue(value);
+                        paletteSlider.value = String(snapped);
                     }
                     if (Number.isFinite(prefs?.quality)) {
                         const value = Math.min(1, Math.max(0.1, Number(prefs.quality)));
@@ -529,12 +611,15 @@
 
             const hasPrefs = applyPrefs();
             updatePaletteLabel();
+            positionPaletteTicks();
             if (!hasPrefs) {
                 updateFormatButtons("image/jpeg");
             }
             if (!hasPrefs) {
                 updateQualityButtons(1);
             }
+
+            window.addEventListener("resize", positionPaletteTicks);
 
             function setStatus(text, tone = "default") {
                 statusEl.textContent = text;
@@ -580,6 +665,11 @@
             });
 
             paletteSlider.addEventListener("input", () => {
+                const raw = Number(paletteSlider.value);
+                const snapped = getSnappedPaletteValue(raw);
+                if (snapped !== raw) {
+                    paletteSlider.value = String(snapped);
+                }
                 updatePaletteLabel();
                 savePrefs();
             });
@@ -868,7 +958,7 @@
                 ctx.drawImage(bitmap, 0, 0);
 
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                if (paletteSize < 256) {
+                if (paletteSize < 1024) {
                     const palette = buildPalette(imageData.data, paletteSize);
                     applyPalette(imageData.data, palette, canvas.width, canvas.height, dither);
                     ctx.putImageData(imageData, 0, 0);
