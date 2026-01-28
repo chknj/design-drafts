@@ -429,6 +429,7 @@
             <div>Created by hyunkyun.choi@musinsatrading.com</div>
         </footer>
 
+        <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
         <script>
             const dropzone = document.getElementById("dropzone");
@@ -882,7 +883,20 @@
                     ctx.putImageData(imageData, 0, 0);
                 }
 
-                const { blob, typeUsed } = await canvasToBlob(canvas, targetType, quality);
+                let blobData;
+                if (targetType === "image/png" && window.UPNG && typeof UPNG.encode === "function") {
+                    try {
+                        const rgba = new Uint8Array(imageData.data);
+                        const colorCount = paletteSize < 256 ? paletteSize : 0;
+                        const pngBuffer = UPNG.encode([rgba.buffer], canvas.width, canvas.height, colorCount);
+                        blobData = { blob: new Blob([pngBuffer], { type: "image/png" }), typeUsed: "image/png" };
+                    } catch {
+                        blobData = await canvasToBlob(canvas, targetType, quality);
+                    }
+                } else {
+                    blobData = await canvasToBlob(canvas, targetType, quality);
+                }
+                const { blob, typeUsed } = blobData;
                 const outputName = renameFile(item.relPath, typeUsed);
                 const outputSize = blob.size;
                 const originalSize = file.size;
