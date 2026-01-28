@@ -236,6 +236,19 @@
         gap: 8px;
       }
 
+      .size-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .basis-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
             .chip {
                 border: 1px solid var(--line);
                 background: #fff;
@@ -377,6 +390,25 @@
                     </div>
 
                     <div class="setting">
+                        <label for="resizeButtons">사이즈 조절</label>
+                        <div class="basis-row" id="resizeBasisButtons" role="radiogroup" aria-label="사이즈 기준 선택">
+                            <button type="button" class="chip" data-basis="width">가로 기준</button>
+                            <button type="button" class="chip" data-basis="height">세로 기준</button>
+                        </div>
+                        <div class="size-grid" id="resizeButtons" role="radiogroup" aria-label="사이즈 선택">
+                            <button type="button" class="chip" data-size="none">선택없음</button>
+                            <button type="button" class="chip" data-size="640">640px</button>
+                            <button type="button" class="chip" data-size="960">960px</button>
+                            <button type="button" class="chip" data-size="1000">1000px</button>
+                            <button type="button" class="chip" data-size="1280">1280px</button>
+                            <button type="button" class="chip" data-size="1440">1440px</button>
+                            <button type="button" class="chip" data-size="1920">1920px</button>
+                            <button type="button" class="chip" data-size="2560">2560px</button>
+                        </div>
+                        <small>선택한 기준(px)에 맞춰 비율을 유지하며 리사이즈됩니다.</small>
+                    </div>
+
+                    <div class="setting">
                         <label for="paletteSize">컬러 팔레트 수</label>
                         <div class="slider-row">
                             <input id="paletteSize" type="range" min="8" max="256" value="256" />
@@ -444,6 +476,8 @@
             const paletteValue = document.getElementById("paletteValue");
             const qualityButtons = document.getElementById("qualityButtons");
             const formatButtons = document.getElementById("formatButtons");
+            const resizeButtons = document.getElementById("resizeButtons");
+            const resizeBasisButtons = document.getElementById("resizeBasisButtons");
             const startOptimize = document.getElementById("startOptimize");
             const downloadAll = document.getElementById("downloadAll");
             const saveFolder = document.getElementById("saveFolder");
@@ -488,6 +522,43 @@
                 }
             };
 
+            const updateResizeButtons = (value) => {
+                const buttons = Array.from(resizeButtons.querySelectorAll(".chip"));
+                let matched = false;
+                buttons.forEach((button) => {
+                    const sizeValue = button.dataset.size === "none" ? null : Number(button.dataset.size);
+                    const isActive = value === null ? sizeValue === null : sizeValue === value;
+                    if (isActive) matched = true;
+                    button.classList.toggle("active", isActive);
+                    button.setAttribute("aria-checked", isActive ? "true" : "false");
+                });
+                if (!matched) {
+                    const fallback = buttons.find((button) => button.dataset.size === "none");
+                    if (fallback) {
+                        fallback.classList.add("active");
+                        fallback.setAttribute("aria-checked", "true");
+                    }
+                }
+            };
+
+            const updateResizeBasisButtons = (value) => {
+                const buttons = Array.from(resizeBasisButtons.querySelectorAll(".chip"));
+                let matched = false;
+                buttons.forEach((button) => {
+                    const isActive = button.dataset.basis === value;
+                    if (isActive) matched = true;
+                    button.classList.toggle("active", isActive);
+                    button.setAttribute("aria-checked", isActive ? "true" : "false");
+                });
+                if (!matched) {
+                    const fallback = buttons.find((button) => button.dataset.basis === "width");
+                    if (fallback) {
+                        fallback.classList.add("active");
+                        fallback.setAttribute("aria-checked", "true");
+                    }
+                }
+            };
+
             const getSelectedQuality = () => {
                 const active = qualityButtons.querySelector(".chip.active");
                 const value = Number(active?.dataset?.quality);
@@ -499,12 +570,27 @@
                 return active?.dataset?.format || "image/jpeg";
             };
 
+            const getSelectedResizeSize = () => {
+                const active = resizeButtons.querySelector(".chip.active");
+                const raw = active?.dataset?.size;
+                if (raw === "none") return null;
+                const value = Number(raw);
+                return Number.isFinite(value) ? value : null;
+            };
+
+            const getSelectedResizeBasis = () => {
+                const active = resizeBasisButtons.querySelector(".chip.active");
+                return active?.dataset?.basis === "height" ? "height" : "width";
+            };
+
             const savePrefs = () => {
                 try {
                     const prefs = {
                         format: getSelectedFormat(),
                         palette: Number(paletteSlider.value),
                         quality: getSelectedQuality(),
+                        resizeSize: getSelectedResizeSize(),
+                        resizeBasis: getSelectedResizeBasis(),
                     };
                     localStorage.setItem(storageKey, JSON.stringify(prefs));
                 } catch {
@@ -526,10 +612,14 @@
                         const value = Math.min(256, Math.max(8, Number(prefs.palette)));
                         paletteSlider.value = String(value);
                     }
-                    if (Number.isFinite(prefs?.quality)) {
-                        const value = Math.min(1, Math.max(0.1, Number(prefs.quality)));
-                        updateQualityButtons(value);
-                    }
+                    const qualityValue = Number.isFinite(prefs?.quality) ? Number(prefs.quality) : 0.8;
+                    updateQualityButtons(Math.min(1, Math.max(0.1, qualityValue)));
+
+                    const resizeValue = Number.isFinite(prefs?.resizeSize) ? Number(prefs.resizeSize) : null;
+                    updateResizeButtons(resizeValue);
+
+                    const basisValue = prefs?.resizeBasis === "height" ? "height" : "width";
+                    updateResizeBasisButtons(basisValue);
                     return true;
                 } catch {
                     localStorage.removeItem(storageKey);
@@ -544,6 +634,10 @@
             }
             if (!hasPrefs) {
                 updateQualityButtons(0.8);
+            }
+            if (!hasPrefs) {
+                updateResizeButtons(null);
+                updateResizeBasisButtons("width");
             }
 
             function setStatus(text, tone = "default") {
@@ -609,6 +703,25 @@
                 const value = target.dataset.format;
                 if (!value) return;
                 updateFormatButtons(value);
+                savePrefs();
+            });
+
+            resizeButtons.addEventListener("click", (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) return;
+                const raw = target.dataset.size;
+                const value = raw === "none" ? null : Number(raw);
+                if (raw !== "none" && !Number.isFinite(value)) return;
+                updateResizeButtons(value);
+                savePrefs();
+            });
+
+            resizeBasisButtons.addEventListener("click", (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) return;
+                const value = target.dataset.basis;
+                if (!value) return;
+                updateResizeBasisButtons(value);
                 savePrefs();
             });
 
@@ -754,6 +867,8 @@
                 const paletteSize = Number(paletteSlider.value);
                 const quality = getSelectedQuality();
                 const targetType = getSelectedFormat();
+                const resizeSize = getSelectedResizeSize();
+                const resizeBasis = getSelectedResizeBasis();
                 const dither = ditherToggle.checked;
                 if (targetType === "image/png" && !isUpngReady()) {
                     setStatus("PNG 최적화용 UPNG.js를 불러오지 못했습니다. 네트워크/차단 설정을 확인하세요.");
@@ -770,6 +885,8 @@
                             paletteSize,
                             quality,
                             targetType,
+                            resizeSize,
+                            resizeBasis,
                             dither,
                         });
                         state.results.push(result);
@@ -875,14 +992,22 @@
             }
 
             async function optimizeFile(item, options) {
-                const { paletteSize, quality, targetType, dither } = options;
+                const { paletteSize, quality, targetType, resizeSize, resizeBasis, dither } = options;
                 const file = item.file;
                 const bitmap = await loadBitmap(file);
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d", { willReadFrequently: true });
-                canvas.width = bitmap.width;
-                canvas.height = bitmap.height;
-                ctx.drawImage(bitmap, 0, 0);
+                let targetWidth = bitmap.width;
+                let targetHeight = bitmap.height;
+                if (resizeSize) {
+                    const basisValue = resizeBasis === "height" ? bitmap.height : bitmap.width;
+                    const scale = basisValue > 0 ? resizeSize / basisValue : 1;
+                    targetWidth = Math.max(1, Math.round(bitmap.width * scale));
+                    targetHeight = Math.max(1, Math.round(bitmap.height * scale));
+                }
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+                ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
 
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 if (paletteSize < 256) {
