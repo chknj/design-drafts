@@ -1002,6 +1002,26 @@
                 link.remove();
             }
 
+            function getTopFolderName(path) {
+                const parts = path.split("/");
+                return parts.length > 1 ? parts[0] : null;
+            }
+
+            function getBaseName(path) {
+                const name = path.split("/").pop() || "image";
+                return name.replace(/\.[^/.]+$/, "") || "image";
+            }
+
+            function groupResultsByFolder(results) {
+                const groups = new Map();
+                results.forEach((result) => {
+                    const folder = getTopFolderName(result.outputName) || "__root__";
+                    if (!groups.has(folder)) groups.set(folder, []);
+                    groups.get(folder).push(result);
+                });
+                return groups;
+            }
+
             async function saveAllToFolder(results) {
                 if (!results.length) return;
                 if (typeof JSZip === "undefined") {
@@ -1012,20 +1032,32 @@
                     return;
                 }
 
+                const groups = groupResultsByFolder(results);
                 try {
-                    setStatus("ZIP 생성 중...");
-                    const zip = new JSZip();
-                    results.forEach((result) => {
-                        zip.file(result.outputName, result.blob);
-                    });
-                    const blob = await zip.generateAsync({
-                        type: "blob",
-                        compression: "DEFLATE",
-                        compressionOptions: { level: 6 },
-                    });
-                    const zipUrl = URL.createObjectURL(blob);
-                    triggerDownload(zipUrl, "optimized-images.zip");
-                    setTimeout(() => URL.revokeObjectURL(zipUrl), 10000);
+                    let idx = 0;
+                    const total = groups.size;
+                    for (const [folder, items] of groups.entries()) {
+                        idx += 1;
+                        setStatus(`ZIP 생성 중... (${idx}/${total})`);
+                        const zip = new JSZip();
+                        items.forEach((result) => {
+                            zip.file(result.outputName, result.blob);
+                        });
+                        const blob = await zip.generateAsync({
+                            type: "blob",
+                            compression: "DEFLATE",
+                            compressionOptions: { level: 6 },
+                        });
+                        const zipUrl = URL.createObjectURL(blob);
+                        const zipName =
+                            folder === "__root__"
+                                ? items.length === 1
+                                    ? getBaseName(items[0].outputName)
+                                    : "optimized-images"
+                                : folder;
+                        triggerDownload(zipUrl, `${zipName}.zip`);
+                        setTimeout(() => URL.revokeObjectURL(zipUrl), 10000);
+                    }
                     setStatus("ZIP 다운로드 준비 완료!", "success");
                 } catch (error) {
                     setStatus("ZIP 생성 실패. 개별 다운로드로 전환합니다.");
