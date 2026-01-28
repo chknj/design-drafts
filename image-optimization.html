@@ -4,11 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>이미지 최적화 | 확장자 변환</title>
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23FFD24D' stroke='%23000' stroke-width='4'/><circle cx='35' cy='40' r='6' fill='%23000'/><circle cx='65' cy='40' r='6' fill='%23000'/><path d='M30 60 Q50 75 70 60' stroke='%23000' stroke-width='5' fill='none' stroke-linecap='round'/></svg>"
-        />
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23FFD24D' stroke='%23000' stroke-width='4'/><circle cx='35' cy='40' r='6' fill='%23000'/><circle cx='65' cy='40' r='6' fill='%23000'/><path d='M30 60 Q50 75 70 60' stroke='%23000' stroke-width='5' fill='none' stroke-linecap='round'/></svg>" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
@@ -219,34 +215,37 @@
                 margin-top: 6px;
             }
 
-      .slider-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
+            .slider-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
 
-      .quality-grid {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 8px;
-      }
+            .quality-grid {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 8px;
+            }
 
-      .chip {
-        border: 1px solid var(--line);
-        background: #fff;
-        border-radius: 999px;
-        padding: 8px 0;
-        font-weight: 600;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-      }
+            .chip {
+                border: 1px solid var(--line);
+                background: #fff;
+                border-radius: 999px;
+                padding: 8px 0;
+                font-weight: 600;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition:
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease,
+                    border-color 0.15s ease;
+            }
 
-      .chip.active {
-        border-color: var(--accent);
-        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
-        transform: translateY(-1px);
-      }
+            .chip.active {
+                border-color: var(--accent);
+                box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+                transform: translateY(-1px);
+            }
 
             input[type="range"] {
                 width: 100%;
@@ -305,20 +304,20 @@
                 flex-wrap: wrap;
             }
 
-      .note {
-        margin-top: 16px;
-        color: var(--muted);
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
+            .note {
+                margin-top: 16px;
+                color: var(--muted);
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
 
-      .footer-note {
-        margin: 32px auto 24px;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.85rem;
-        line-height: 1.6;
-      }
+            .footer-note {
+                margin: 32px auto 24px;
+                text-align: center;
+                color: var(--muted);
+                font-size: 0.85rem;
+                line-height: 1.6;
+            }
 
             .hidden {
                 display: none;
@@ -354,7 +353,7 @@
                     </div>
 
                     <div class="results" id="results"></div>
-          <div class="note">PNG는 무손실 포맷이라 컬러 통합 효과가 크지만, 압축률은 이미지 종류에 따라 달라집니다.</div>
+                    <div class="note">PNG는 무손실 포맷이라 컬러 통합 효과가 크지만, 압축률은 이미지 종류에 따라 달라집니다.</div>
                 </section>
 
                 <aside class="settings">
@@ -377,22 +376,22 @@
                         <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다. 256은 색 통합 없음.</small>
                     </div>
 
-          <div class="setting">
-            <label for="qualityButtons">출력 품질 (JPG/WebP)</label>
-            <div class="quality-grid" id="qualityButtons" role="radiogroup" aria-label="출력 품질 선택">
-              <button type="button" class="chip" data-quality="0.1">10%</button>
-              <button type="button" class="chip" data-quality="0.2">20%</button>
-              <button type="button" class="chip" data-quality="0.3">30%</button>
-              <button type="button" class="chip" data-quality="0.4">40%</button>
-              <button type="button" class="chip" data-quality="0.5">50%</button>
-              <button type="button" class="chip" data-quality="0.6">60%</button>
-              <button type="button" class="chip" data-quality="0.7">70%</button>
-              <button type="button" class="chip" data-quality="0.8">80%</button>
-              <button type="button" class="chip" data-quality="0.9">90%</button>
-              <button type="button" class="chip" data-quality="1">100%</button>
-            </div>
-            <small>PNG는 무시됩니다.</small>
-          </div>
+                    <div class="setting">
+                        <label for="qualityButtons">출력 품질 (JPG/WebP)</label>
+                        <div class="quality-grid" id="qualityButtons" role="radiogroup" aria-label="출력 품질 선택">
+                            <button type="button" class="chip" data-quality="0.1">10%</button>
+                            <button type="button" class="chip" data-quality="0.2">20%</button>
+                            <button type="button" class="chip" data-quality="0.3">30%</button>
+                            <button type="button" class="chip" data-quality="0.4">40%</button>
+                            <button type="button" class="chip" data-quality="0.5">50%</button>
+                            <button type="button" class="chip" data-quality="0.6">60%</button>
+                            <button type="button" class="chip" data-quality="0.7">70%</button>
+                            <button type="button" class="chip" data-quality="0.8">80%</button>
+                            <button type="button" class="chip" data-quality="0.9">90%</button>
+                            <button type="button" class="chip" data-quality="1">100%</button>
+                        </div>
+                        <small>PNG는 무시됩니다.</small>
+                    </div>
 
                     <div class="setting">
                         <label for="ditherToggle">디더링 (밴딩 완화)</label>
@@ -417,10 +416,11 @@
         </main>
 
         <footer class="footer-note">
-          <div>© Musinsa Trading. All rights reserved.</div>
-          <div>Created by hyunkyun.choi@musinsatrading.com</div>
+            <div>© Musinsa Trading. All rights reserved.</div>
+            <div>Created by hyunkyun.choi@musinsatrading.com</div>
         </footer>
 
+        <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
         <script>
             const dropzone = document.getElementById("dropzone");
             const fileInput = document.getElementById("fileInput");
@@ -432,7 +432,7 @@
             const statusEl = document.getElementById("status");
             const paletteSlider = document.getElementById("paletteSize");
             const paletteValue = document.getElementById("paletteValue");
-      const qualityButtons = document.getElementById("qualityButtons");
+            const qualityButtons = document.getElementById("qualityButtons");
             const formatButtons = document.getElementById("formatButtons");
             const startOptimize = document.getElementById("startOptimize");
             const downloadAll = document.getElementById("downloadAll");
@@ -825,8 +825,9 @@
             }
 
             async function saveAllToFolder(results) {
-                if (!window.showDirectoryPicker) {
-                    setStatus("브라우저가 폴더 저장을 지원하지 않습니다. 개별 다운로드로 전환합니다.");
+                if (!results.length) return;
+                if (typeof JSZip === "undefined") {
+                    setStatus("ZIP 라이브러리를 불러오지 못했습니다. 개별 다운로드로 전환합니다.");
                     results.forEach((result) => {
                         triggerDownload(result.blobUrl, result.outputName);
                     });
@@ -834,27 +835,22 @@
                 }
 
                 try {
-                    const rootHandle = await window.showDirectoryPicker();
-                    for (const result of results) {
-                        const parts = result.outputName.split("/");
-                        const filename = parts.pop();
-                        let currentHandle = rootHandle;
-                        for (const part of parts) {
-                            currentHandle = await currentHandle.getDirectoryHandle(part, { create: true });
-                        }
-                        if (!filename) continue;
-                        const fileHandle = await currentHandle.getFileHandle(filename, { create: true });
-                        const writable = await fileHandle.createWritable();
-                        await writable.write(result.blob);
-                        await writable.close();
-                    }
-                    setStatus("폴더 저장 완료!", "success");
+                    setStatus("ZIP 생성 중...");
+                    const zip = new JSZip();
+                    results.forEach((result) => {
+                        zip.file(result.outputName, result.blob);
+                    });
+                    const blob = await zip.generateAsync({
+                        type: "blob",
+                        compression: "DEFLATE",
+                        compressionOptions: { level: 6 },
+                    });
+                    const zipUrl = URL.createObjectURL(blob);
+                    triggerDownload(zipUrl, "optimized-images.zip");
+                    setTimeout(() => URL.revokeObjectURL(zipUrl), 10000);
+                    setStatus("ZIP 다운로드 준비 완료!", "success");
                 } catch (error) {
-                    if (error?.name === "AbortError") {
-                        setStatus("폴더 저장이 취소되었습니다.");
-                        return;
-                    }
-                    setStatus("폴더 저장 실패. 개별 다운로드로 전환합니다.");
+                    setStatus("ZIP 생성 실패. 개별 다운로드로 전환합니다.");
                     results.forEach((result) => {
                         triggerDownload(result.blobUrl, result.outputName);
                     });
