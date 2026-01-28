@@ -229,6 +229,11 @@
         flex: 0 0 4ch;
       }
 
+      .slider-row .chip {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+
 
       .quality-grid {
         display: grid;
@@ -413,6 +418,7 @@
                         <div class="slider-row">
                             <input id="paletteSize" type="range" min="8" max="256" value="256" />
                             <span id="paletteValue">256</span>
+                            <button type="button" class="chip" id="keepOriginalColors" aria-pressed="false">원본유지</button>
                         </div>
                         <small>낮을수록 용량이 줄지만 밴딩이 생길 수 있습니다. 256은 색 통합 없음.</small>
                     </div>
@@ -474,6 +480,7 @@
             const statusEl = document.getElementById("status");
             const paletteSlider = document.getElementById("paletteSize");
             const paletteValue = document.getElementById("paletteValue");
+            const keepOriginalColors = document.getElementById("keepOriginalColors");
             const qualityButtons = document.getElementById("qualityButtons");
             const formatButtons = document.getElementById("formatButtons");
             const resizeButtons = document.getElementById("resizeButtons");
@@ -493,6 +500,11 @@
             const isUpngReady = () => typeof window.UPNG !== "undefined" && typeof UPNG.encode === "function";
             const updatePaletteLabel = () => {
                 paletteValue.textContent = paletteSlider.value;
+            };
+
+            const updateKeepOriginalColors = (value) => {
+                keepOriginalColors.classList.toggle("active", value);
+                keepOriginalColors.setAttribute("aria-pressed", value ? "true" : "false");
             };
 
             const updateQualityButtons = (value) => {
@@ -570,6 +582,8 @@
                 return active?.dataset?.format || "image/jpeg";
             };
 
+            const getKeepOriginalColors = () => keepOriginalColors.classList.contains("active");
+
             const getSelectedResizeSize = () => {
                 const active = resizeButtons.querySelector(".chip.active");
                 const raw = active?.dataset?.size;
@@ -591,6 +605,7 @@
                         quality: getSelectedQuality(),
                         resizeSize: getSelectedResizeSize(),
                         resizeBasis: getSelectedResizeBasis(),
+                        keepOriginalColors: getKeepOriginalColors(),
                     };
                     localStorage.setItem(storageKey, JSON.stringify(prefs));
                 } catch {
@@ -620,6 +635,8 @@
 
                     const basisValue = prefs?.resizeBasis === "height" ? "height" : "width";
                     updateResizeBasisButtons(basisValue);
+
+                    updateKeepOriginalColors(Boolean(prefs?.keepOriginalColors));
                     return true;
                 } catch {
                     localStorage.removeItem(storageKey);
@@ -638,6 +655,9 @@
             if (!hasPrefs) {
                 updateResizeButtons(null);
                 updateResizeBasisButtons("width");
+            }
+            if (!hasPrefs) {
+                updateKeepOriginalColors(false);
             }
 
             function setStatus(text, tone = "default") {
@@ -685,6 +705,12 @@
 
             paletteSlider.addEventListener("input", () => {
                 updatePaletteLabel();
+                savePrefs();
+            });
+
+            keepOriginalColors.addEventListener("click", () => {
+                const next = !getKeepOriginalColors();
+                updateKeepOriginalColors(next);
                 savePrefs();
             });
 
@@ -869,6 +895,7 @@
                 const targetType = getSelectedFormat();
                 const resizeSize = getSelectedResizeSize();
                 const resizeBasis = getSelectedResizeBasis();
+                const keepColors = getKeepOriginalColors();
                 const dither = ditherToggle.checked;
                 if (targetType === "image/png" && !isUpngReady()) {
                     setStatus("PNG 최적화용 UPNG.js를 불러오지 못했습니다. 네트워크/차단 설정을 확인하세요.");
@@ -887,6 +914,7 @@
                             targetType,
                             resizeSize,
                             resizeBasis,
+                            keepColors,
                             dither,
                         });
                         state.results.push(result);
@@ -992,7 +1020,7 @@
             }
 
             async function optimizeFile(item, options) {
-                const { paletteSize, quality, targetType, resizeSize, resizeBasis, dither } = options;
+                const { paletteSize, quality, targetType, resizeSize, resizeBasis, keepColors, dither } = options;
                 const file = item.file;
                 const bitmap = await loadBitmap(file);
                 const canvas = document.createElement("canvas");
@@ -1010,7 +1038,7 @@
                 ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
 
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                if (paletteSize < 256) {
+                if (!keepColors && paletteSize < 256) {
                     const palette = buildPalette(imageData.data, paletteSize);
                     applyPalette(imageData.data, palette, canvas.width, canvas.height, dither);
                     ctx.putImageData(imageData, 0, 0);
@@ -1020,7 +1048,7 @@
                 if (targetType === "image/png" && window.UPNG && typeof UPNG.encode === "function") {
                     try {
                         const rgba = new Uint8Array(imageData.data);
-                        const colorCount = paletteSize < 256 ? paletteSize : 0;
+                        const colorCount = !keepColors && paletteSize < 256 ? paletteSize : 0;
                         const pngBuffer = UPNG.encode([rgba.buffer], canvas.width, canvas.height, colorCount);
                         blobData = { blob: new Blob([pngBuffer], { type: "image/png" }), typeUsed: "image/png" };
                     } catch {
