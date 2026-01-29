@@ -1,0 +1,135 @@
+<style>
+    .content {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .framed {
+        padding: 0 300px 150px;
+        background: #fff;
+    }
+    .logo-block {
+        padding: 150px 20px;
+        text-align: center;
+    }
+    .logo-block img {
+        width: 70%;
+        max-width: 480px;
+        height: auto;
+    }
+    .image-row {
+        display: flex;
+        gap: 0;
+    }
+    .image-row .image {
+        flex: 1 1 50%;
+    }
+    .image-square {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+    }
+    .image-square img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    @media (max-width: 768px) {
+        .logo-block {
+            padding: 100px 20px;
+        }
+        .text-block {
+            padding: 100px 20px;
+        }
+        .framed {
+            padding: 0 50px 100px;
+        }
+        .image-1x1 {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+        }
+        .image-1x1 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: right center;
+            display: block;
+        }
+        .image-portrait {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+        }
+        .image-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+    .text-block {
+        padding: 150px 20px;
+        text-align: center;
+        word-break: keep-all;
+    }
+    .text-block h2 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    .text-block p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+</style>
+
+<main class="content">
+    <section class="image">
+        <div class="image-1x1">
+            <img src="https://championkorea.com/data/images/promotion/x_wtaps/1.jpg" alt="" />
+        </div>
+    </section>
+    <section class="logo-block">
+        <img src="https://championkorea.com/data/images/promotion/x_wtaps/logo.jpg" alt="Champion WTAPS" />
+    </section>
+    <section class="image-row">
+        <div class="image">
+            <div class="image-square">
+                <img src="https://championkorea.com/data/images/promotion/x_wtaps/2.jpg" alt="" />
+            </div>
+        </div>
+        <div class="image">
+            <div class="image-square">
+                <img src="https://championkorea.com/data/images/promotion/x_wtaps/3.jpg" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <section class="text-block">
+        <h2>도시적인 시선으로 본질에 집중하다.</h2>
+        <p>
+            Champion만의 헤리티지와 니시야마 테츠(TET)가 이끄는
+            <br />
+            도쿄 기반 브랜드 WTAPS®의 독보적인 감각이 만나
+            <br />
+            정제된 어반 무드를 기반으로 어반 스타일의 표준을 새롭게 정의합니다.
+        </p>
+    </section>
+
+    <section class="image framed">
+        <img src="https://championkorea.com/data/images/promotion/x_wtaps/4.jpg" alt="" />
+    </section>
+    <section class="image">
+        <div class="image-portrait">
+            <img src="https://championkorea.com/data/images/promotion/x_wtaps/5.jpg" alt="" />
+        </div>
+    </section>
+</main>
