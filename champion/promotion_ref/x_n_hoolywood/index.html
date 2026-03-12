@@ -1,0 +1,295 @@
+<style>
+    /* 1. Reset & Base */
+    #lookbook-section {
+        font-family: "Noto Sans KR", sans-serif;
+        max-width: 640px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        line-height: 1.5;
+        position: relative;
+        text-align: left;
+    }
+    #lookbook-section *,
+    #lookbook-section *::before,
+    #lookbook-section *::after {
+        box-sizing: border-box;
+    }
+
+    /* 2. Utility Classes */
+    #lookbook-section .relative {
+        position: relative;
+    }
+    #lookbook-section .w-full {
+        width: 100% !important;
+    }
+    #lookbook-section .h-full {
+        height: 100% !important;
+    }
+    #lookbook-section .object-cover {
+        object-fit: cover;
+        display: block;
+    }
+
+    /* 3. Slider Container & Arrows (추가 및 수정) */
+    #lookbook-section .slider-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+    }
+
+    /* 화살표 스타일 */
+    #lookbook-section .nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 0%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 20;
+        border: none;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    #lookbook-section .nav-arrow:hover {
+        background: #fff;
+    }
+    #lookbook-section .nav-arrow.prev {
+        left: 0px;
+    }
+    #lookbook-section .nav-arrow.next {
+        right: 0px;
+    }
+    #lookbook-section .nav-arrow.disabled {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    #lookbook-section .nav-arrow svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: #000;
+        stroke-width: 2;
+    }
+
+    /* 4. Slider Track */
+    #lookbook-section .slider-track {
+        display: flex;
+        height: 100%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth; /* 부드러운 이동 */
+    }
+    #lookbook-section .slider-track::-webkit-scrollbar {
+        display: none;
+    }
+    #lookbook-section .look-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+        scroll-snap-align: start;
+        position: relative;
+    }
+
+    /* 5. 썸네일 네비게이션 */
+    #lookbook-section .thumbnail-nav {
+        display: flex !important;
+        gap: 4px !important;
+        padding: 15px !important;
+        background: #fff !important;
+        overflow-x: auto !important;
+        justify-content: center;
+    }
+    #lookbook-section .thumbnail-nav img.thumb {
+        width: 50px !important;
+        height: 65px !important;
+        object-fit: cover !important;
+        cursor: pointer;
+        transition: 0.3s;
+        opacity: 0.4;
+        border: 1px solid transparent;
+    }
+    #lookbook-section .thumbnail-nav img.thumb.active {
+        opacity: 1 !important;
+        border-color: #000 !important;
+    }
+
+    /* 3. Layout Components */
+    #lookbook-section .aspect-3-4 {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        position: relative;
+        overflow: hidden;
+    }
+    #lookbook-section .lookbook-intro {
+        padding: 60px 20px;
+        text-align: center;
+    }
+    #lookbook-section .intro-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #000;
+    }
+    #lookbook-section .intro-desc {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.8;
+        word-break: keep-all;
+        margin: 0;
+    }
+
+    /* 4. Slider & Navigation */
+    #lookbook-section .slider-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+    }
+    #lookbook-section .slider-track {
+        display: flex;
+        height: 100%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    #lookbook-section .slider-track::-webkit-scrollbar {
+        display: none;
+    }
+    #lookbook-section .look-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+        scroll-snap-align: start;
+        position: relative;
+    }
+
+    /* 6. Editorial Section */
+    #lookbook-section .editorial {
+        padding: 60px 0;
+        background: #fff;
+    }
+    #lookbook-section .editorial-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+    }
+    #lookbook-section .px-10 {
+        padding: 0 50px;
+    }
+    #lookbook-section .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+    #lookbook-section .grid-2 img {
+        width: 100% !important;
+        display: block;
+    }
+</style>
+
+<section id="lookbook-section">
+    <div class="relative aspect-3-4" style="aspect-ratio: 3/4; overflow: hidden">
+        <video class="w-full h-full object-cover" src="https://cdn.shopify.com/videos/c/o/v/e6590675a5444299ad7d10ac505e3860.mp4" autoplay="" muted="" loop="" playsinline=""></video>
+    </div>
+
+    <div class="lookbook-intro">
+        <h2 class="intro-title">'NEW WEAVE' 9th Collection</h2>
+        <p class="intro-desc" style="margin-bottom: 20px">입체적인 구조와 반전의 미학,</p>
+        <p class="intro-desc">이번 시즌은 챔피온의 상징인 ‘리버스 위브’를 입체적인 구조로 재해석한 9번째 콜라보레이션으로, 기존 문법에 ‘리버시블(양면)’ 디자인을 더해 한 단계 더 진화했습니다. 건축적인 실루엣과 양면 활용의 실용성을 동시에 담아, 두 브랜드의 철학이 담긴 스페셜 라벨로 완성된 7가지 스타일을 경험해 보세요.</p>
+    </div>
+
+    <div class="slider-container">
+        <button class="nav-arrow prev disabled" id="prevBtn">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="nav-arrow next" id="nextBtn">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <div id="lookSlider" class="slider-track"></div>
+    </div>
+
+    <div id="thumbnailNav" class="thumbnail-nav"></div>
+
+    <div class="editorial">
+        <div class="editorial-inner">
+            <div class="px-10"><img src="/data/images/promotion/x_nholloywood/nholloywood_ed_01.jpg" class="w-full" /></div>
+            <div class="grid-2">
+                <img src="/data/images/promotion/x_nholloywood/nholloywood_ed_02.jpg" />
+                <img src="/data/images/promotion/x_nholloywood/nholloywood_ed_03.jpg" />
+            </div>
+            <div><img src="/data/images/promotion/x_nholloywood/nholloywood_ed_04.jpg" class="w-full" /></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function () {
+        // 상품 데이터(goodsNo)를 제거하고 이미지 경로만 유지합니다.
+        const lookbookImages = ["/data/images/promotion/x_nholloywood/nholloywood_01.jpg", "/data/images/promotion/x_nholloywood/nholloywood_02.jpg", "/data/images/promotion/x_nholloywood/nholloywood_03.jpg", "/data/images/promotion/x_nholloywood/nholloywood_04.jpg", "/data/images/promotion/x_nholloywood/nholloywood_05.jpg"];
+
+        function initLookbook() {
+            const slider = document.querySelector("#lookSlider");
+            const thumbnailNav = document.querySelector("#thumbnailNav");
+            const prevBtn = document.querySelector("#prevBtn");
+            const nextBtn = document.querySelector("#nextBtn");
+
+            if (!slider || !thumbnailNav) return;
+
+            // 슬라이드 및 썸네일 생성
+            lookbookImages.forEach((imgSrc, index) => {
+                const slide = document.createElement("div");
+                slide.className = "look-slide";
+                slide.innerHTML = `<img src="${imgSrc}" class="w-full h-full object-cover">`;
+                slider.appendChild(slide);
+
+                const thumb = document.createElement("img");
+                thumb.src = imgSrc;
+                thumb.className = `thumb ${index === 0 ? "active" : ""}`;
+                thumb.onclick = () => {
+                    slider.scrollTo({ left: slider.clientWidth * index, behavior: "smooth" });
+                };
+                thumbnailNav.appendChild(thumb);
+            });
+
+            // 화살표 클릭 이벤트
+            prevBtn.onclick = () => {
+                slider.scrollBy({ left: -slider.clientWidth, behavior: "smooth" });
+            };
+            nextBtn.onclick = () => {
+                slider.scrollBy({ left: slider.clientWidth, behavior: "smooth" });
+            };
+
+            // 스크롤 감지 (화살표 상태 및 썸네일 활성화 제어)
+            slider.addEventListener("scroll", () => {
+                const scrollLeft = slider.scrollLeft;
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+                const idx = Math.round(scrollLeft / slider.clientWidth);
+
+                // 썸네일 업데이트
+                const thumbs = document.querySelectorAll("#lookbook-section .thumb");
+                thumbs.forEach((t, i) => t.classList.toggle("active", i === idx));
+
+                // 화살표 숨김/노출 처리
+                prevBtn.classList.toggle("disabled", scrollLeft <= 10);
+                nextBtn.classList.toggle("disabled", scrollLeft >= maxScroll - 10);
+            });
+        }
+
+        // 초기화 실행
+        if (document.readyState === "complete") {
+            initLookbook();
+        } else {
+            window.addEventListener("load", initLookbook);
+        }
+    })();
+</script>
