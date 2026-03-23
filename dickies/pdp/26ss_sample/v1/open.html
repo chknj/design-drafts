@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dickies PDP Preview</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #fff;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .framed-video {
+      background: #191919;
+      padding: 0 16px;
+    }
+
+    .inline-video {
+      margin-top: 16px;
+    }
+
+    @media (max-width: 767px) {
+      .framed-video {
+        padding: 0 24px;
+      }
+
+      .inline-video {
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img src="1.jpg" alt="">
+    <img src="2.jpg" alt="">
+    <img src="3.jpg" alt="">
+    <div class="framed-video">
+      <video autoplay loop muted playsinline>
+        <source src="https://cdn.shopify.com/videos/c/o/v/371d47f5b90f45de840bf3c241fd7085.mp4" type="video/mp4">
+      </video>
+    </div>
+    <img src="5.jpg" alt="">
+    <img src="6.jpg" alt="">
+    <img src="7.jpg" alt="">
+    <video class="inline-video" autoplay loop muted playsinline>
+      <source src="2.mp4" type="video/mp4">
+    </video>
+    <img src="8.jpg" alt="">
+    <img src="9.jpg" alt="">
+    <img src="10.jpg" alt="">
+    <img src="11.jpg" alt="">
+  </div>
+</body>
+</html>
