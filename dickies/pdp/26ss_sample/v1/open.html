@@ -34,20 +34,75 @@
 
     .framed-video {
       background: #191919;
-      padding: 0 16px;
+      padding: 0 100px;
+    }
+
+    .media-stage {
+      position: relative;
+      --toggle-offset: 100px;
+      --toggle-height: 46px;
+    }
+
+    .media-stage.is-collapsed {
+      max-height: calc(var(--toggle-offset) + var(--toggle-height));
+      overflow: hidden;
     }
 
     .inline-video {
       margin-top: 16px;
     }
 
+    .detail-toggle-wrap {
+      position: absolute;
+      top: var(--toggle-offset);
+      right: 0;
+      left: 0;
+      padding: 0 20px;
+      z-index: 2;
+    }
+
+    .detail-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 46px;
+      border: 1px solid #b9b9b9;
+      border-radius: 4px;
+      background: #fff;
+      color: #111;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+    }
+
+    .detail-toggle::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid #111;
+      border-bottom: 1.5px solid #111;
+      transform: rotate(45deg) translateY(-1px);
+    }
+
+    .detail-content[hidden],
+    .detail-toggle-wrap[hidden] {
+      display: none;
+    }
+
     @media (max-width: 767px) {
       .framed-video {
-        padding: 0 24px;
+        padding: 0 40px;
       }
 
       .inline-video {
         margin-top: 8px;
+      }
+
+      .detail-toggle-wrap {
+        padding: 0 16px;
       }
     }
   </style>
@@ -57,21 +112,43 @@
     <img src="1.jpg" alt="">
     <img src="2.jpg" alt="">
     <img src="3.jpg" alt="">
-    <div class="framed-video">
-      <video autoplay loop muted playsinline>
-        <source src="https://cdn.shopify.com/videos/c/o/v/371d47f5b90f45de840bf3c241fd7085.mp4" type="video/mp4">
-      </video>
+    <div class="media-stage is-collapsed">
+      <div class="framed-video">
+        <video autoplay loop muted playsinline>
+          <source src="https://cdn.shopify.com/videos/c/o/v/371d47f5b90f45de840bf3c241fd7085.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="detail-toggle-wrap">
+        <button class="detail-toggle" type="button" aria-controls="detail-content" aria-expanded="false">
+          <span>더보기</span>
+        </button>
+      </div>
     </div>
-    <img src="5.jpg" alt="">
-    <img src="6.jpg" alt="">
-    <img src="7.jpg" alt="">
-    <video class="inline-video" autoplay loop muted playsinline>
-      <source src="2.mp4" type="video/mp4">
-    </video>
-    <img src="8.jpg" alt="">
-    <img src="9.jpg" alt="">
-    <img src="10.jpg" alt="">
-    <img src="11.jpg" alt="">
+    <div id="detail-content" class="detail-content" hidden>
+      <img src="5.jpg" alt="">
+      <img src="6.jpg" alt="">
+      <img src="7.jpg" alt="">
+      <video class="inline-video" autoplay loop muted playsinline>
+        <source src="2.mp4" type="video/mp4">
+      </video>
+      <img src="8.jpg" alt="">
+      <img src="9.jpg" alt="">
+      <img src="10.jpg" alt="">
+      <img src="11.jpg" alt="">
+    </div>
   </div>
+  <script>
+    const detailToggle = document.querySelector(".detail-toggle");
+    const detailToggleWrap = document.querySelector(".detail-toggle-wrap");
+    const mediaStage = document.querySelector(".media-stage");
+    const detailContent = document.querySelector("#detail-content");
+
+    detailToggle.addEventListener("click", () => {
+      detailToggle.setAttribute("aria-expanded", "true");
+      mediaStage.classList.remove("is-collapsed");
+      detailContent.hidden = false;
+      detailToggleWrap.hidden = true;
+    });
+  </script>
 </body>
 </html>
