@@ -34,7 +34,7 @@
 
     .framed-video {
       background: #191919;
-      padding: 0 100px 150px;
+      padding: 0 100px;
     }
 
     .media-stage {
@@ -50,6 +50,20 @@
 
     .inline-video {
       margin-top: 16px;
+    }
+
+    .inline-video-frame {
+      aspect-ratio: 3 / 4;
+      margin-top: 16px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .inline-video-frame .inline-video {
+      width: 100%;
+      height: 100%;
+      margin-top: 0;
+      object-fit: cover;
     }
 
     .detail-toggle-wrap {
@@ -94,10 +108,14 @@
 
     @media (max-width: 767px) {
       .framed-video {
-        padding: 0 40px 80px;
+        padding: 0 40px;
       }
 
       .inline-video {
+        margin-top: 8px;
+      }
+
+      .inline-video-frame {
         margin-top: 8px;
       }
 
@@ -115,7 +133,7 @@
     <div class="media-stage is-collapsed">
       <div class="framed-video">
         <video autoplay loop muted playsinline>
-          <source src="https://cdn.shopify.com/videos/c/o/v/371d47f5b90f45de840bf3c241fd7085.mp4" type="video/mp4">
+          <source src="2.mp4" type="video/mp4">
         </video>
       </div>
       <div class="detail-toggle-wrap">
@@ -128,13 +146,16 @@
       <img src="5.jpg" alt="">
       <img src="6.jpg" alt="">
       <img src="7.jpg" alt="">
-      <video class="inline-video" autoplay loop muted playsinline>
-        <source src="2.mp4" type="video/mp4">
-      </video>
       <img src="8.jpg" alt="">
       <img src="9.jpg" alt="">
-      <img src="10.jpg" alt="">
+      <div class="inline-video-frame">
+        <video class="inline-video" autoplay loop muted playsinline>
+          <source src="https://cdn.shopify.com/videos/c/o/v/371d47f5b90f45de840bf3c241fd7085.mp4" type="video/mp4">
+        </video>
+      </div>
       <img src="11.jpg" alt="">
+      <img src="12.jpg" alt="">
+      <img src="13.jpg" alt="">
     </div>
   </div>
   <script>
