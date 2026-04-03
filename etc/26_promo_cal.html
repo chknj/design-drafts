@@ -27,7 +27,8 @@ const CB={"챔피온":{1:["WTAPS"],2:["로우로우","UNDERCOVER"],3:["WKNDRS","
 
 const BC={'잔스포츠':['#185FA5','#E6F1FB'],'디키즈':['#854F0B','#FAEEDA'],'챔피온':['#534AB7','#EEEDFE'],'드래곤디퓨전':['#0F6E56','#E1F5EE'],'베이프':['#993C1D','#FAECE7'],'킨':['#993556','#FBEAF0'],'토앤토':['#3B6D11','#EAF3DE'],'그라미치':['#5F5E5A','#F1EFE8'],'하바이아나스':['#854F0B','#FFF8E1']};
 const BO=['잔스포츠','디키즈','챔피온','드래곤디퓨전','베이프','킨','토앤토','그라미치','하바이아나스'];
-let cur=3;
+const initialMonth=new Date().getMonth()+1;
+let cur=D.some(d=>d.m===initialMonth)?initialMonth:3;
 function esc(s){return s.replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function renderTabs(){document.getElementById('tabs').innerHTML=D.map(d=>{const a=d.m===cur;return`<button class="tab${a?' on':''}" onclick="sel(${d.m})">${d.m}월</button>`}).join('')}
 function render(){const d=D.find(x=>x.m===cur);
