@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>BUILT TO RESIST — EASTPAK</title>
+  <meta name="description" content="BUILT TO RESIST. Eastpak immersive visual campaign.">
+  <style>
+    :root {
+      --black: #000;
+      --white: #fff;
+      --red: #c7112f;
+      --page-progress: 0;
+      --intro-progress: 0;
+      --zoom-progress: 0;
+      --unfold-progress: 0;
+      --pan-progress: 0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--black);
+      color-scheme: dark;
+      scrollbar-color: #555 var(--black);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: clip;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, "Apple SD Gothic Neo", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.lightbox-open { overflow: hidden; }
+
+    img {
+      display: block;
+      max-width: 100%;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: var(--black);
+      background: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-180%);
+      transition: transform 180ms ease;
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .immersive {
+      position: relative;
+      height: 4800svh;
+      background: var(--black);
+    }
+
+    .stage {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100svh;
+      min-height: 560px;
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--black);
+    }
+
+    .brand-logo {
+      position: absolute;
+      z-index: 30;
+      top: max(24px, env(safe-area-inset-top));
+      left: 50%;
+      width: clamp(108px, 10vw, 164px);
+      transform: translateX(-50%);
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-copy {
+      position: absolute;
+      z-index: 24;
+      top: 50%;
+      left: 50%;
+      width: min(94vw, 1500px);
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      mix-blend-mode: difference;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(56px, 11.4vw, 196px);
+      font-weight: 900;
+      line-height: .76;
+      letter-spacing: -.072em;
+      text-transform: uppercase;
+    }
+
+    .hero-title span { display: block; }
+
+    .hero-kicker {
+      position: absolute;
+      z-index: 25;
+      top: calc(50% + clamp(96px, 11.8vw, 190px));
+      left: 50%;
+      display: block;
+      margin: 0;
+      transform: translateX(-50%);
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .track {
+      position: absolute;
+      z-index: 3;
+      inset: 0 auto 0 0;
+      display: flex;
+      width: max-content;
+      height: 100%;
+      will-change: transform;
+      transform: translate3d(calc(var(--pan-progress) * -1300vw), 0, 0);
+    }
+
+    .scene {
+      position: relative;
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100%;
+      overflow: visible;
+      background: transparent;
+    }
+
+    .scene::after {
+      content: "";
+      position: absolute;
+      z-index: 12;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .32), transparent 24%, transparent 76%, rgba(0, 0, 0, .36));
+    }
+
+    .visual {
+      --pointer-x: 0px;
+      --pointer-y: 0px;
+      --parallax-render-x: 0px;
+      --visual-rotation: 0deg;
+      position: absolute;
+      z-index: 2;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .42);
+      cursor: zoom-in;
+      touch-action: manipulation;
+      will-change: transform, opacity;
+    }
+
+    .visual:focus-visible {
+      outline: 2px solid var(--white);
+      outline-offset: 4px;
+    }
+
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate3d(var(--pointer-x), var(--pointer-y), 0) scale(1.01);
+      transition: transform 260ms cubic-bezier(.22, 1, .36, 1);
+      will-change: transform;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .visual:hover img { transform: translate3d(var(--pointer-x), var(--pointer-y), 0) scale(1.055); }
+    }
+
+    .visual-main {
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100%;
+      transform: translate(calc(-50% + var(--parallax-render-x)), -50%);
+    }
+
+    .scene:not(:first-child) .visual-main { width: min(56vw, 760px); }
+
+    .visual-a, .visual-b, .visual-c, .visual-d, .visual-e, .visual-f {
+      z-index: 4;
+      width: clamp(112px, 15vw, 260px);
+      aspect-ratio: 2 / 3;
+    }
+
+    .visual-a { top: 5%; left: 4%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+    .visual-b { top: 7%; right: 4%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+    .visual-c { bottom: 4%; left: 13%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+    .visual-d { right: 12%; bottom: 3%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+    .visual-e { top: 35%; left: 1%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+    .visual-f { top: 31%; right: 1%; transform: translateX(var(--parallax-render-x)) rotate(var(--visual-rotation)); }
+
+    .scene:first-child { perspective: 1100px; }
+
+    .scene:first-child .visual-main {
+      width: min(71vw, 960px);
+      height: min(82svh, 1120px);
+      opacity: calc(.82 + var(--zoom-progress) * .18);
+      transform:
+        translate(-50%, -50%)
+        scale(calc(.42 + var(--zoom-progress) * .58));
+    }
+
+    .scene:first-child .visual-a {
+      opacity: calc(.16 + var(--intro-progress) * .84 - var(--unfold-progress) * .82);
+      transform: translate3d(calc(var(--intro-progress) * 6vw), calc(var(--intro-progress) * 2vh), calc(-250px + var(--intro-progress) * 250px)) rotate(calc(-18deg + var(--intro-progress) * 13deg));
+    }
+
+    .scene:first-child .visual-b {
+      opacity: calc(.12 + var(--intro-progress) * .88 - var(--unfold-progress) * .82);
+      transform: translate3d(calc(var(--intro-progress) * -5vw), calc(var(--intro-progress) * 4vh), calc(-320px + var(--intro-progress) * 320px)) rotate(calc(16deg - var(--intro-progress) * 12deg));
+    }
+
+    .scene:first-child .visual-c {
+      opacity: calc(.12 + var(--intro-progress) * .88 - var(--unfold-progress) * .82);
+      transform: translate3d(calc(var(--intro-progress) * 8vw), calc(var(--intro-progress) * -4vh), calc(-180px + var(--intro-progress) * 180px)) rotate(calc(14deg - var(--intro-progress) * 11deg));
+    }
+
+    .scene:first-child .visual-d {
+      opacity: calc(.12 + var(--intro-progress) * .88 - var(--unfold-progress) * .82);
+      transform: translate3d(calc(var(--intro-progress) * -8vw), calc(var(--intro-progress) * -3vh), calc(-220px + var(--intro-progress) * 220px)) rotate(calc(-15deg + var(--intro-progress) * 11deg));
+    }
+
+    .scene:first-child .visual-e {
+      opacity: calc(.08 + var(--intro-progress) * .92 - var(--unfold-progress) * .84);
+      transform: translate3d(calc(var(--intro-progress) * 3vw), 0, calc(-360px + var(--intro-progress) * 360px)) rotate(calc(22deg - var(--intro-progress) * 15deg));
+    }
+
+    .scene:first-child .visual-f {
+      opacity: calc(.08 + var(--intro-progress) * .92 - var(--unfold-progress) * .84);
+      transform: translate3d(calc(var(--intro-progress) * -3vw), 0, calc(-360px + var(--intro-progress) * 360px)) rotate(calc(-22deg + var(--intro-progress) * 16deg));
+    }
+
+    .scene:not(:first-child) .visual:not(.visual-main) { opacity: .62; }
+
+    .scene-number {
+      position: absolute;
+      z-index: 20;
+      right: 24px;
+      bottom: 24px;
+      color: rgba(255, 255, 255, .72);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      z-index: 30;
+      left: 50%;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, .58);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .progress-rail {
+      position: relative;
+      width: 1px;
+      height: 46px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .progress-rail::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: scaleY(var(--page-progress));
+      transform-origin: top;
+      background: rgba(255, 255, 255, .8);
+    }
+
+    .lightbox[hidden] { display: none; }
+
+    .lightbox {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--black);
+      overscroll-behavior: contain;
+    }
+
+    .lightbox__image {
+      width: auto;
+      max-width: none;
+      height: 100svh;
+      max-height: 100svh;
+      object-fit: contain;
+    }
+
+    .lightbox__close {
+      position: fixed;
+      z-index: 2;
+      top: max(18px, env(safe-area-inset-top));
+      right: max(18px, env(safe-area-inset-right));
+      display: grid;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 50%;
+      color: var(--white);
+      background: rgba(0, 0, 0, .48);
+      font: 300 32px/1 Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox__close:hover { background: rgba(255, 255, 255, .14); }
+
+    .lightbox__close:focus-visible {
+      outline: 2px solid var(--white);
+      outline-offset: 3px;
+    }
+
+    .end-card {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      padding: 80px 24px;
+      overflow: hidden;
+      background: var(--black);
+      text-align: center;
+    }
+
+    .end-card::before {
+      content: "";
+      position: absolute;
+      top: -22vw;
+      left: -18vw;
+      width: 50vw;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 50%;
+    }
+
+    .end-card::after {
+      content: "";
+      position: absolute;
+      right: -15vw;
+      bottom: -24vw;
+      width: 44vw;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 50%;
+    }
+
+    .end-inner { position: relative; z-index: 2; }
+
+    .end-logo {
+      width: clamp(140px, 18vw, 240px);
+      margin: 0 auto 46px;
+      filter: brightness(0) invert(1);
+    }
+
+    .end-title {
+      margin: 0;
+      font-size: clamp(52px, 10vw, 150px);
+      font-weight: 900;
+      line-height: .82;
+      letter-spacing: -.065em;
+    }
+
+    .end-caption {
+      margin: 30px 0 0;
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+    }
+
+    .product-list {
+      min-height: 100svh;
+      padding: clamp(72px, 8vw, 140px) clamp(18px, 3.4vw, 56px);
+      background: var(--black);
+    }
+
+    .product-grid {
+      display: grid;
+      width: min(100%, 1800px);
+      margin: 0 auto;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(48px, 6vw, 96px) clamp(14px, 2vw, 32px);
+    }
+
+    .product-card { min-width: 0; }
+
+    .product-card__media {
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .product-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-card__info { padding: 14px 2px 0; }
+
+    .product-card__name {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(13px, 1vw, 16px);
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .product-card__price {
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, .7);
+      font-size: clamp(12px, .9vw, 14px);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 767px) {
+      .immersive { height: 4200svh; }
+      .stage { min-height: 500px; }
+      .brand-logo { top: max(20px, env(safe-area-inset-top)); width: 110px; }
+      .hero-copy { width: calc(100vw - 28px); }
+      .hero-title { font-size: clamp(52px, 20vw, 92px); line-height: .79; }
+      .hero-kicker { top: calc(50% + clamp(72px, 23vw, 96px)); font-size: 8px; }
+      .scene:first-child .visual-main { width: 88vw; height: min(72svh, 760px); }
+      .scene:not(:first-child) .visual-main { width: 68vw; height: 74svh; }
+      .visual-a, .visual-b, .visual-c, .visual-d, .visual-e, .visual-f { width: 25vw; min-width: 84px; }
+      .visual-a { top: 12%; left: -6%; }
+      .visual-b { top: 10%; right: -5%; }
+      .visual-c { bottom: 9%; left: 3%; }
+      .visual-d { right: 2%; bottom: 8%; }
+      .visual-e { top: 39%; left: -10%; }
+      .visual-f { top: 36%; right: -10%; }
+      .scroll-cue { bottom: max(12px, env(safe-area-inset-bottom)); gap: 7px; font-size: 8px; }
+      .progress-rail { height: 34px; }
+      .scene-number { right: 14px; bottom: 14px; }
+      .end-card::before, .end-card::after { width: 82vw; }
+      .product-list { padding: 64px 12px 88px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 8px; }
+      .product-card__info { padding: 11px 2px 0; }
+      .product-card__name { font-size: 13px; }
+      .product-card__price { margin-top: 4px; font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .immersive { height: 100svh; }
+      .track { transform: none; }
+      .scene:not(:first-child) { display: none; }
+      .scene:first-child .visual-main { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      .scene:first-child .visual:not(.visual-main) { display: none; }
+      .visual img { transform: none; transition: none; }
+      .scroll-cue { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#end">콘텐츠 끝으로 이동</a>
+
+  <main>
+    <section class="immersive" aria-label="Eastpak Built to Resist 이미지 스토리">
+      <div class="stage">
+        <img class="brand-logo" src="https://eastpak.co.kr/est_img/logo.svg" alt="EASTPAK">
+
+        <div class="track" id="track" aria-live="off"></div>
+
+        <div class="hero-copy">
+          <h1 class="hero-title"><span>BUILT TO</span><span>RESIST</span></h1>
+        </div>
+        <div class="hero-kicker">Since 1952</div>
+
+        <div class="scroll-cue" aria-hidden="true">
+          <span>Scroll to explore</span>
+          <span class="progress-rail"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="end-card" id="end">
+      <div class="end-inner">
+        <img class="end-logo" src="https://eastpak.co.kr/est_img/logo.svg" alt="EASTPAK">
+        <h2 class="end-title">26FW<br>APPAREL</h2>
+        <p class="end-caption">Since 1952</p>
+      </div>
+    </section>
+
+    <section class="product-list" aria-label="이스트팩 어패럴 상품 목록">
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lookbook-lightbox" role="dialog" aria-modal="true" aria-label="룩북 이미지 전체화면 보기" hidden>
+    <button class="lightbox__close" type="button" aria-label="전체화면 이미지 닫기">×</button>
+    <img class="lightbox__image" src="" alt="">
+  </div>
+
+  <script>
+    (() => {
+      const IMAGE_BASE = 'https://inoo11.cafe24.com/web/eastpak/';
+      const IMAGE_ORDER = [49, ...Array.from({ length: 48 }, (_, index) => index + 1)];
+      const SCENE_IMAGE_COUNTS = [7, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+      const PARALLAX_RATIOS = [.12, -.35, .28, -.24, .38, -.42, .22];
+      const PARALLAX_VARIATIONS = [1, -.78, 1.15, -.94, .72, -1.08];
+      const SCENE_LAYOUTS = [
+        {
+          main: { top: '48%', left: '43%' },
+          small: [
+            { top: '8%', left: '7%', rotation: -7 },
+            { top: '24%', right: '3%', rotation: 5 },
+            { bottom: '5%', left: '28%', rotation: 2 }
+          ]
+        },
+        {
+          main: { top: '52%', left: '58%' },
+          small: [
+            { top: '4%', left: '28%', rotation: 4 },
+            { top: '13%', right: '12%', rotation: -6 },
+            { bottom: '8%', left: '4%', rotation: -3 }
+          ]
+        },
+        {
+          main: { top: '45%', left: '47%' },
+          small: [
+            { top: '30%', left: '2%', rotation: 8 },
+            { top: '5%', right: '30%', rotation: 3 },
+            { bottom: '4%', right: '7%', rotation: -5 }
+          ]
+        },
+        {
+          main: { top: '55%', left: '40%' },
+          small: [
+            { top: '7%', left: '17%', rotation: -4 },
+            { top: '33%', right: '2%', rotation: 7 },
+            { bottom: '3%', left: '40%', rotation: 4 }
+          ]
+        },
+        {
+          main: { top: '49%', left: '62%' },
+          small: [
+            { top: '3%', left: '4%', rotation: 6 },
+            { top: '20%', right: '25%', rotation: -3 },
+            { bottom: '10%', left: '14%', rotation: -7 }
+          ]
+        },
+        {
+          main: { top: '46%', left: '53%' },
+          small: [
+            { top: '15%', left: '33%', rotation: -6 },
+            { top: '4%', right: '5%', rotation: 4 },
+            { bottom: '4%', left: '2%', rotation: 6 }
+          ]
+        }
+      ];
+      const sceneCount = SCENE_IMAGE_COUNTS.length;
+      const immersive = document.querySelector('.immersive');
+      const track = document.querySelector('#track');
+      const productGrid = document.querySelector('#product-grid');
+      const root = document.documentElement;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+      const lightbox = document.querySelector('#lookbook-lightbox');
+      const lightboxImage = lightbox.querySelector('.lightbox__image');
+      const lightboxClose = lightbox.querySelector('.lightbox__close');
+      const visualClasses = ['visual-main', 'visual-a', 'visual-b', 'visual-c', 'visual-d', 'visual-e', 'visual-f'];
+      const sceneVisuals = [];
+
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      const range = (value, start, end) => clamp((value - start) / (end - start));
+
+      function applySceneLayout(frame, sceneIndex, imageIndex) {
+        if (sceneIndex === 0) return;
+        const layout = SCENE_LAYOUTS[(sceneIndex - 1) % SCENE_LAYOUTS.length];
+        const placement = imageIndex === 0 ? layout.main : layout.small[imageIndex - 1];
+        if (!placement) return;
+
+        ['top', 'right', 'bottom', 'left'].forEach((property) => {
+          frame.style[property] = placement[property] || 'auto';
+        });
+
+        if (imageIndex > 0) {
+          frame.style.setProperty('--visual-rotation', `${placement.rotation}deg`);
+        }
+      }
+
+      function createVisual(imageNumber, className, sceneIndex, imageIndex) {
+        const frame = document.createElement('div');
+        const image = document.createElement('img');
+
+        frame.className = `visual ${className}`;
+        frame.dataset.imageNumber = imageNumber;
+        applySceneLayout(frame, sceneIndex, imageIndex);
+        frame.tabIndex = 0;
+        frame.setAttribute('role', 'button');
+        frame.setAttribute('aria-label', `Eastpak 룩북 이미지 ${imageNumber} 전체화면으로 보기`);
+        image.src = `${IMAGE_BASE}${imageNumber}.jpg`;
+        image.alt = imageIndex === 0
+          ? `Eastpak campaign visual ${sceneIndex + 1}`
+          : '';
+        image.loading = sceneIndex === 0 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        image.draggable = false;
+
+        if (imageNumber === 49) image.fetchPriority = 'high';
+
+        frame.appendChild(image);
+        return frame;
+      }
+
+      function buildScenes() {
+        const fragment = document.createDocumentFragment();
+        let imageCursor = 0;
+
+        for (let sceneIndex = 0; sceneIndex < sceneCount; sceneIndex += 1) {
+          const scene = document.createElement('article');
+          const visuals = [];
+          const imageCount = SCENE_IMAGE_COUNTS[sceneIndex];
+          const sceneImages = IMAGE_ORDER.slice(
+            imageCursor,
+            imageCursor + imageCount
+          );
+          imageCursor += imageCount;
+
+          scene.className = 'scene';
+          scene.setAttribute('aria-label', `Campaign scene ${sceneIndex + 1} of ${sceneCount}`);
+
+          sceneImages.forEach((imageNumber, imageIndex) => {
+            const visual = createVisual(
+              imageNumber,
+              visualClasses[imageIndex],
+              sceneIndex,
+              imageIndex
+            );
+            visuals.push(visual);
+            scene.appendChild(visual);
+          });
+
+          const number = document.createElement('span');
+          number.className = 'scene-number';
+          number.setAttribute('aria-hidden', 'true');
+          number.textContent = `${String(sceneIndex + 1).padStart(2, '0')} / ${String(sceneCount).padStart(2, '0')}`;
+          scene.appendChild(number);
+          sceneVisuals.push(visuals);
+          fragment.appendChild(scene);
+        }
+
+        track.appendChild(fragment);
+      }
+
+      function buildProductGrid() {
+        const fragment = document.createDocumentFragment();
+
+        IMAGE_ORDER.slice(0, 20).forEach((imageNumber, index) => {
+          const card = document.createElement('article');
+          const media = document.createElement('div');
+          const image = document.createElement('img');
+          const info = document.createElement('div');
+          const name = document.createElement('p');
+          const price = document.createElement('p');
+
+          card.className = 'product-card';
+          media.className = 'product-card__media';
+          image.className = 'product-card__image';
+          image.src = `${IMAGE_BASE}${imageNumber}.jpg`;
+          image.alt = `이스트팩 어패럴 상품 이미지 ${index + 1}`;
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          image.draggable = false;
+          info.className = 'product-card__info';
+          name.className = 'product-card__name';
+          name.textContent = '이스트팩 어패럴';
+          price.className = 'product-card__price';
+          price.textContent = '₩999,999';
+
+          media.appendChild(image);
+          info.append(name, price);
+          card.append(media, info);
+          fragment.appendChild(card);
+        });
+
+        productGrid.appendChild(fragment);
+      }
+
+      let lastFocusedVisual = null;
+
+      function openLightbox(frame) {
+        const image = frame.querySelector('img');
+        lastFocusedVisual = frame;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = `Eastpak 룩북 이미지 ${frame.dataset.imageNumber}`;
+        lightbox.hidden = false;
+        document.body.classList.add('lightbox-open');
+        lightboxClose.focus({ preventScroll: true });
+      }
+
+      function closeLightbox() {
+        if (lightbox.hidden) return;
+        lightbox.hidden = true;
+        document.body.classList.remove('lightbox-open');
+        lightboxImage.removeAttribute('src');
+        lightboxImage.alt = '';
+        lastFocusedVisual?.focus({ preventScroll: true });
+        lastFocusedVisual = null;
+      }
+
+      function resetPointerPosition(frame) {
+        frame.style.setProperty('--pointer-x', '0px');
+        frame.style.setProperty('--pointer-y', '0px');
+      }
+
+      track.addEventListener('pointermove', (event) => {
+        if (!finePointer.matches || reduceMotion.matches) return;
+        const frame = event.target.closest('.visual');
+        if (!frame) return;
+
+        const bounds = frame.getBoundingClientRect();
+        const x = ((event.clientX - bounds.left) / bounds.width - .5) * 14;
+        const y = ((event.clientY - bounds.top) / bounds.height - .5) * 14;
+        frame.style.setProperty('--pointer-x', `${x.toFixed(2)}px`);
+        frame.style.setProperty('--pointer-y', `${y.toFixed(2)}px`);
+      });
+
+      track.addEventListener('pointerout', (event) => {
+        const frame = event.target.closest('.visual');
+        if (!frame || frame.contains(event.relatedTarget)) return;
+        resetPointerPosition(frame);
+      });
+
+      track.addEventListener('click', (event) => {
+        const frame = event.target.closest('.visual');
+        if (frame) openLightbox(frame);
+      });
+
+      track.addEventListener('keydown', (event) => {
+        const frame = event.target.closest('.visual');
+        if (!frame || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        openLightbox(frame);
+      });
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeLightbox();
+      });
+
+      let ticking = false;
+
+      function render() {
+        ticking = false;
+        if (reduceMotion.matches) return;
+
+        const rect = immersive.getBoundingClientRect();
+        const scrollable = Math.max(1, immersive.offsetHeight - window.innerHeight);
+        const progress = clamp(-rect.top / scrollable);
+
+        const introProgress = range(progress, 0, .12);
+        const zoomProgress = range(progress, .12, .29);
+        const unfoldProgress = range(progress, .29, .4);
+        const panProgress = range(progress, .4, 1);
+        const panPosition = panProgress * (sceneCount - 1);
+        const viewportWidth = window.innerWidth;
+
+        sceneVisuals.forEach((visuals, sceneIndex) => {
+          const sceneProgress = clamp(panPosition - sceneIndex, -1, 1);
+          const movementVariation = sceneIndex === 0
+            ? 1
+            : PARALLAX_VARIATIONS[(sceneIndex - 1) % PARALLAX_VARIATIONS.length];
+
+          visuals.forEach((visual, visualIndex) => {
+            const mobileIntroOffset = viewportWidth <= 767 && sceneIndex === 1 && visualIndex === 0
+              ? clamp(1 - panPosition) * .2 * viewportWidth
+              : 0;
+            const offset = (sceneIndex === 0
+              ? 0
+              : sceneProgress * PARALLAX_RATIOS[visualIndex] * movementVariation * viewportWidth)
+              + mobileIntroOffset;
+            visual.style.setProperty('--parallax-render-x', `${offset.toFixed(2)}px`);
+          });
+        });
+
+        root.style.setProperty('--page-progress', progress.toFixed(4));
+        root.style.setProperty('--intro-progress', introProgress.toFixed(4));
+        root.style.setProperty('--zoom-progress', zoomProgress.toFixed(4));
+        root.style.setProperty('--unfold-progress', unfoldProgress.toFixed(4));
+        root.style.setProperty('--pan-progress', panProgress.toFixed(4));
+      }
+
+      function requestRender() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(render);
+      }
+
+      buildScenes();
+      buildProductGrid();
+      render();
+      window.addEventListener('scroll', requestRender, { passive: true });
+      window.addEventListener('resize', requestRender, { passive: true });
+      reduceMotion.addEventListener?.('change', requestRender);
+    })();
+  </script>
+</body>
+</html>
