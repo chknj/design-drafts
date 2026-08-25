@@ -1,0 +1,297 @@
+<!-- ===== 챔피온 기획전 - BTS V ===== -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<style>
+	/* ===== 초기화 ===== */
+    #contents .sub_content {width: 100%!important;}
+    .list-contents .list-filter-wrap { display:none;}
+    .list-contents .goods_list_item {width: 100%;}
+    .goods_list_item {margin-top:0;}
+    .goods_pick_list {display: none;}
+    @media (min-width: 769px) {
+        .goods_list { width: 90%; margin: 0 auto; }
+    }
+	/* ===== 공통 ===== */
+	.btsv-event { --btsv-blue: #232D64; --btsv-white: #FFFFFF; --btsv-black: #111111; --btsv-cream: #F4F3EF; --btsv-gap-large: 150px; --btsv-gap-small: 100px; width: 100%; max-width: 5000px; margin: 0 auto; overflow: hidden; background: var(--btsv-white); color: var(--btsv-black); font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; line-height: 1.6; word-break: keep-all; }
+	.btsv-event * { box-sizing: border-box; }
+	.btsv-event img { display: block; width: 100%; height: auto; }
+	.btsv-ratio--portrait { aspect-ratio: 3 / 4; }
+	.btsv-ratio--landscape { aspect-ratio: 4 / 3; }
+
+	/* ===== 공통 아이콘 ===== */
+	.btsv-icons { position: absolute; top: clamp(20px, 2vw, 60px); right: clamp(20px, 2.67vw, 80px); left: clamp(20px, 2.67vw, 80px); z-index: 5; display: flex; align-items: flex-start; justify-content: space-between; pointer-events: none; }
+	.btsv-icons__copy, .btsv-icons__logo { display: block; width: auto !important; object-fit: contain; }
+	.btsv-icons--full .btsv-icons__copy, .btsv-icons--full .btsv-icons__logo { height: clamp(28px, 2.17vw, 65px); }
+	.btsv-icons--half { top: clamp(18px, 1.67vw, 50px); right: clamp(18px, 2vw, 60px); left: clamp(18px, 2vw, 60px); }
+	.btsv-icons--half .btsv-icons__copy, .btsv-icons--half .btsv-icons__logo { height: clamp(26px, 1.67vw, 50px); }
+
+	/* ===== 섹션1: 캠페인 헤더 + 영상 ===== */
+	.btsv-hero { background: var(--btsv-blue); }
+	.btsv-hero__header { position: relative; height: clamp(120px, 7vw, 210px); }
+	.btsv-hero__header .btsv-icons { top: 50%; transform: translateY(-50%); }
+	.btsv-hero__header .btsv-icons__copy, .btsv-hero__header .btsv-icons__logo { height: clamp(34px, 2.17vw, 65px); }
+	.btsv-hero__video-wrap { position: relative; width: 100%; overflow: hidden; background: #000; }
+	.btsv-hero__video { display: block; width: 100%; height: auto; margin: 0; }
+	.btsv-hero__video--mobile { display: none; }
+	.btsv-hero__space { height: var(--btsv-gap-large); }
+
+	/* ===== 섹션2: 3분할 이미지 ===== */
+	.btsv-triptych { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; width: 100%; background: var(--btsv-white); }
+	.btsv-triptych__item { position: relative; min-width: 0; overflow: hidden; }
+	.btsv-triptych__item > img:not(.btsv-triptych__spoken) { width: 100%; height: 100%; object-fit: cover; }
+	.btsv-triptych__item .btsv-triptych__spoken { display: none; }
+
+	/* ===== 섹션3: 캠페인 소개 ===== */
+	.btsv-intro { display: grid; grid-template-columns: minmax(280px, 0.8fr) minmax(440px, 1.6fr); gap: var(--btsv-gap-small); align-items: start; padding: var(--btsv-gap-large) clamp(50px, 12.5vw, 375px); background: var(--btsv-cream); }
+	.btsv-intro__title { margin: 0; font-size: 30px; line-height: 1.35; font-weight: 700; letter-spacing: -0.04em; }
+	.btsv-intro__desc { margin: 0; font-size: 16px; line-height: 1.85; font-weight: 400; letter-spacing: -0.025em; }
+
+	/* ===== 섹션4: 캐러셀 ===== */
+	.btsv-gallery { padding: var(--btsv-gap-large) clamp(30px, 4vw, 120px) 0; background: var(--btsv-white); }
+	.btsv-gallery__main-wrap { position: relative; width: min(48%, 1440px); aspect-ratio: 3 / 4; margin: 0 auto; overflow: hidden; background: #ECEAE6; }
+	.btsv-gallery__main, .btsv-gallery__main .swiper-wrapper, .btsv-gallery__main .swiper-slide { width: 100%; height: 100%; }
+	.btsv-gallery__main .swiper-slide { overflow: hidden; }
+	.btsv-gallery__main .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+	.btsv-gallery__thumbs { width: min(64%, 1920px); height: auto !important; margin: var(--btsv-gap-small) auto 0; }
+	.btsv-gallery__thumbs .swiper-wrapper { height: auto !important; align-items: flex-start; }
+	.btsv-gallery__thumbs .swiper-slide { height: auto !important; aspect-ratio: 3 / 4; overflow: hidden; opacity: 0.5; cursor: pointer; transition: opacity 0.25s ease; }
+	.btsv-gallery__thumbs .swiper-slide-thumb-active { opacity: 1; }
+	.btsv-gallery__thumbs img { width: 100%; height: 100% !important; object-fit: cover; }
+	.btsv-gallery__text { width: min(62%, 1860px); margin: var(--btsv-gap-small) auto 0; text-align: center; }
+	.btsv-gallery__text p { margin: 0; font-size: 16px; line-height: 1.9; font-weight: 400; letter-spacing: -0.025em; }
+
+	/* ===== 섹션5: 2단 이미지 ===== */
+	.btsv-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--btsv-gap-large) 0; padding: var(--btsv-gap-large) 0; background: var(--btsv-white); }
+	.btsv-duo__item { position: relative; min-width: 0; overflow: hidden; }
+	.btsv-duo__item > img:not(.btsv-icons__copy):not(.btsv-icons__logo) { width: 100%; height: 100%; object-fit: cover; }
+
+	@media (min-width: 769px) {
+		.btsv-desktop-inset { padding: 100px; }
+		.btsv-desktop-inset .btsv-icons--half { top: calc(100px + clamp(18px, 1.67vw, 50px)); right: calc(100px + clamp(18px, 2vw, 60px)); left: calc(100px + clamp(18px, 2vw, 60px)); }
+	}
+
+	@media (max-width: 768px) {
+		.btsv-event { --btsv-gap-large: 80px; --btsv-gap-small: 40px; }
+		.btsv-icons { top: 20px; right: 20px; left: 20px; }
+		.btsv-icons--full .btsv-icons__copy, .btsv-icons--full .btsv-icons__logo, .btsv-icons--half .btsv-icons__copy, .btsv-icons--half .btsv-icons__logo { height: 28px; }
+		.btsv-hero__header { height: 86px; }
+		.btsv-hero__header .btsv-icons { right: 20px; left: 20px; }
+		.btsv-hero__header .btsv-icons__copy, .btsv-hero__header .btsv-icons__logo { height: 28px; }
+		.btsv-hero__video--desktop { display: none; }
+		.btsv-hero__video--mobile { display: block; }
+		.btsv-hero__space { height: var(--btsv-gap-small); }
+		.btsv-triptych { grid-template-columns: 1fr; gap: var(--btsv-gap-small); padding: 0; background: var(--btsv-cream); }
+		.btsv-triptych__item { width: 100%; }
+		.btsv-intro { grid-template-columns: 1fr; gap: var(--btsv-gap-small); padding: var(--btsv-gap-large) 30px; text-align: center; }
+		.btsv-intro__desc { line-height: 1.8; }
+		.btsv-gallery { padding: var(--btsv-gap-large) 0 0; }
+		.btsv-gallery__main-wrap { width: 100%; }
+		.btsv-gallery__thumbs { width: 100%; margin-top: var(--btsv-gap-small); padding: 0 10px; }
+		.btsv-gallery__text { width: auto; margin: var(--btsv-gap-small) 30px 0; text-align: left; }
+		.btsv-gallery__text p { line-height: 1.8; }
+		.btsv-duo { grid-template-columns: 1fr; gap: var(--btsv-gap-small); padding: var(--btsv-gap-large) 0; }
+		.btsv-duo__item { width: 100%; }
+		.btsv-triptych__item:nth-child(2) { order: 1; aspect-ratio: 3 / 4; }
+		.btsv-triptych__item:nth-child(1) { order: 2; aspect-ratio: 1 / 1; }
+		.btsv-triptych__item:nth-child(3) { order: 3; }
+		.btsv-mobile-inset { width: calc(100% - 60px) !important; aspect-ratio: 3 / 4; margin-right: 30px; margin-left: 30px; }
+		.btsv-mobile-inset > img:not(.btsv-triptych__spoken):not(.btsv-icons__copy):not(.btsv-icons__logo), .btsv-duo__item:nth-child(4) > img:not(.btsv-icons__copy):not(.btsv-icons__logo) { width: 100%; height: 100%; object-fit: cover; }
+		.btsv-triptych__item .btsv-triptych__spoken { position: absolute; bottom: 10px; left: 50%; z-index: 3; display: block; width: 42%; height: auto; object-fit: contain; transform: translateX(-50%); }
+		.btsv-duo__item:nth-child(4) { aspect-ratio: 3 / 4; }
+		.btsv-duo__item:nth-child(4) .btsv-icons { display: none; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btsv-gallery__thumbs .swiper-slide { transition: none; }
+	}
+</style>
+
+<div class="btsv-event">
+	<!-- ===== 섹션1: 캠페인 헤더 + 영상 ===== -->
+	<section class="btsv-hero">
+		<div class="btsv-hero__header">
+			<div class="btsv-icons btsv-icons--full">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="BTS V Champion Global Ambassador">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo(red).svg" alt="Champion">
+			</div>
+		</div>
+		<div class="btsv-hero__video-wrap">
+			<video class="btsv-hero__video btsv-hero__video--desktop" data-btsv-video="desktop" autoplay="" muted="" loop="" playsinline="" preload="metadata" poster="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/poster_pc.jpg" aria-label="BTS V Champion campaign video">
+				<source src="https://cdn.shopify.com/videos/c/o/v/ef6a538e93bf41f19df1f424c7881902.mp4" type="video/mp4">
+			</video>
+			<video class="btsv-hero__video btsv-hero__video--mobile" data-btsv-video="mobile" autoplay="" muted="" loop="" playsinline="" preload="metadata" poster="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/poster_m.jpg" aria-label="BTS V Champion campaign mobile video">
+				<source src="https://cdn.shopify.com/videos/c/o/v/a9e7f50f574342d59017b3c5e0e702d6.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="btsv-hero__space"></div>
+	</section>
+
+	<!-- ===== 섹션2: 3분할 이미지 ===== -->
+	<section class="btsv-triptych" aria-label="BTS V campaign images">
+		<div class="btsv-triptych__item btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_1.jpg" alt="BTS V Champion campaign image 1"></div>
+		<div class="btsv-triptych__item btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_2.jpg" alt="BTS V Champion campaign image 2"></div>
+		<div class="btsv-triptych__item btsv-ratio--portrait btsv-mobile-inset">
+			<img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_3.jpg" alt="BTS V Champion campaign image 3">
+			<img class="btsv-triptych__spoken" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/spoken_like_a true(red).svg" alt="Spoken Like A True Champion">
+		</div>
+	</section>
+
+	<!-- ===== 섹션3: 캠페인 소개 ===== -->
+	<section class="btsv-intro">
+		<h1 class="btsv-intro__title">BTS V가 말하는 진짜 챔피온</h1>
+		<p class="btsv-intro__desc">챔피온 (Champion) 이 BTS V를 챔피온 코리아의 글로벌 앰배서더로 선정하고, 새로운 브랜드 캠페인 'SPOKEN LIKE A TRUE CHAMPION'을 선보인다.</p>
+	</section>
+
+	<!-- ===== 섹션4: 캐러셀 ===== -->
+	<section class="btsv-gallery">
+		<div class="btsv-gallery__main-wrap">
+			<div class="btsv-icons btsv-icons--full">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo.svg" alt="">
+			</div>
+			<div class="swiper btsv-gallery__main">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_1.jpg" alt="BTS V Champion rolling image 1"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_2.jpg" alt="BTS V Champion rolling image 2" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_3.jpg" alt="BTS V Champion rolling image 3" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_4.jpg" alt="BTS V Champion rolling image 4" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_5.jpg" alt="BTS V Champion rolling image 5" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_6.jpg" alt="BTS V Champion rolling image 6" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_7.jpg" alt="BTS V Champion rolling image 7" loading="lazy"></div>
+					<div class="swiper-slide"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_8.jpg" alt="BTS V Champion rolling image 8" loading="lazy"></div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper btsv-gallery__thumbs" aria-label="캐러셀 썸네일">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_1.jpg" alt=""></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_2.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_3.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_4.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_5.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_6.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_7.jpg" alt="" loading="lazy"></div>
+				<div class="swiper-slide btsv-ratio--portrait"><img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_Roll_8.jpg" alt="" loading="lazy"></div>
+			</div>
+		</div>
+		<div class="btsv-gallery__text">
+			<p>챔피온이 정의하는 진짜 챔피온은 말보다 행동으로 스스로를 증명하는 사람이다. 아무도 보지 않는 순간에도 이어지는 노력과 쉽게 포기하지 않는 태도에 주목하며, 각자의 분야에서 자신만의 길을 걸어온 이들의 이야기를 담는다.</p>
+		</div>
+	</section>
+
+	<!-- ===== 섹션5: 2단 이미지 ===== -->
+	<section class="btsv-duo" aria-label="BTS V Champion campaign images">
+		<div class="btsv-duo__item btsv-ratio--portrait btsv-mobile-inset">
+			<div class="btsv-icons btsv-icons--half">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo.svg" alt="">
+			</div>
+			<img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_4.jpg" alt="BTS V Champion campaign image 4" loading="lazy">
+		</div>
+		<div class="btsv-duo__item btsv-ratio--portrait btsv-desktop-inset">
+			<div class="btsv-icons btsv-icons--half">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo.svg" alt="">
+			</div>
+			<img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_5.jpg" alt="BTS V Champion campaign image 5" loading="lazy">
+		</div>
+		<div class="btsv-duo__item btsv-ratio--portrait btsv-mobile-inset btsv-desktop-inset">
+			<div class="btsv-icons btsv-icons--half">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo.svg" alt="">
+			</div>
+			<img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_6.jpg" alt="BTS V Champion campaign image 6" loading="lazy">
+		</div>
+		<div class="btsv-duo__item btsv-ratio--portrait">
+			<div class="btsv-icons btsv-icons--half">
+				<img class="btsv-icons__copy" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/BTSV_CHAMPION GLOBAL AMBASSADOR.svg" alt="">
+				<img class="btsv-icons__logo" src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/C_logo.svg" alt="">
+			</div>
+			<img src="https://m.championkorea.com/data/images/promotion/26fw_BTS_V/CHMP_V_7.jpg" alt="BTS V Champion campaign image 7" loading="lazy">
+		</div>
+	</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+(function () {
+	function initBtsvPage(root, retryCount) {
+		if (root.dataset.btsvInitialized === 'true') {
+			return;
+		}
+
+		if (typeof Swiper === 'undefined') {
+			if ((retryCount || 0) < 20) {
+				setTimeout(function () {
+					initBtsvPage(root, (retryCount || 0) + 1);
+				}, 100);
+			}
+			return;
+		}
+
+		root.dataset.btsvInitialized = 'true';
+		var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		var thumbsElement = root.querySelector('.btsv-gallery__thumbs');
+		var mainElement = root.querySelector('.btsv-gallery__main');
+
+		var thumbsSwiper = new Swiper(thumbsElement, {
+			slidesPerView: 4.5,
+			spaceBetween: 8,
+			watchSlidesProgress: true,
+			breakpoints: {
+				769: {
+					slidesPerView: 8,
+					spaceBetween: 16
+				}
+			}
+		});
+
+		new Swiper(mainElement, {
+			loop: true,
+			speed: reduceMotion ? 0 : 700,
+			autoplay: reduceMotion ? false : {
+				delay: 3500,
+				disableOnInteraction: false
+			},
+			thumbs: {
+				swiper: thumbsSwiper
+			}
+		});
+
+		function syncHeroVideo() {
+			var isMobile = window.matchMedia('(max-width: 768px)').matches;
+			var videos = root.querySelectorAll('[data-btsv-video]');
+
+			videos.forEach(function (video) {
+				var shouldPlay = video.dataset.btsvVideo === (isMobile ? 'mobile' : 'desktop');
+
+				if (shouldPlay && !reduceMotion) {
+					var playPromise = video.play();
+					if (playPromise && typeof playPromise.catch === 'function') {
+						playPromise.catch(function () {});
+					}
+				} else {
+					video.pause();
+				}
+			});
+		}
+
+		syncHeroVideo();
+		window.addEventListener('resize', syncHeroVideo);
+	}
+
+	function initBtsvPages() {
+		document.querySelectorAll('.btsv-event').forEach(function (root) {
+			initBtsvPage(root, 0);
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initBtsvPages);
+	} else {
+		initBtsvPages();
+	}
+})();
+</script>
