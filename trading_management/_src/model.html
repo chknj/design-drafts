@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Model — HAAN MANAGEMENT</title>
+  {{HEAD}}
+</head>
+<body data-page="model">
+  {{HEADER}}
+
+  <main class="detail">
+    <aside class="detail-info">
+      <div class="crumb eyebrow">
+        <a href="models.html">Models</a><span class="sep">/</span><a id="m-cat" href="models.html"></a>
+      </div>
+      <h1 id="m-name"></h1>
+      <div class="sub"><span id="m-origin"></span><span>·</span><span class="status" id="m-status"></span></div>
+
+      <div class="size-head">
+        <span class="eyebrow">Measurements</span>
+        <div class="unit-toggle" role="group" aria-label="Unit">
+          <button data-unit="cm" class="active">cm</button>
+          <button data-unit="in">inch</button>
+        </div>
+      </div>
+      <dl class="sizes"></dl>
+
+      <div class="detail-actions">
+        <a class="btn-booking" id="m-mail" href="#"><span class="dot"></span><span class="label">Book this model</span></a>
+        <a class="btn-line" href="#" onclick="window.print();return false;">Comp card</a>
+      </div>
+
+      <nav class="detail-nav" aria-label="Model navigation">
+        <a id="m-prev" href="#">← <b></b></a>
+        <a id="m-next" href="#"><b></b> →</a>
+      </nav>
+    </aside>
+
+    <section class="gallery"></section>
+  </main>
+
+  {{FOOTER}}
+</body>
+</html>
