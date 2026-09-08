@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Models — HAAN MANAGEMENT</title>
+  <meta name="description" content="HAAN MANAGEMENT 모델 보드. Women / Men.">
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="models">
+  <header class="header">
+  <a class="brand" href="index.html"><span class="mark">HAAN</span><span class="sub">Management</span></a>
+  <nav class="nav" aria-label="Primary">
+    <a href="models.html" data-nav="models">Models</a>
+    <a href="models.html?cat=women">Women</a>
+    <a href="models.html?cat=men">Men</a>
+    <a href="index.html#about" data-nav="about">About</a>
+    <a href="index.html#contact" data-nav="contact">Contact</a>
+  </nav>
+  <div class="header-right">
+    <a class="btn-booking" href="index.html#contact"><span class="dot"></span><span class="label">Booking</span></a>
+    <button class="btn-menu" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu" aria-hidden="true">
+  <ul>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="models.html?cat=women"><em>Women</em></a></li>
+    <li><a href="models.html?cat=men"><em>Men</em></a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="menu-foot"><span data-agency="email"></span><span data-agency="tel"></span></div>
+</div>
+
+  <main>
+    <section class="page-head">
+      <div class="title-row">
+        <h1>Models<sup id="model-count">06</sup></h1>
+        <div class="tabs" role="tablist" aria-label="Category">
+          <button data-cat="all" class="active">All</button>
+          <button data-cat="women">Women</button>
+          <button data-cat="men">Men</button>
+        </div>
+      </div>
+    </section>
+    <section class="grid" aria-live="polite"></section>
+  </main>
+
+  <footer class="footer" id="contact">
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="mark">HAAN</span></a>
+      <p style="margin-top:14px;max-width:32ch;color:var(--ink-2);font-size:14px;word-break:keep-all">서울을 기반으로 국내외 모델을 매니지먼트하는 에이전시입니다. 캠페인·룩북·커머스 촬영 캐스팅을 문의해 주세요.</p>
+    </div>
+    <div>
+      <h4>Booking</h4>
+      <ul>
+        <li><a data-agency="email" href="#"></a></li>
+        <li><span data-agency="tel"></span></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Office</h4>
+      <ul>
+        <li><span data-agency="address"></span></li>
+        <li><span data-agency="addressKo"></span></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <ul>
+        <li><a data-agency="instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> <span data-agency="name"></span>. All rights reserved.</span>
+    <span>Seoul, Korea</span>
+  </div>
+</footer>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
