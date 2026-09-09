@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   gnidart agency — main.js  (no dependencies)
+   GNIDART agency — main.js  (no dependencies)
    ------------------------------------------------------------------ */
 (function () {
   "use strict";
@@ -20,17 +20,51 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
   const menuBtn = $(".btn-menu");
+  const menu = $(".menu");
   if (menuBtn) {
     menuBtn.addEventListener("click", () => {
       const open = document.body.classList.toggle("menu-open");
       menuBtn.setAttribute("aria-expanded", open);
+      if (menu) menu.setAttribute("aria-hidden", !open);
       onScroll(); // 메뉴가 열리면 헤더 색을 잉크로 강제
     });
-    $$(".menu a").forEach(a => a.addEventListener("click", () => document.body.classList.remove("menu-open")));
+    $$(".menu a").forEach(a => a.addEventListener("click", () => {
+      document.body.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      if (menu) menu.setAttribute("aria-hidden", "true");
+      onScroll();
+    }));
   }
   // active nav
   const page = document.body.dataset.page;
-  $$(".nav a").forEach(a => a.classList.toggle("active", a.dataset.nav === page));
+  const navLinks = $$(".nav a, .menu ul a");
+  const navKey = (href) => {
+    const url = new URL(href, location.href);
+    const file = url.pathname.split("/").pop();
+    if (file === "models.html") {
+      const cat = url.searchParams.get("cat");
+      return ["women", "men"].includes(cat) ? cat : "models";
+    }
+    if (file === "model.html") {
+      return (D.models.find(m => m.slug === url.searchParams.get("id")) || D.models[0]).gender;
+    }
+    return ["#about", "#contact"].includes(url.hash) ? url.hash.slice(1) : "";
+  };
+  const syncNav = (href = location.href) => {
+    const active = navKey(href);
+    navLinks.forEach(a => {
+      const selected = navKey(a.href) === active;
+      a.classList.toggle("active", selected);
+      if (selected) a.setAttribute("aria-current", ["about", "contact"].includes(active) ? "location" : "page");
+      else a.removeAttribute("aria-current");
+    });
+  };
+  navLinks.forEach(a => a.addEventListener("click", e => {
+    if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) syncNav(a.href);
+  }));
+  window.addEventListener("hashchange", () => syncNav());
+  window.addEventListener("popstate", () => syncNav());
+  syncNav();
 
   /* ---------- reveal on scroll ---------- */
   const io = new IntersectionObserver((entries) => {
@@ -74,23 +108,10 @@
     const names = D.models.map(m => `<span>${m.name}<i>${m.origin.split(",")[0]}</i></span>`).join("");
     const track = $(".ticker-track");
     if (track) track.innerHTML = names + names; // 2회 반복 → -50% 이동으로 무한 루프
-    // carousel
+    // all model thumbnails
     const car = $(".carousel");
     if (car) {
       car.innerHTML = D.models.map((m, i) => cardHTML(m, i, false)).join("");
-      const bar = $(".progress b");
-      const update = () => {
-        const max = car.scrollWidth - car.clientWidth;
-        const ratio = car.clientWidth / car.scrollWidth;
-        bar.style.width = (ratio * 100) + "%";
-        bar.style.left = (max ? (car.scrollLeft / max) * (100 - ratio * 100) : 0) + "%";
-      };
-      car.addEventListener("scroll", update, { passive: true });
-      window.addEventListener("resize", update);
-      update();
-      const step = () => ($(".card", car).getBoundingClientRect().width + 20);
-      $(".ctrl-prev").addEventListener("click", () => car.scrollBy({ left: -step(), behavior: "smooth" }));
-      $(".ctrl-next").addEventListener("click", () => car.scrollBy({ left: step(), behavior: "smooth" }));
     }
   }
 
@@ -99,7 +120,7 @@
     const grid = $(".grid");
     const count = $("#model-count");
     const params = new URLSearchParams(location.search);
-    let filter = params.get("cat") || "all";
+    let filter = ["women", "men"].includes(params.get("cat")) ? params.get("cat") : "all";
     const render = () => {
       const list = D.models.filter(m => filter === "all" || m.gender === filter);
       grid.innerHTML = list.map((m, i) => cardHTML(m, i, true)).join("");
@@ -107,6 +128,7 @@
       $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === filter));
       observeReveals();
       history.replaceState(null, "", filter === "all" ? "models.html" : `models.html?cat=${filter}`);
+      syncNav();
     };
     $$(".tabs button").forEach(b => b.addEventListener("click", () => { filter = b.dataset.cat; render(); }));
     render();

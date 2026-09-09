@@ -1,5 +1,5 @@
 /* ==================================================================
-   gnidart agency — style.css
+   GNIDART agency — style.css
    Tokens → Base → Layout → Components → Pages → Responsive
    ================================================================== */
 
@@ -65,7 +65,7 @@ h1, h2, h3, p { margin: 0; }
 .nav { display: flex; gap: 32px; }
 .nav a { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; position: relative; padding: 6px 0; }
 .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: currentColor; transition: right .35s var(--ease); }
-.nav a:hover::after, .nav a.active::after { right: 0; }
+.nav a:hover::after, .nav a:focus-visible::after, .nav a.active::after { right: 0; }
 .header-right { display: flex; align-items: center; gap: 16px; }
 .btn-booking {
   display: inline-flex; align-items: center; gap: 10px;
@@ -93,6 +93,7 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .45s
 body.menu-open { overflow: hidden; }
 .menu ul li a { display: block; font-family: var(--serif); font-size: clamp(44px, 9vw, 96px); line-height: 1.05; padding: 6px 0; border-bottom: 1px solid var(--line); transform: translateY(20px); opacity: 0; transition: transform .6s var(--ease), opacity .6s; }
 body.menu-open .menu ul li a { transform: none; opacity: 1; }
+.menu ul li a.active { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .14em; }
 .menu ul li:nth-child(2) a { transition-delay: .05s } .menu ul li:nth-child(3) a { transition-delay: .1s } .menu ul li:nth-child(4) a { transition-delay: .15s } .menu ul li:nth-child(5) a { transition-delay: .2s }
 .menu ul li a em { font-style: italic; color: var(--accent); }
 .menu .menu-foot { margin-top: 32px; display: flex; gap: 32px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
@@ -155,19 +156,14 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
 .service h3 { font-family: var(--serif); font-size: 40px; line-height: 1; margin-bottom: 20px; }
 .service p { color: var(--ink-2); font-size: 14px; max-width: 32ch; margin-bottom: 26px; word-break: keep-all; }
 
-/* featured carousel */
+/* featured model thumbnails */
 .carousel-wrap { position: relative; }
-.carousel { display: flex; gap: 20px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x pinch-zoom; overscroll-behavior-x: contain; overscroll-behavior-y: none; scroll-snap-type: x mandatory; scroll-padding-left: var(--gutter); scrollbar-width: none; padding-bottom: 8px; margin: 0 calc(var(--gutter) * -1); padding-left: var(--gutter); padding-right: var(--gutter); }
-.carousel::-webkit-scrollbar { display: none; }
-.carousel .card { flex: 0 0 clamp(240px, 26vw, 380px); scroll-snap-align: start; }
-.carousel .card.reveal { transform: none; }
-.carousel-ctrl { display: flex; align-items: center; gap: 24px; margin-top: 28px; }
-.progress { flex: 1; height: 1px; background: var(--line); position: relative; }
-.progress b { position: absolute; left: 0; top: -1px; height: 3px; width: 20%; background: var(--ink); transition: left .4s var(--ease), width .4s var(--ease); }
-.ctrl-btns { display: flex; gap: 8px; }
-.ctrl-btns button { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; transition: background .3s, color .3s, border-color .3s; }
-.ctrl-btns button:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.ctrl-btns svg { width: 16px; height: 16px; }
+.carousel { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 18px; }
+.carousel .card { min-width: 0; }
+.carousel .card.reveal { opacity: 1; transform: none; }
+.carousel .card .meta { flex-direction: column; align-items: flex-start; gap: 5px; margin-top: 10px; }
+.carousel .card .meta .name { font-size: 24px; }
+.carousel .card .meta .origin { font-size: 10px; letter-spacing: .08em; }
 
 /* model card (shared: carousel + grid) */
 .card { position: relative; display: block; }
@@ -259,6 +255,7 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
   .btn-menu { display: block; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .grid { grid-template-columns: repeat(2, 1fr); }
+  .carousel { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .services { grid-template-columns: 1fr; }
   .service { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--line); padding: 32px 0; }
   .service:last-child { border-bottom: 0; }
@@ -276,6 +273,10 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
   .hero .hero-meta { align-items: flex-start; text-align: left; }
   .hero .scroll { display: none; }
   .grid { grid-template-columns: 1fr 1fr; gap: 32px 12px; }
+  .carousel { gap: 20px 8px; }
+  .carousel .card .meta { margin-top: 7px; }
+  .carousel .card .meta .name { font-size: 16px; }
+  .carousel .card .tag { top: 5px; left: 5px; padding: 3px 5px; font-size: 7px; letter-spacing: .04em; }
   .card .meta .name { font-size: 20px; }
   .card .meta .origin { display: none; }
   .card .panel { display: none; }
