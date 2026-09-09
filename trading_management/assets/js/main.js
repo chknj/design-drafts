@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   HAAN MANAGEMENT — main.js  (no dependencies)
+   gnidart agency — main.js  (no dependencies)
    ------------------------------------------------------------------ */
 (function () {
   "use strict";
@@ -133,6 +133,7 @@
     const drawSizes = (unit) => {
       const cm = unit === "cm";
       const rows = [
+        ...(m.ageRange ? [["Age range", `${m.ageRange} years`]] : []),
         ["Height", cm ? `${m.height} cm` : `${Math.floor(m.height / 30.48)}'${Math.round((m.height / 2.54) % 12)}"`],
         ["Bust", cm ? `${Math.round(m.bust * 2.54)} cm` : `${m.bust}"`],
         ["Waist", cm ? `${Math.round(m.waist * 2.54)} cm` : `${m.waist}"`],

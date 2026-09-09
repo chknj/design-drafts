@@ -1,5 +1,5 @@
 /* ==================================================================
-   HAAN MANAGEMENT — style.css
+   gnidart agency — style.css
    Tokens → Base → Layout → Components → Pages → Responsive
    ================================================================== */
 
@@ -157,9 +157,10 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
 
 /* featured carousel */
 .carousel-wrap { position: relative; }
-.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: var(--gutter); scrollbar-width: none; padding-bottom: 8px; margin: 0 calc(var(--gutter) * -1); padding-left: var(--gutter); padding-right: var(--gutter); }
+.carousel { display: flex; gap: 20px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x pinch-zoom; overscroll-behavior-x: contain; overscroll-behavior-y: none; scroll-snap-type: x mandatory; scroll-padding-left: var(--gutter); scrollbar-width: none; padding-bottom: 8px; margin: 0 calc(var(--gutter) * -1); padding-left: var(--gutter); padding-right: var(--gutter); }
 .carousel::-webkit-scrollbar { display: none; }
 .carousel .card { flex: 0 0 clamp(240px, 26vw, 380px); scroll-snap-align: start; }
+.carousel .card.reveal { transform: none; }
 .carousel-ctrl { display: flex; align-items: center; gap: 24px; margin-top: 28px; }
 .progress { flex: 1; height: 1px; background: var(--line); position: relative; }
 .progress b { position: absolute; left: 0; top: -1px; height: 3px; width: 20%; background: var(--ink); transition: left .4s var(--ease), width .4s var(--ease); }

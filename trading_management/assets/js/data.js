@@ -1,16 +1,16 @@
 /* ------------------------------------------------------------------
-   HAAN MANAGEMENT — model data
+   gnidart agency — model data
    실제 모델로 교체할 때 이 파일만 수정하면 리스트/상세/메인 캐러셀에
    모두 반영됩니다. 사진은 assets/img/models/<slug>/00.jpg(대표) ~ 05.jpg
    ------------------------------------------------------------------ */
 window.HAAN_DATA = {
   agency: {
-    name: "HAAN MANAGEMENT",
-    short: "HAAN",
+    name: "gnidart agency",
+    short: "gnidart",
     tel: "+82 2 000 0000",
     email: "booking@haanmgmt.com",
-    address: "Dosan-daero 45gil 12, Gangnam-gu, Seoul, Korea",
-    addressKo: "서울특별시 강남구 도산대로45길 12",
+    address: "Seongsu-dong, Seoul, Korea",
+    addressKo: "서울특별시 성동구 성수동",
     instagram: "https://instagram.com/",
   },
   models: [
@@ -49,6 +49,34 @@ window.HAAN_DATA = {
       status: "DIRECT BOOKING", activity: "DIRECT BOOKING",
       height: 188, bust: 36.5, waist: 29.5, hips: 37, shoes: 285,
       hair: "BLONDE", eyes: "GREEN", photos: 6
+    },
+    {
+      slug: "aoi", name: "AOI", gender: "women", origin: "Tokyo, JP", korean: false,
+      age: 22, ageRange: "20–25", nationality: "Japanese",
+      status: "NEW FACE", activity: "DIRECT BOOKING",
+      height: 174, bust: 31, waist: 23.5, hips: 34, shoes: 245,
+      hair: "BLACK", eyes: "DARK BROWN", photos: 1
+    },
+    {
+      slug: "romy", name: "ROMY", gender: "women", origin: "Paris, FR", korean: false,
+      age: 24, ageRange: "20–25", nationality: "French",
+      status: "NEW FACE", activity: "DIRECT BOOKING",
+      height: 177, bust: 32, waist: 24, hips: 35, shoes: 250,
+      hair: "DARK BLONDE", eyes: "HAZEL", photos: 1
+    },
+    {
+      slug: "ren", name: "REN", gender: "men", origin: "Osaka, JP", korean: false,
+      age: 23, ageRange: "20–25", nationality: "Japanese",
+      status: "NEW FACE", activity: "DIRECT BOOKING",
+      height: 184, bust: 35, waist: 28, hips: 36, shoes: 275,
+      hair: "BLACK", eyes: "DARK BROWN", photos: 1
+    },
+    {
+      slug: "luca", name: "LUCA", gender: "men", origin: "London, UK", korean: false,
+      age: 21, ageRange: "20–25", nationality: "British",
+      status: "NEW FACE", activity: "DIRECT BOOKING",
+      height: 185, bust: 35.5, waist: 28.5, hips: 36.5, shoes: 280,
+      hair: "CHESTNUT BROWN", eyes: "GREY BLUE", photos: 1
     }
   ]
 };
