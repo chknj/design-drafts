@@ -93,6 +93,7 @@
           ${tag}
           ${withPanel ? `<span class="idx">${String(i + 1).padStart(2, "0")}</span>` : ""}
           <img src="${IMG(m, 0)}" alt="${m.name}" loading="lazy" width="900" height="1200">
+          ${m.slug === "jiwoo" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? `<video class="thumb-video" src="assets/img/models/jiwoo/00.mp4" poster="${IMG(m, 0)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1" onerror="this.remove()"></video>` : ""}
           ${panel}
         </div>
         <div class="meta">
