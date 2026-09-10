@@ -91,13 +91,6 @@ window.HAAN_DATA = {
       status: "NEW FACE", activity: "DIRECT BOOKING",
       height: 186, bust: 36, waist: 29, hips: 37, shoes: 280,
       hair: "DARK BROWN", eyes: "DARK BROWN", photos: 6
-    },
-    {
-      slug: "yuna", name: "YUNA", gender: "women", origin: "Seoul, KR", korean: true,
-      age: 23, ageRange: "20–25", nationality: "Korean",
-      status: "NEW FACE", activity: "IN TOWN",
-      height: 173, bust: 31, waist: 24, hips: 34.5, shoes: 245,
-      hair: "BLACK", eyes: "DARK BROWN", photos: 6
     }
   ]
 };
