@@ -275,7 +275,7 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
   .hero .hero-meta { align-items: flex-start; text-align: left; }
   .hero .scroll { display: none; }
   .grid { grid-template-columns: 1fr 1fr; gap: 32px 12px; }
-  .carousel { gap: 20px 8px; }
+  .carousel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 8px; }
   .carousel .card .meta { margin-top: 7px; }
   .carousel .card .meta .name { font-size: 16px; }
   .carousel .card .tag { top: 5px; left: 5px; padding: 3px 5px; font-size: 7px; letter-spacing: .04em; }
