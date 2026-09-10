@@ -46,7 +46,8 @@
       return ["women", "men"].includes(cat) ? cat : "models";
     }
     if (file === "model.html") {
-      return (D.models.find(m => m.slug === url.searchParams.get("id")) || D.models[0]).gender;
+      const gender = (D.models.find(m => m.slug === url.searchParams.get("id")) || D.models[0]).gender;
+      return gender === "characters" ? "models" : gender;
     }
     return ["#about", "#contact"].includes(url.hash) ? url.hash.slice(1) : "";
   };
@@ -76,7 +77,7 @@
   const inch = v => (v / 2.54).toFixed(1);
   function cardHTML(m, i, withPanel) {
     const tag = m.status === "NEW FACE" ? `<span class="tag new">New face</span>` : `<span class="tag">${m.status}</span>`;
-    const panel = withPanel ? `
+    const panel = withPanel && !m.profile ? `
       <div class="panel" aria-hidden="true">
         <dl>
           <div><dt>Height</dt><dd>${m.height}</dd></div>
@@ -121,7 +122,7 @@
     const grid = $(".grid");
     const count = $("#model-count");
     const params = new URLSearchParams(location.search);
-    let filter = ["women", "men"].includes(params.get("cat")) ? params.get("cat") : "all";
+    let filter = ["women", "men", "characters"].includes(params.get("cat")) ? params.get("cat") : "all";
     const render = () => {
       const list = D.models.filter(m => filter === "all" || m.gender === filter);
       grid.innerHTML = list.map((m, i) => cardHTML(m, i, true)).join("");
@@ -152,9 +153,14 @@
     $("#m-next").href = `model.html?id=${next.slug}`; $("#m-next b").textContent = next.name;
 
     const sizes = $(".sizes");
+    if (m.profile) {
+      $(".detail").classList.add("is-character");
+      $(".size-head .eyebrow").textContent = "Character";
+      $(".unit-toggle").style.display = "none";
+    }
     const drawSizes = (unit) => {
       const cm = unit === "cm";
-      const rows = [
+      const rows = m.profile || [
         ...(m.ageRange ? [["Age range", `${m.ageRange} years`]] : []),
         ["Height", cm ? `${m.height} cm` : `${Math.floor(m.height / 30.48)}'${Math.round((m.height / 2.54) % 12)}"`],
         ["Bust", cm ? `${Math.round(m.bust * 2.54)} cm` : `${m.bust}"`],

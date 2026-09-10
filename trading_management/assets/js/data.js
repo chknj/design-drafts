@@ -92,6 +92,21 @@ window.HAAN_DATA = {
       status: "NEW FACE", activity: "DIRECT BOOKING",
       height: 186, bust: 36, waist: 29, hips: 37, shoes: 280,
       hair: "DARK BROWN", eyes: "DARK BROWN", photos: 6
+    },
+    {
+      slug: "mint", name: "MINT", gender: "characters", origin: "Original Character",
+      status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 6,
+      profile: [["Type", "Otter"], ["Fur", "Mint & Cream"], ["Eyes", "Dark Brown"], ["Features", "Leaf Tufts"]]
+    },
+    {
+      slug: "cream", name: "CREAM", gender: "characters", origin: "Original Character",
+      status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 6,
+      profile: [["Type", "Rabbit"], ["Fur", "Cream"], ["Eyes", "Dark Brown"], ["Features", "Floppy Ears"]]
+    },
+    {
+      slug: "apri", name: "APRI", gender: "characters", origin: "Original Character",
+      status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 6,
+      profile: [["Type", "Dragon"], ["Fur", "Apricot"], ["Eyes", "Brown"], ["Features", "Horns & Wings"]]
     }
   ]
 };
