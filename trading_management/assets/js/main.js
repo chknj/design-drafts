@@ -173,7 +173,10 @@
     const gal = $(".gallery");
     gal.innerHTML = Array.from({ length: m.photos }, (_, n) => `
       <figure class="reveal">
-        <div class="ph reveal-img"><img src="${IMG(m, n)}" alt="${m.name} ${n + 1}" ${n ? 'loading="lazy"' : ""} width="900" height="1200"></div>
+        <div class="ph reveal-img">
+          <img src="${IMG(m, n)}" alt="${m.name} ${n + 1}" ${n ? 'loading="lazy"' : ""} width="900" height="1200">
+          ${m.slug === "jiwoo" && n === 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? `<video class="profile-video" src="assets/img/models/jiwoo/00.mp4" poster="${IMG(m, 0)}" autoplay muted loop playsinline controls preload="metadata" aria-label="JIWOO profile video" onerror="this.remove()"></video>` : ""}
+        </div>
         <figcaption>${m.name} — ${String(n + 1).padStart(2, "0")} / ${String(m.photos).padStart(2, "0")}</figcaption>
       </figure>`).join("");
   }
