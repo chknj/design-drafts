@@ -150,7 +150,6 @@
     $("#m-cat").href = `models.html?cat=${m.gender}`;
     $("#m-prev").href = `model.html?id=${prev.slug}`; $("#m-prev b").textContent = prev.name;
     $("#m-next").href = `model.html?id=${next.slug}`; $("#m-next b").textContent = next.name;
-    $("#m-mail").href = `mailto:${D.agency.email}?subject=Booking%20inquiry%20-%20${m.name}`;
 
     const sizes = $(".sizes");
     const drawSizes = (unit) => {
@@ -183,11 +182,17 @@
 
   /* ---------- footer / agency info (모든 페이지) ---------- */
   $$("[data-agency]").forEach(el => {
-    const v = D.agency[el.dataset.agency];
+    const v = el.dataset.agency === "email" ? D.agency.bookingLabel : D.agency[el.dataset.agency];
     if (v == null) return;
-    if (el.tagName === "A" && el.dataset.agency === "email") el.href = "mailto:" + v;
     if (el.tagName === "A" && el.dataset.agency === "instagram") { el.href = v; return; }
     el.textContent = v;
+  });
+  // 기존 이메일 영역과 부킹 버튼을 개인 Slack 링크로 연결합니다.
+  $$('a.btn-booking, a[data-agency="email"]').forEach(el => {
+    el.href = D.agency.bookingUrl;
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+    el.setAttribute("aria-label", "Slack으로 부킹 문의 (새 창)");
   });
   $("#year") && ($("#year").textContent = new Date().getFullYear());
 
