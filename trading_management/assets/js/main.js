@@ -4,6 +4,7 @@
 (function () {
   "use strict";
   const D = window.HAAN_DATA;
+  const board = D.models.concat(D.casting || []);
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
   const IMG = (m, n) => `assets/img/models/${m.slug}/${String(n).padStart(2, "0")}.jpg`;
@@ -76,6 +77,13 @@
   /* ---------- card template ---------- */
   const inch = v => (v / 2.54).toFixed(1);
   function cardHTML(m, i, withPanel) {
+    if (m.thumbnail) return `
+      <div class="card reveal casting-card" data-gender="${m.gender}">
+        <div class="thumb">
+          <span class="tag">섭외중</span>
+          <img src="${m.thumbnail}" alt="${m.name} — 섭외중" loading="lazy" width="1086" height="1448">
+        </div>
+      </div>`;
     const tag = m.status === "NEW FACE" ? `<span class="tag new">New face</span>` : `<span class="tag">${m.status}</span>`;
     const panel = withPanel && !m.profile ? `
       <div class="panel" aria-hidden="true">
@@ -113,7 +121,7 @@
     // all model thumbnails
     const car = $(".carousel");
     if (car) {
-      car.innerHTML = D.models.map((m, i) => cardHTML(m, i, false)).join("");
+      car.innerHTML = board.map((m, i) => cardHTML(m, i, false)).join("");
     }
   }
 
@@ -124,7 +132,7 @@
     const params = new URLSearchParams(location.search);
     let filter = ["women", "men", "characters"].includes(params.get("cat")) ? params.get("cat") : "all";
     const render = () => {
-      const list = D.models.filter(m => filter === "all" || m.gender === filter);
+      const list = board.filter(m => filter === "all" || m.gender === filter);
       grid.innerHTML = list.map((m, i) => cardHTML(m, i, true)).join("");
       count.textContent = String(list.length).padStart(2, "0");
       $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === filter));

@@ -108,5 +108,17 @@ window.HAAN_DATA = {
       status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 6,
       profile: [["Type", "Dragon"], ["Fur", "Apricot"], ["Eyes", "Brown"], ["Features", "Horns & Wings"]]
     }
+  ],
+  casting: [
+    { name: "남성 모델 01", gender: "men", thumbnail: "assets/img/casting/male-01.jpg" },
+    { name: "남성 모델 02", gender: "men", thumbnail: "assets/img/casting/male-02.jpg" },
+    { name: "남성 모델 03", gender: "men", thumbnail: "assets/img/casting/male-03.jpg" },
+    { name: "남성 모델 04", gender: "men", thumbnail: "assets/img/casting/male-04.jpg" },
+    { name: "남성 모델 05", gender: "men", thumbnail: "assets/img/casting/male-05.jpg" },
+    { name: "여성 모델 01", gender: "women", thumbnail: "assets/img/casting/female-01.jpg" },
+    { name: "여성 모델 02", gender: "women", thumbnail: "assets/img/casting/female-02.jpg" },
+    { name: "여성 모델 03", gender: "women", thumbnail: "assets/img/casting/female-03.jpg" },
+    { name: "여성 모델 04", gender: "women", thumbnail: "assets/img/casting/female-04.jpg" },
+    { name: "여성 모델 05", gender: "women", thumbnail: "assets/img/casting/female-05.jpg" }
   ]
 };
