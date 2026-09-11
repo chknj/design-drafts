@@ -107,6 +107,11 @@ window.HAAN_DATA = {
       slug: "apri", name: "APRI", gender: "characters", origin: "Original Character",
       status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 6,
       profile: [["Type", "Dragon"], ["Fur", "Apricot"], ["Eyes", "Brown"], ["Features", "Horns & Wings"]]
+    },
+    {
+      slug: "bibi", name: "BIBI", gender: "characters", origin: "Original Character",
+      status: "CHARACTER", activity: "VIRTUAL TALENT", photos: 1,
+      profile: [["Type", "Fantasy Creature"], ["Fur", "Warm Biscuit"], ["Eyes", "Dark Brown"], ["Features", "Round Cheeks & Antennae"]]
     }
   ],
   casting: [
