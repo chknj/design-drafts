@@ -1,12 +1,12 @@
 /* ------------------------------------------------------------------
-   GNIDART agency — model data
+   CHK agency — model data
    실제 모델로 교체할 때 이 파일만 수정하면 리스트/상세/메인 모델 보드에
    모두 반영됩니다. 사진은 assets/img/models/<slug>/00.jpg(대표) ~ 05.jpg
    ------------------------------------------------------------------ */
 window.HAAN_DATA = {
   agency: {
-    name: "GNIDART agency",
-    short: "GNIDART",
+    name: "CHK agency",
+    short: "CHK",
     tel: "+82 2 000 0000",
     bookingUrl: "https://musinsa.slack.com/team/U0AN99U7DKM",
     bookingLabel: "Slack으로 문의",

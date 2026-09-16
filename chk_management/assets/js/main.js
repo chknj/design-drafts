@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   GNIDART agency — main.js  (no dependencies)
+   CHK agency — main.js  (no dependencies)
    ------------------------------------------------------------------ */
 (function () {
   "use strict";
