@@ -1,4 +1,4 @@
-# CHK MANAGEMENT — 모델 에이전시 사이트 (정적 HTML)
+# YUNIK MANAGEMENT — 모델 에이전시 사이트 (정적 HTML)
 
 ## 구성
 ```

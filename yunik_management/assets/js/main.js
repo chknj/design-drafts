@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   CHK agency — main.js  (no dependencies)
+   YUNIK agency — main.js  (no dependencies)
    ------------------------------------------------------------------ */
 (function () {
   "use strict";
