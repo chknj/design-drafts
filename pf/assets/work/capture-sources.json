@@ -1,0 +1,146 @@
+[
+  {
+    "id": "marine-serre",
+    "name": "Marine Serre",
+    "url": "https://marineserrekorea.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/marine-serre.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "bape",
+    "name": "BAPE",
+    "url": "https://kr.bape.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/bape.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "empty",
+    "name": "MUSINSA EMPTY",
+    "url": "https://empty.seoul.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/empty.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "noah",
+    "name": "NOAH",
+    "url": "https://noahny.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/noah.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "champion-store",
+    "name": "Champion",
+    "url": "https://www.championkorea.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/champion-store.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "tawntoe",
+    "name": "TAW&TOE",
+    "url": "https://tawntoe.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/tawntoe.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "jansport",
+    "name": "JanSport",
+    "url": "https://jansport.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/jansport.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "dickies",
+    "name": "Dickies",
+    "url": "https://dickieskr.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/dickies.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "havaianas",
+    "name": "Havaianas",
+    "url": "https://havaianas.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/havaianas.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "manhattan-portage",
+    "name": "Manhattan Portage",
+    "url": "https://manhattanportage.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/manhattan-portage.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "novesta",
+    "name": "Novesta",
+    "url": "https://novesta.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/novesta.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "tenderate",
+    "name": "Tenderate",
+    "url": "https://tenderate.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/tenderate.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "032c",
+    "name": "032c",
+    "url": "https://www.032c.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/032c.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "y-3",
+    "name": "Y-3",
+    "url": "https://y-3.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/y-3.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "sound-of-sunrise",
+    "name": "Sound of Sunrise",
+    "url": "https://sound-of-sunrise.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/sound-of-sunrise.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "sleepy-jones",
+    "name": "Sleepy Jones",
+    "url": "https://sleepyjones.co.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/sleepy-jones.jpg",
+    "status": "captured"
+  },
+  {
+    "id": "thorogood",
+    "name": "Thorogood",
+    "url": "https://thorogoodkorea.com/",
+    "captured": "2026-11-02",
+    "image": "assets/work/thorogood-logo.png",
+    "status": "unavailable-store-paused"
+  },
+  {
+    "id": "jason-markk",
+    "name": "Jason Markk",
+    "url": "https://jasonmarkk.kr/",
+    "captured": "2026-11-02",
+    "image": "assets/work/jason-markk-logo.png",
+    "status": "unavailable-store-paused"
+  }
+]
