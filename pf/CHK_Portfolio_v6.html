@@ -221,20 +221,24 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 
 /* Personal work: a quiet portrait film beside the existing project links. */
 .about-projects .about-chapter-body{max-width:1120px}
-.about-projects-layout{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.4fr);gap:clamp(28px,3vw,48px);align-items:start;margin-top:30px}
-.about-project-film{position:relative;min-width:0;line-height:0;background:#eee}
+.about-projects-layout{display:grid;grid-template-columns:minmax(180px,220px) minmax(0,1fr);gap:clamp(32px,4vw,60px);align-items:stretch;margin-top:30px}
+.about-project-film{position:relative;align-self:start;min-width:0;line-height:0;background:#eee}
 .about-project-film video{display:block;width:100%;height:auto;aspect-ratio:876/1108;object-fit:contain}
-.about-projects-layout .about-links{margin:0;min-width:0}
-.about-projects-layout .about-links a{min-height:112px;gap:16px;grid-template-columns:minmax(0,1fr) auto 20px}
-.about-projects-layout .about-links a span:first-child{font-size:clamp(22px,2vw,30px);overflow-wrap:break-word}
+.about-projects-layout .about-links{display:grid;grid-template-rows:repeat(3,minmax(0,1fr));margin:0;min-width:0}
+.about-projects-layout .about-links a{height:100%;min-height:0;padding:16px 0;gap:16px;grid-template-columns:minmax(0,1fr) auto 20px}
+.about-projects-layout .about-links a span:first-child{font-size:clamp(24px,2.2vw,32px);overflow-wrap:break-word}
 .about-film-toggle{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:36px;height:36px;padding:8px;border:1px solid #ffffff80;border-radius:50%;background:#ffffffdf;color:#111}
 .about-film-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
 .about-film-toggle .film-play{display:none;fill:currentColor;stroke:none}
 .about-film-toggle.is-paused .film-pause{display:none}
 .about-film-toggle.is-paused .film-play{display:block}
 @media(max-width:1100px) and (min-width:901px){.about-projects-layout .about-links a{grid-template-columns:minmax(0,1fr) 20px;gap:4px 16px}.about-projects-layout .about-links a span:nth-child(2){grid-column:1;grid-row:2}.about-projects-layout .about-links a span:last-child{grid-column:2;grid-row:1/3}}
-@media(max-width:900px){.about-projects-layout{grid-template-columns:1fr;gap:28px}.about-project-film{width:min(100%,360px)}.about-projects-layout .about-links a{min-height:0}}
+@media(max-width:900px){.about-projects-layout{grid-template-columns:1fr;gap:28px}.about-project-film{width:min(100%,360px)}.about-projects-layout .about-links{display:block}.about-projects-layout .about-links a{height:auto;min-height:0;padding:20px 0}}
 @media(max-width:560px){.about-project-film{width:100%}.about-projects-layout .about-links a{grid-template-columns:minmax(0,1fr) auto}.about-projects-layout .about-links a span:first-child{font-size:25px}}
+
+.loop-film-card{overflow:hidden;background:#eee}
+.loop-film-card .work-film{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.loop-film-card .loop-caption{color:white;text-shadow:0 1px 5px #000}
 </style>
 </head>
 <body>
@@ -290,7 +294,14 @@ function populateImages(root=document){root.querySelectorAll('[data-image]').for
 function card(p){return `<button class="project-card" data-project="${p.id}" aria-label="${p.name} ${p.type} 자세히 보기">${imageMarkup(p.id+'-cover')}<div class="project-caption"><div><h3>${p.name}</h3><p>${p.type}</p></div><span class="arrow" aria-hidden="true">↗</span></div></button>`}
 
 const grid=document.getElementById('work-grid');
-function renderWork(){grid.innerHTML=Array.from({length:4},()=>PROJECTS).flat().map((p,i)=>`<button ${i>=PROJECTS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card" data-project="${p.id}" aria-label="${p.name} ${p.type} 자세히 보기">${imageMarkup(p.id+'-cover')}<span class="loop-caption"><span><strong>${p.name}</strong><small>${p.type}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`).join('');populateImages(grid)}renderWork();
+function renderWork(){
+ grid.innerHTML=Array.from({length:4},()=>PROJECTS).flat().map((p,i)=>{
+  // Replace a repeated card, keeping every original project's accessible entry.
+  if(i===PROJECTS.length)return `<a class="loop-card loop-film-card" href="#about/experiments" aria-label="Branden 패션 영상 자세히 보기"><video class="work-film" autoplay muted loop playsinline preload="metadata" poster="branden-lifestyle-poster.jpg" width="876" height="1108" aria-hidden="true"><source src="https://chknj.github.io/design-drafts/pf/branden-lifestyle-18s-720p-taller-5pct.mp4" type="video/mp4"></video><span class="loop-caption"><span><strong>Branden</strong><small>Fashion film</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></a>`;
+  return `<button ${i>=PROJECTS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card" data-project="${p.id}" aria-label="${p.name} ${p.type} 자세히 보기">${imageMarkup(p.id+'-cover')}<span class="loop-caption"><span><strong>${p.name}</strong><small>${p.type}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`;
+ }).join('');populateImages(grid);
+}renderWork();
+
 const dialog=document.getElementById('project-dialog');const menuButton=document.getElementById('menu-button');const menu=document.getElementById('mobile-menu');
 function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false');menuButton.textContent='MENU ＋';document.body.classList.remove('locked');wakeGallery()}
 menuButton.addEventListener('click',()=>{const open=menu.hidden;menu.hidden=!open;menuButton.setAttribute('aria-expanded',String(open));menuButton.textContent=open?'CLOSE ×':'MENU ＋';document.body.classList.toggle('locked',open)});
@@ -368,7 +379,7 @@ function sizeLoop(){
  }
  loopLayout=loopCards.map((el,i)=>{
   const item=i%PROJECTS.length,col=item%3,row=Math.floor(item/3),tile=Math.floor(i/PROJECTS.length);
-  const width=unit*widths[row][col],height=unit*heights[row][col];
+  const width=unit*widths[row][col],height=el.classList.contains('loop-film-card')?width*1108/876:unit*heights[row][col];
   const x=w*.055+(col+(tile%2)*3)*colStep+(unit*1.12-width)/2+unit*offsetsX[row][col];
   let y=h*.65+Math.floor(tile/2)*tileHeight+[0,-unit*1.94,-unit*.70][col]+unit*offsetsY[row][col];
   for(let r=0;r<row;r++)y+=unit*heights[r][col]+verticalGap+(r===[2,0,1][col]?breathingRoom:0);
@@ -552,6 +563,20 @@ new IntersectionObserver(entries=>{filmInView=entries[0].isIntersecting;syncBran
 document.addEventListener('visibilitychange',syncBrandenFilm);
 filmMotion.addEventListener('change',()=>{filmUserPaused=filmMotion.matches;syncBrandenFilm()});
 syncBrandenFilm();
+
+const workFilm=document.querySelector('.work-film');
+let workFilmInView=false;
+function syncWorkFilm(){
+ workFilm.muted=true;
+ if(workFilmInView&&!filmMotion.matches&&!document.hidden){workFilm.play().catch(()=>{})}
+ else{workFilm.pause()}
+}
+workFilm.defaultMuted=true;
+workFilm.addEventListener('volumechange',()=>{if(!workFilm.muted)workFilm.muted=true});
+new IntersectionObserver(entries=>{workFilmInView=entries[0].isIntersecting;syncWorkFilm()},{threshold:0.15}).observe(workFilm);
+document.addEventListener('visibilitychange',syncWorkFilm);
+filmMotion.addEventListener('change',syncWorkFilm);
+syncWorkFilm();
 
 </script>
 </body>
