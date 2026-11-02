@@ -1,5 +1,5 @@
 /* ==================================================================
-   YUNIK agency — style.css
+   the brands — style.css
    Tokens → Base → Layout → Components → Pages → Responsive
    ================================================================== */
 
@@ -108,7 +108,7 @@ body.menu-open .menu ul li a { transform: none; opacity: 1; }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--line); padding: 64px var(--gutter) 40px; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
 .footer .brand .mark { font-size: 40px; }
 .footer h4 { margin: 0 0 14px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
 .footer li { font-size: 14px; line-height: 1.9; color: var(--ink-2); }

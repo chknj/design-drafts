@@ -1,4 +1,4 @@
-# YUNIK MANAGEMENT — 모델 에이전시 사이트 (정적 HTML)
+# the brands — 모델 에이전시 사이트 (정적 HTML)
 
 ## 구성
 ```
@@ -15,7 +15,7 @@ assets/img/hero.jpg     메인 히어로 배경
 `_partials.html` 수정 후 `python3 _build.py` 를 실행하면 세 페이지에 반영됩니다. 직접 각 HTML을 편집해도 됩니다.
 
 ## 실제 데이터로 교체
-1. `assets/js/data.js` 의 `agency` (이름/이메일/전화/주소/인스타) 수정
+1. `assets/js/data.js` 의 `agency` (이름/전화/주소) 수정
 2. `models` 배열의 이름·출신·상태·사이즈 수정. `slug` 는 사진 폴더명과 동일해야 합니다.
 3. 사진을 `assets/img/models/<slug>/00.jpg~05.jpg` 로 교체 (`photos` 값으로 장수 조절)
 

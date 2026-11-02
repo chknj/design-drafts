@@ -1,15 +1,19 @@
-<!-- ===== HEAD (모든 페이지 공통) ===== -->
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Models — the brands</title>
+  <meta name="description" content="the brands 모델 보드. Women / Men / Characters.">
+  <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
-
-<!-- ===== HEADER ===== -->
-<header class="header">
-  <a class="brand" href="index.html"><span class="mark">YUNIK</span><span class="sub">Agency</span></a>
+</head>
+<body data-page="models">
+  <header class="header">
+  <a class="brand" href="index.html"><span class="mark">the brands</span><span class="sub">Agency</span></a>
   <nav class="nav" aria-label="Primary">
     <a href="models.html" data-nav="models">Models</a>
     <a href="models.html?cat=women">Women</a>
@@ -18,7 +22,6 @@
     <a href="index.html#contact" data-nav="contact">Contact</a>
   </nav>
   <div class="header-right">
-    <a class="btn-booking" href="index.html#contact"><span class="dot"></span><span class="label">Booking</span></a>
     <button class="btn-menu" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -30,20 +33,33 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
-  <div class="menu-foot"><span data-agency="email"></span><span data-agency="tel"></span></div>
+  <div class="menu-foot"><span data-agency="tel"></span></div>
 </div>
 
-<!-- ===== FOOTER ===== -->
-<footer class="footer" id="contact">
+  <main>
+    <section class="page-head">
+      <div class="title-row">
+        <h1>Models<sup id="model-count">26</sup></h1>
+        <div class="tabs" role="tablist" aria-label="Category">
+          <button data-cat="all" class="active">All</button>
+          <button data-cat="women">Women</button>
+          <button data-cat="men">Men</button>
+          <button data-cat="characters">Characters</button>
+        </div>
+      </div>
+    </section>
+    <section class="grid" aria-live="polite"></section>
+  </main>
+
+  <footer class="footer" id="contact">
   <div class="footer-grid">
     <div>
-      <a class="brand" href="index.html"><span class="mark">YUNIK</span></a>
+      <a class="brand" href="index.html"><span class="mark">the brands</span></a>
       <p style="margin-top:14px;max-width:32ch;color:var(--ink-2);font-size:14px;word-break:keep-all">성수동을 기반으로 국내외 모델을 매니지먼트하는 에이전시입니다. 캠페인·룩북·커머스 촬영 캐스팅을 문의해 주세요.</p>
     </div>
     <div>
-      <h4>Booking</h4>
+      <h4>Telephone</h4>
       <ul>
-        <li><a data-agency="email" href="#"></a></li>
         <li><span data-agency="tel"></span></li>
       </ul>
     </div>
@@ -54,13 +70,6 @@
         <li><span data-agency="addressKo"></span></li>
       </ul>
     </div>
-    <div>
-      <h4>Follow</h4>
-      <ul>
-        <li><a data-agency="instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="#">TikTok</a></li>
-      </ul>
-    </div>
   </div>
   <div class="footer-bottom">
     <span>© <span id="year"></span> <span data-agency="name"></span>. All rights reserved.</span>
@@ -69,3 +78,5 @@
 </footer>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
+</body>
+</html>
