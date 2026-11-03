@@ -250,6 +250,9 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 .type-cover small{font-size:9px;letter-spacing:.1em}.type-cover strong{font-size:clamp(18px,2.7vw,40px);line-height:1.1}.type-cover span{font-size:12px;line-height:1.6}
 .detail-notes{display:grid;grid-template-columns:1fr 1fr;gap:50px;border-top:1px solid #d8d8d8;padding:35px 0 55px}
 .detail-notes h3{font-size:23px;line-height:1.5;margin-bottom:18px}.detail-notes p:not(.eyebrow){font-size:16px;line-height:1.9;max-width:620px;word-break:keep-all}
+.store-capture-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:32px}
+.store-capture-pair .detail-capture{margin:0;min-width:0}
+@media(max-width:560px){.store-capture-pair{gap:12px;margin-top:20px}.store-capture-pair .detail-capture figcaption{font-size:10px;margin-top:8px}}
 .detail-capture img{display:block;width:100%;height:auto;border:1px solid #eee}
 .detail-capture figcaption{font-size:11px;color:#777;margin-top:14px;line-height:1.7}
 .detail-capture.is-archive{padding:50px;background:#f0eee9;text-align:center}.detail-capture.is-archive img{height:180px;object-fit:contain;border:0}
@@ -259,15 +262,77 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 .loop-poster{margin:0;user-select:none}
 .loop-poster img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
 .loop-poster:after{display:none}
+
+/* PDP case studies: image column 30%, written context 70%. */
+.loop-pdp{padding:0}
+.loop-pdp>img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.detail.pdp-detail{max-width:none;width:100%;margin:0;padding:48px var(--pad) 100px}
+.pdp-layout{display:grid;grid-template-columns:minmax(0,9fr) minmax(0,2fr) minmax(0,9fr);align-items:start}
+.pdp-heading{grid-column:3;grid-row:1;position:sticky;top:130px;padding:12px 0 50px;min-width:0}
+.detail.pdp-detail h2{font-size:clamp(32px,4.4vw,76px);line-height:1.25;margin:22px 0 20px;word-break:keep-all;overflow-wrap:anywhere}
+.pdp-subtitle{font-size:clamp(17px,1.7vw,24px);line-height:1.6;margin:0 0 32px}
+.pdp-description{font-size:16px;line-height:1.9;max-width:510px;color:#555}
+.pdp-meta{margin:48px 0 0;padding-top:24px;border-top:1px solid #ddd;max-width:510px;font-size:12px;line-height:1.8}
+.pdp-meta>div{display:grid;grid-template-columns:72px 1fr;gap:16px;margin:0 0 12px}
+.pdp-meta dt{color:#777}.pdp-meta dd{margin:0}
+.pdp-slices{grid-column:1;grid-row:1;width:100%;min-width:0;margin:0;padding:0;font-size:0;line-height:0;background:#fff}
+.pdp-slices img{display:block;width:100%;height:auto;margin:0;padding:0;border:0}
+@media(max-width:800px){
+ .detail.pdp-detail{padding:28px 0 50px}
+ .pdp-layout{grid-template-columns:minmax(0,1fr)}
+ .pdp-heading{grid-column:1;grid-row:1;position:static;padding:0 var(--pad) 40px}
+ .detail.pdp-detail h2{font-size:36px;margin:16px 0}
+ .pdp-subtitle{font-size:18px;margin-bottom:20px}
+ .pdp-description{font-size:15px}.pdp-meta{margin-top:28px}
+ .pdp-slices{grid-column:1;grid-row:2}
+}
+
+/* Image-backed Work frames use the source image aspect ratio. */
+.loop-card .placeholder:not(.archive-cover) img{object-fit:contain}
+
+/* Constellation adapted from the supplied values-constellation.html. */
+.about-hero-main{width:100%;max-width:920px;min-width:0;container-type:inline-size}
+.about-heading-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:52px;margin-bottom:54px}
+.about-heading-row h1{font-size:clamp(48px,12cqw,112px);margin:0;white-space:nowrap}
+.about-values{position:relative;min-width:0;width:100%;max-width:440px;justify-self:center;align-self:center}
+.about-values-stage{position:relative;display:block;width:100%;aspect-ratio:1;isolation:isolate;touch-action:pan-y;cursor:grab;outline-offset:4px}
+.about-values-stage.is-dragging{cursor:grabbing}
+.about-values-canvas{position:absolute;inset:0;width:100%;height:100%}
+.about-values-points{position:absolute;inset:0;margin:0;padding:0;list-style:none;pointer-events:none}
+.about-values-point{position:absolute;left:0;top:0;padding:2px 4px;background:#f3f3f3f2;color:#333;font-size:11px;line-height:1.5;white-space:nowrap;user-select:none;will-change:transform}
+
+.about-values-stage:focus-visible{outline:1px solid currentColor;outline-offset:5px}
+@media(max-width:900px){.about-heading-row{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:30px}.about-heading-row h1{font-size:12cqw}.about-values-point{font-size:10px}}
+@media(max-width:560px){.about-heading-row{grid-template-columns:minmax(0,1fr);gap:18px;margin-bottom:32px}.about-heading-row h1{font-size:18vw;line-height:1.02}.about-values{width:min(320px,100%);justify-self:center;margin-bottom:0}.about-values-point{font-size:10px;padding:1px 3px}}
+
+.stack .placeholder{bottom:auto;background:transparent;border:0}
+.stack .placeholder img{height:auto;object-fit:contain}
+
+/* Career summary within the team operations section. */
+.about-career{margin-top:64px}
+.about-career>h3{font-size:20px;line-height:1.5;font-weight:600;margin:0 0 26px}
+.about-career-list{list-style:none;margin:0;padding:0}
+.about-career-row{display:grid;grid-template-columns:140px minmax(0,1fr);gap:32px;padding:24px 0;border-top:1px solid var(--line)}
+.about-career-period{font-size:14px;line-height:1.8;color:#777;padding-top:2px}
+.about-career-role{font-size:18px;line-height:1.6;font-weight:600;margin:0 0 8px}
+.about-career-description,.about-career-update{font-size:15px;line-height:1.9;word-break:keep-all;overflow-wrap:break-word;color:#4d4d4d;margin:0}
+.about-career-update{margin-top:14px}
+.about-career-update strong{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.about-career{margin-top:44px}.about-career>h3{font-size:18px;margin-bottom:20px}.about-career-row{grid-template-columns:1fr;gap:8px;padding:22px 0}.about-career-period{font-size:13px;padding-top:0}.about-career-role{font-size:17px}.about-career-description,.about-career-update{font-size:14px;line-height:1.85}}
+
+/* Hide scrollbar chrome everywhere while retaining scrolling. */
+*{scrollbar-width:none}
+*::-webkit-scrollbar{display:none;width:0;height:0}
 </style>
 </head>
 <body>
 <a class="skip" href="#main-content">본문으로 이동</a>
-<header class="topbar"><a class="logo" href="#home" aria-label="CHK 홈">CHK</a><nav class="nav" aria-label="주 메뉴"><a data-nav="work" href="#work">WORK</a><a data-nav="about" href="#about">ABOUT</a><a href="#work/archive">ARCHIVE ↗</a></nav><button class="menu-button" id="menu-button" aria-expanded="false" aria-controls="mobile-menu">MENU ＋</button></header>
-<nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><a href="#home">Home</a><a href="#work">Work</a><a href="#about">About</a><a href="#work/archive">Archive ↗</a><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
+<header class="topbar"><a class="logo" href="#home" aria-label="CHK 홈">CHK</a><nav class="nav" aria-label="주 메뉴"><a data-nav="home" href="#home">MAIN</a><a data-nav="work" href="#work">WORK</a><a data-nav="about" href="#about">ABOUT</a><a data-nav="archive" href="#work/archive">ARCHIVE ↗</a></nav><button class="menu-button" id="menu-button" aria-expanded="false" aria-controls="mobile-menu">MENU ＋</button></header>
+<nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><a data-nav="home" href="#home">Main</a><a data-nav="work" href="#work">Work</a><a data-nav="about" href="#about">About</a><a data-nav="archive" href="#work/archive">Archive ↗</a><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
 <main id="main-content">
 <div class="page home-page" data-page="home">
-<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder" data-image="hero-1"></div><div class="placeholder" data-image="hero-2"></div><div class="placeholder" data-image="hero-3"></div><div class="placeholder" data-image="hero-4"></div></a></section>
+<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder" style="z-index:3"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder" style="z-index:2"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder" style="z-index:1"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder" style="z-index:0;width:80%;left:10%;right:auto"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
+</a></section>
 </div>
 <div class="page" data-page="work" hidden>
 <section class="work-canvas" id="work-canvas" aria-label="상하좌우 무한 스크롤 작업 갤러리" tabindex="0">
@@ -282,10 +347,23 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 <article class="about-profile">
 <header class="about-hero">
 <aside class="about-rail"><p>최현균<br>Brand &amp; Commerce<br>Design</p><a href="#about/responsibilities">주요 경험 <span aria-hidden="true">↓</span></a></aside>
-<div class="about-hero-main"><h1>About<br>my work.</h1><p class="about-intro">무신사에서 여러 브랜드의 온라인 디자인을 제작하고,<br class="about-desktop-break"> 팀의 업무 배분과 제작 기준을 정리해 왔습니다.</p></div>
+<div class="about-hero-main"><div class="about-heading-row"><h1>About<br>my work.</h1><div class="about-values">
+<values-constellation class="about-values-stage" tabindex="0" role="group" aria-label="주요 역량. 드래그하거나 방향키로 회전합니다.">
+<canvas class="about-values-canvas" aria-hidden="true"></canvas><ul class="about-values-points"><li class="about-values-point">PDP</li><li class="about-values-point">공식몰</li><li class="about-values-point">상품 촬영 기획</li><li class="about-values-point">자동화</li><li class="about-values-point">비주얼 디자인</li><li class="about-values-point">팀 운영</li><li class="about-values-point">AI 활용</li><li class="about-values-point">브랜드 가이드</li><li class="about-values-point">업무 표준화</li><li class="about-values-point">웹 구현</li><li class="about-values-point">콘텐츠 기획</li><li class="about-values-point">협업 프로세스</li></ul></values-constellation>
+
+</div></div><p class="about-intro">무신사에서 여러 브랜드의 온라인 디자인을 제작하고,<br class="about-desktop-break"> 팀의 업무 배분과 제작 기준을 정리해 왔습니다.</p></div>
 </header>
 <section class="about-chapter" id="responsibilities" aria-labelledby="about-work"><header class="about-section-label"><span>01 /</span><h2 id="about-work">주요 업무</h2></header><div class="about-chapter-body"><h3 class="about-feature">PDP 제작부터<br>공식몰 구축·운영까지.</h3><p class="about-copy about-overview">잔스포츠·챔피온·디키즈·이스트팩 등 다양한 브랜드의 PDP, 공식몰, 마케팅 비주얼 디자인을 담당했습니다.</p><div class="about-columns"><div><h4>브랜드 디자인</h4><p>상품 정보를 전달하는 PDP와 프로모션·캠페인 비주얼을 제작했습니다. 브랜드마다 필요한 디자인 업무를 팀에서 함께 진행했습니다.</p></div><div><h4>공식몰 구축</h4><p>카페24·고도몰·쇼피파이 등 브랜드에 맞는 솔루션으로 공식몰을 직접 디자인하고 구축했습니다. 오픈 이후의 유지보수는 팀원에게 이관했습니다.</p></div></div></div></section>
-<section class="about-chapter" id="method" aria-labelledby="about-team"><header class="about-section-label"><span>02 /</span><h2 id="about-team">조직 운영</h2></header><div class="about-chapter-body"><h3 class="about-feature">웹디자이너와 포토그래퍼,<br>10인 조직을 리드했습니다.</h3><div class="about-columns"><div><h4>브랜드별·기능별 업무 배분</h4><p>브랜드별 담당과 기능별 역할을 나누어 PDP 제작, 공식몰 유지보수, 마케팅 디자인 업무를 배분했습니다.</p></div><div><h4>협업과 제작 관리</h4><p>상품MD·운영지원팀과의 요청 및 전달 절차를 정리하고, 제작 일정과 결과물의 품질을 관리했습니다.</p></div></div></div></section>
+<section class="about-chapter" id="method" aria-labelledby="about-team"><header class="about-section-label"><span>02 /</span><h2 id="about-team">조직 운영</h2></header><div class="about-chapter-body"><h3 class="about-feature">웹디자이너와 포토그래퍼,<br>10인 조직을 리드했습니다.</h3><div class="about-columns"><div><h4>브랜드별·기능별 업무 배분</h4><p>브랜드별 담당과 기능별 역할을 나누어 PDP 제작, 공식몰 유지보수, 마케팅 디자인 업무를 배분했습니다.</p></div><div><h4>협업과 제작 관리</h4><p>상품MD·운영지원팀과의 요청 및 전달 절차를 정리하고, 제작 일정과 결과물의 품질을 관리했습니다.</p></div></div><section class="about-career" aria-labelledby="about-career-title">
+<h3 id="about-career-title">무신사 경력</h3>
+<ol class="about-career-list">
+<li class="about-career-row"><p class="about-career-period">2018–2021</p><div><h4 class="about-career-role">디자인팀장</h4><p class="about-career-description">상품 상세페이지 제작 · 공식몰 유지보수 · 캠페인 및 프로모션 디자인</p></div></li>
+<li class="about-career-row"><p class="about-career-period">2021–2023</p><div><h4 class="about-career-role">플랫폼 디자인팀장</h4><p class="about-career-description">상품 상세페이지 제작 총괄 · 공식몰 구축·운영 · 상품 촬영팀 관리</p></div></li>
+<li class="about-career-row"><p class="about-career-period">2024–2025</p><div><h4 class="about-career-role">플랫폼 디자인팀장</h4><p class="about-career-description">다수 브랜드의 공식몰 구축·운영 · 상품 상세페이지 제작 총괄</p></div></li>
+<li class="about-career-row"><p class="about-career-period">2025–2026.08</p><div><h4 class="about-career-role">브랜드 경험(BX) 디자인 매니저</h4><p class="about-career-description">공식몰 구축·운영 · 상품 상세페이지 제작 총괄 · 콘텐츠 제작 자동화 · 생성형 AI 도입</p></div></li>
+<li class="about-career-row"><p class="about-career-period">2026.09–현재</p><div><h4 class="about-career-role">마케팅팀</h4><p class="about-career-description">CX 디자이너 4명의 업무 조율과 실무 리딩을 담당하고 있습니다.</p></div></li>
+</ol>
+</section></div></section>
 <section class="about-chapter" aria-labelledby="about-improvement"><header class="about-section-label"><span>03 /</span><h2 id="about-improvement">업무 개선</h2></header><div class="about-chapter-body about-improvements">
 <section class="about-principle" id="automation" aria-labelledby="about-tools"><span class="about-index">A /</span><div><h3 id="about-tools">PDP 제작 자동화</h3><p class="about-result">자동화 툴을 직접 개발해<br>제작 리드타임을 50% 단축했습니다.</p><p class="about-copy">상품 정보가 담긴 엑셀과 이미지 폴더를 입력하면, 텍스트 이미지 생성·이미지 순서 배치·등록용 코드 작성을 한 번에 처리하도록 만들었습니다. 공식몰 구현 과정에서도 AI를 활용해 문제를 해결했습니다.</p></div></section>
 <section class="about-principle" aria-labelledby="about-guides"><span class="about-index">B /</span><div><h3 id="about-guides">브랜드 비주얼·기초 가이드 수립</h3><p class="about-copy">폰트·컬러·이미지 사용 기준과 제작에 필요한 기초 가이드를 정리했습니다. 담당자가 달라져도 브랜드의 표현과 기본적인 제작 품질이 유지되도록 했습니다.</p></div></section>
@@ -318,7 +396,10 @@ const PROJECTS=[
     "focusTitle": "컬렉션과 소재의 이야기를 함께 보여주는 공간.",
     "focus": "여성·남성 컬렉션과 Materials, Shows, Core 콘텐츠를 함께 탐색하는 공식몰입니다. 큰 캠페인 이미지와 간결한 메뉴가 브랜드의 시각적 인상을 이어갑니다.",
     "platform": "Cafe24",
-    "image": "assets/work/marine-serre.jpg"
+    "image": "assets/work/marine-serre-2x.png",
+    "listImage": "assets/work/marine-serre-list-2x.png",
+    "detailImage": "assets/work/marine-serre-detail-2x.png",
+    "coverImage": "assets/work/marine-serre-cover-hq.webp"
   },
   {
     "id": "bape",
@@ -332,7 +413,10 @@ const PROJECTS=[
     "focusTitle": "협업과 신상품을 빠르게 만나는 구조.",
     "focus": "협업 캠페인을 메인에 두고 남성·여성·아동과 라이프스타일로 상품을 나누었습니다. 브랜드의 그래픽과 다양한 제품군이 하나의 스토어 안에서 연결됩니다.",
     "platform": "Shopify",
-    "image": "assets/work/bape.jpg"
+    "image": "assets/work/bape-2x.png",
+    "listImage": "assets/work/bape-list-2x.png",
+    "detailImage": "assets/work/bape-detail-2x.png",
+    "coverImage": "assets/work/bape-cover-hq.webp"
   },
   {
     "id": "empty",
@@ -346,7 +430,10 @@ const PROJECTS=[
     "focusTitle": "새로운 브랜드와 상품을 발견하는 편집숍.",
     "focus": "시즌 프로모션, 신규 상품, 브랜드 탐색을 중심으로 구성된 편집숍입니다. 의류부터 신발·가방·액세서리까지 다양한 상품을 카테고리와 브랜드 기준으로 살펴볼 수 있습니다.",
     "platform": "Cafe24",
-    "image": "assets/work/empty.jpg"
+    "image": "assets/work/empty-2x.png",
+    "listImage": "assets/work/empty-list-2x.png",
+    "detailImage": "assets/work/empty-detail-2x.png",
+    "coverImage": "assets/work/empty-cover-hq.webp"
   },
   {
     "id": "noah",
@@ -360,7 +447,10 @@ const PROJECTS=[
     "focusTitle": "쇼핑에서 룩북과 카페로 이어지는 경험.",
     "focus": "시즌 컬렉션과 협업 소식에서 시작해 카테고리별 상품으로 이어집니다. Shop, Cafe, Lookbooks, Explore를 함께 배치해 판매 공간 너머의 브랜드 이야기를 담았습니다.",
     "platform": "Cafe24",
-    "image": "assets/work/noah.jpg"
+    "image": "assets/work/noah-2x.png",
+    "listImage": "assets/work/noah-list-2x.png",
+    "detailImage": "assets/work/noah-detail-2x.png",
+    "coverImage": "assets/work/noah-cover-hq.webp"
   },
   {
     "id": "champion-store",
@@ -374,7 +464,10 @@ const PROJECTS=[
     "focusTitle": "캠페인과 상품의 흐름을 연결하는 공식몰.",
     "focus": "대형 캠페인 비주얼을 시작으로 시즌 컬렉션과 신상품을 소개합니다. UNISEX·WOMEN 상품 구분과 에디토리얼, 브랜드 소개를 통해 쇼핑과 콘텐츠 탐색을 함께 제공합니다.",
     "platform": "Godomall",
-    "image": "assets/work/champion-store.jpg"
+    "image": "assets/work/champion-store-2x.png",
+    "listImage": "assets/work/champion-store-list-2x.png",
+    "detailImage": "assets/work/champion-store-detail-2x.png",
+    "coverImage": "assets/work/champion-store-cover-hq.webp"
   },
   {
     "id": "tawntoe",
@@ -388,7 +481,10 @@ const PROJECTS=[
     "focusTitle": "일상 속 풋웨어를 보여주는 화면.",
     "focus": "제품을 사용하는 장면과 협업 이미지를 넓게 보여주는 공식몰입니다. Products와 Collaboration, Pictorial, Editorial을 구분해 상품 탐색과 브랜드 콘텐츠를 연결합니다.",
     "platform": "Cafe24",
-    "image": "assets/work/tawntoe.jpg"
+    "image": "assets/work/tawntoe-2x.png",
+    "listImage": "assets/work/tawntoe-list-2x.png",
+    "detailImage": "assets/work/tawntoe-detail-2x.png",
+    "coverImage": "assets/work/tawntoe-cover-hq.webp"
   },
   {
     "id": "jansport-pdp",
@@ -440,12 +536,12 @@ const PROJECTS=[
     "desc": "Thorogood의 공식 사이트를 직접 디자인하고 구축했습니다.",
     "role": "공식몰 디자인 · 구축",
     "url": "https://thorogoodkorea.com/",
-    "line": "브랜드의 공식 판매 공간.",
-    "focusTitle": "공식몰 디자인 · 구축 기록.",
-    "focus": "카페24 기반으로 직접 디자인하고 구축한 써로굿 공식몰 작업입니다. 현재 공식몰은 휴점 안내 상태이며, 이 화면에는 기존 브랜드 로고를 사용했습니다.",
+    "line": "부츠의 헤리티지를 담은 브랜드 사이트.",
+    "focusTitle": "브랜드의 역사와 제작 과정을 전하는 공간.",
+    "focus": "부츠의 이미지를 중심으로 브랜드 소개와 제작 영상, 역사, 온라인 판매처를 연결합니다. 카페24 기반으로 직접 디자인하고 구축한 쏘로굿 공식 사이트입니다.",
     "platform": "Cafe24",
-    "image": "assets/work/thorogood-logo.png",
-    "archiveOnly": true
+    "image": "assets/work/thorogood-2x.png",
+    "coverImage": "assets/work/thorogood-cover-hq.webp"
   },
   {
     "id": "jason-markk",
@@ -456,11 +552,11 @@ const PROJECTS=[
     "role": "공식몰 디자인 · 구축",
     "url": "https://jasonmarkk.kr/",
     "line": "제품을 만나는 공식 채널.",
-    "focusTitle": "공식몰 디자인 · 구축 기록.",
-    "focus": "카페24 기반으로 직접 디자인하고 구축한 제이슨마크 공식몰 작업입니다. 현재 공식몰은 휴점 안내 상태이며, 이 화면에는 기존 브랜드 로고를 사용했습니다.",
+    "focusTitle": "브랜드 소개와 스니커즈 케어 콘텐츠를 연결한 사이트.",
+    "focus": "브랜드 스토리와 소재별 스니커즈 케어 방법, 온·오프라인 판매처를 소개합니다. 메인 영상과 콘텐츠를 중심으로 구성한 카페24 기반 공식 사이트입니다.",
     "platform": "Cafe24",
-    "image": "assets/work/jason-markk-logo.png",
-    "archiveOnly": true
+    "image": "assets/work/jason-markk-2x.png",
+    "coverImage": "assets/work/jason-markk-cover-hq.webp"
   },
   {
     "id": "jansport",
@@ -474,7 +570,10 @@ const PROJECTS=[
     "focusTitle": "카테고리와 시즌 이야기를 함께 담다.",
     "focus": "백팩·미니백·액세서리·어패럴을 명확히 구분한 공식몰입니다. 메인 캠페인과 룩북, 브랜드 이야기, 매장 소식이 상품 탐색의 출발점이 됩니다.",
     "platform": "Cafe24",
-    "image": "assets/work/jansport.jpg"
+    "image": "assets/work/jansport-2x.png",
+    "listImage": "assets/work/jansport-list-2x.png",
+    "detailImage": "assets/work/jansport-detail-2x.png",
+    "coverImage": "assets/work/jansport-cover-hq.webp"
   },
   {
     "id": "dickies",
@@ -488,7 +587,10 @@ const PROJECTS=[
     "focusTitle": "아이코닉한 제품과 협업을 함께 보여주다.",
     "focus": "워크웨어의 제품군과 협업 캠페인을 중심으로 구성된 공식몰입니다. ICONS, NEW ARRIVAL, COLLECTION, EDITORIAL 메뉴가 제품의 기본형과 새로운 스타일을 함께 소개합니다.",
     "platform": "Cafe24",
-    "image": "assets/work/dickies.jpg"
+    "image": "assets/work/dickies-2x.png",
+    "listImage": "assets/work/dickies-list-2x.png",
+    "detailImage": "assets/work/dickies-detail-2x.png",
+    "coverImage": "assets/work/dickies-cover-hq.webp"
   },
   {
     "id": "havaianas",
@@ -502,7 +604,9 @@ const PROJECTS=[
     "focusTitle": "여유로운 이미지에서 제품 탐색으로.",
     "focus": "브랜드의 밝은 라이프스타일 이미지를 메인에 크게 배치했습니다. 플립플랍·샌달·슬라이드 구분과 여성·남성 상품 탐색이 이어지는 쇼피파이 기반 공식몰입니다.",
     "platform": "Shopify",
-    "image": "assets/work/havaianas.jpg"
+    "image": "assets/work/havaianas.jpg",
+    "listImage": "assets/work/havaianas-list.jpg",
+    "detailImage": "assets/work/havaianas-detail.jpg"
   },
   {
     "id": "manhattan-portage",
@@ -516,7 +620,10 @@ const PROJECTS=[
     "focusTitle": "용도별 상품과 브랜드 이야기를 연결하다.",
     "focus": "메신저백·백팩·웨이스트백 등 가방의 용도에 따라 탐색할 수 있습니다. 협업 캠페인과 스냅, 브랜드 스토리, 소재 소개가 제품을 사용하는 맥락을 함께 보여줍니다.",
     "platform": "Cafe24",
-    "image": "assets/work/manhattan-portage.jpg"
+    "image": "assets/work/manhattan-portage-2x.png",
+    "listImage": "assets/work/manhattan-portage-list-2x.png",
+    "detailImage": "assets/work/manhattan-portage-detail-2x.png",
+    "coverImage": "assets/work/manhattan-portage-cover-hq.webp"
   },
   {
     "id": "novesta",
@@ -530,7 +637,8 @@ const PROJECTS=[
     "focusTitle": "제품 이미지와 소식에 집중한 브랜드 사이트.",
     "focus": "스니커즈의 소재와 형태가 드러나는 큰 사진을 중심에 두었습니다. About, News, Stockists와 룩북을 통해 브랜드 소개와 컬렉션 소식을 간결하게 전달합니다.",
     "platform": "Cafe24",
-    "image": "assets/work/novesta.jpg"
+    "image": "assets/work/novesta-2x.png",
+    "coverImage": "assets/work/novesta-cover-hq.webp"
   },
   {
     "id": "tenderate",
@@ -544,7 +652,8 @@ const PROJECTS=[
     "focusTitle": "브랜드 스토리에서 기술과 제품으로.",
     "focus": "소재 브랜드의 이야기를 스크롤 흐름에 따라 소개하는 사이트입니다. 브랜드 철학, 소재 기술, 제조 과정, 제품, 문의를 순서대로 연결해 소재가 가진 특성을 설명합니다.",
     "platform": "Cafe24",
-    "image": "assets/work/tenderate.jpg"
+    "image": "assets/work/tenderate-2x.png",
+    "coverImage": "assets/work/tenderate-cover-hq.webp"
   },
   {
     "id": "032c",
@@ -558,7 +667,10 @@ const PROJECTS=[
     "focusTitle": "읽는 콘텐츠와 보는 컬렉션의 접점.",
     "focus": "Magazine, Exhibitions, Store를 중심으로 패션과 문화 콘텐츠를 함께 소개합니다. 레디투웨어 비주얼과 매거진 이슈, 기사 콘텐츠가 나란히 놓인 브랜드 사이트입니다.",
     "platform": "Cafe24",
-    "image": "assets/work/032c.jpg"
+    "image": "assets/work/032c-2x.png",
+    "listImage": "assets/work/032c-list-2x.png",
+    "detailImage": "assets/work/032c-detail-2x.png",
+    "coverImage": "assets/work/032c-cover-hq.webp"
   },
   {
     "id": "y-3",
@@ -572,7 +684,10 @@ const PROJECTS=[
     "focusTitle": "절제된 화면과 큰 컬렉션 이미지.",
     "focus": "흑백 중심의 메뉴와 넓은 캠페인 이미지로 컬렉션을 소개합니다. MEN·WOMEN·UNISEX와 TOPICS, SELECT 상품 영역을 통해 룩과 개별 제품을 이어서 볼 수 있습니다.",
     "platform": "Cafe24",
-    "image": "assets/work/y-3.jpg"
+    "image": "assets/work/y-3-2x.png",
+    "listImage": "assets/work/y-3-list-2x.png",
+    "detailImage": "assets/work/y-3-detail-2x.png",
+    "coverImage": "assets/work/y-3-cover-hq.webp"
   },
   {
     "id": "sound-of-sunrise",
@@ -586,7 +701,10 @@ const PROJECTS=[
     "focusTitle": "이미지와 상품 목록의 균형.",
     "focus": "큰 시즌 비주얼과 로고를 첫 화면에 배치한 공식몰입니다. 아우터·상의·하의·신발·액세서리와 에디토리얼을 구분하고, 신상품 목록으로 자연스럽게 이어집니다.",
     "platform": "Cafe24",
-    "image": "assets/work/sound-of-sunrise.jpg"
+    "image": "assets/work/sound-of-sunrise-2x.png",
+    "listImage": "assets/work/sound-of-sunrise-list-2x.png",
+    "detailImage": "assets/work/sound-of-sunrise-detail-2x.png",
+    "coverImage": "assets/work/sound-of-sunrise-cover-hq.webp"
   },
   {
     "id": "sleepy-jones",
@@ -600,12 +718,15 @@ const PROJECTS=[
     "focusTitle": "룩북을 따라 만나는 브랜드의 분위기.",
     "focus": "여유로운 일상의 이미지와 룩북을 중심으로 브랜드를 소개합니다. 뉴스, 룩북, 스토어, 브랜드 메뉴를 간결하게 구성해 콘텐츠를 편하게 살펴볼 수 있습니다.",
     "platform": "Cafe24",
-    "image": "assets/work/sleepy-jones.jpg"
+    "image": "assets/work/sleepy-jones-2x.png",
+    "coverImage": "assets/work/sleepy-jones-cover-hq.webp"
   }
 ];
 // 이미지 추가: 각 data-image 값에 파일 경로를 넣으면 해당 회색 박스를 대체합니다.
 // 예: const IMAGES = { 'hero-1': 'images/hero.jpg', 'marine-serre-cover': 'images/marine.jpg' };
-const IMAGES=Object.fromEntries(PROJECTS.filter(p=>p.image).flatMap(p=>[[p.id+'-cover',p.image],[p.id+'-detail-1',p.image]]));
+const PDP_PROJECTS=[{"id":"pdp-gloverall-1","name":"글로버올","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/gloverall/1/1.jpg","width":860,"height":458},{"src":"assets/work/pdp/gloverall/1/2.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/3.jpg","width":860,"height":519},{"src":"assets/work/pdp/gloverall/1/4.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/5.jpg","width":860,"height":1},{"src":"assets/work/pdp/gloverall/1/6.jpg","width":860,"height":339},{"src":"assets/work/pdp/gloverall/1/7.jpg","width":860,"height":314},{"src":"assets/work/pdp/gloverall/1/8.jpg","width":860,"height":792},{"src":"assets/work/pdp/gloverall/1/9.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/10.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/11.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/12.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/13.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/14.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/15.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/16.jpg","width":860,"height":1},{"src":"assets/work/pdp/gloverall/1/17.jpg","width":860,"height":339},{"src":"assets/work/pdp/gloverall/1/18.jpg","width":860,"height":486},{"src":"assets/work/pdp/gloverall/1/19.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/20.jpg","width":860,"height":147},{"src":"assets/work/pdp/gloverall/1/21.jpg","width":860,"height":572},{"src":"assets/work/pdp/gloverall/1/22.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/23.jpg","width":860,"height":339},{"src":"assets/work/pdp/gloverall/1/24.jpg","width":860,"height":396},{"src":"assets/work/pdp/gloverall/1/25.jpg","width":860,"height":860},{"src":"assets/work/pdp/gloverall/1/26.jpg","width":860,"height":590},{"src":"assets/work/pdp/gloverall/1/27.jpg","width":860,"height":261},{"src":"assets/work/pdp/gloverall/1/28.jpg","width":860,"height":409},{"src":"assets/work/pdp/gloverall/1/29.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/30.jpg","width":860,"height":352},{"src":"assets/work/pdp/gloverall/1/31.jpg","width":860,"height":1},{"src":"assets/work/pdp/gloverall/1/32.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/33.jpg","width":860,"height":485},{"src":"assets/work/pdp/gloverall/1/34.jpg","width":860,"height":348},{"src":"assets/work/pdp/gloverall/1/35.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/36.jpg","width":860,"height":1145},{"src":"assets/work/pdp/gloverall/1/37.jpg","width":860,"height":339},{"src":"assets/work/pdp/gloverall/1/38.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/39.jpg","width":860,"height":339},{"src":"assets/work/pdp/gloverall/1/41.jpg","width":860,"height":483},{"src":"assets/work/pdp/gloverall/1/42.jpg","width":860,"height":350},{"src":"assets/work/pdp/gloverall/1/45.jpg","width":860,"height":1490}],"thumbnails":[{"src":"assets/work/pdp/gloverall/1/2.jpg","width":860,"height":1490},{"src":"assets/work/pdp/gloverall/1/22.jpg","width":860,"height":1490}]},{"id":"pdp-dr-martens-1","name":"닥터마틴","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/dr-martens/1/1.jpg","width":860,"height":1803},{"src":"assets/work/pdp/dr-martens/1/2.jpg","width":860,"height":772},{"src":"assets/work/pdp/dr-martens/1/3.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/4.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/5.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/6.jpg","width":860,"height":1213},{"src":"assets/work/pdp/dr-martens/1/7.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/8.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/9.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/10.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/11.jpg","width":860,"height":771},{"src":"assets/work/pdp/dr-martens/1/12.jpg","width":860,"height":643},{"src":"assets/work/pdp/dr-martens/1/13.jpg","width":860,"height":1128},{"src":"assets/work/pdp/dr-martens/1/14.jpg","width":860,"height":534},{"src":"assets/work/pdp/dr-martens/1/15.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/16.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/17.jpg","width":860,"height":663},{"src":"assets/work/pdp/dr-martens/1/18.jpg","width":860,"height":720},{"src":"assets/work/pdp/dr-martens/1/19.jpg","width":860,"height":315},{"src":"assets/work/pdp/dr-martens/1/20.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/21.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/22.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/23.jpg","width":860,"height":1001},{"src":"assets/work/pdp/dr-martens/1/24.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/25.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/26.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/27.jpg","width":860,"height":315},{"src":"assets/work/pdp/dr-martens/1/28.jpg","width":860,"height":712},{"src":"assets/work/pdp/dr-martens/1/29.jpg","width":860,"height":1007},{"src":"assets/work/pdp/dr-martens/1/30.jpg","width":860,"height":220},{"src":"assets/work/pdp/dr-martens/1/31.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/32.jpg","width":860,"height":1490},{"src":"assets/work/pdp/dr-martens/1/33.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/34.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/35.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/36.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/37.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/38.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/39.jpg","width":860,"height":1},{"src":"assets/work/pdp/dr-martens/1/40.jpg","width":860,"height":315},{"src":"assets/work/pdp/dr-martens/1/41.jpg","width":860,"height":1100},{"src":"assets/work/pdp/dr-martens/1/42.jpg","width":860,"height":1280}],"thumbnails":[{"src":"assets/work/pdp/dr-martens/1/1.jpg","width":860,"height":1803},{"src":"assets/work/pdp/dr-martens/1/32.jpg","width":860,"height":1490}]},{"id":"pdp-russell-athletic-1","name":"러셀애슬레틱","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/russell-athletic/1/1.jpg","width":860,"height":424},{"src":"assets/work/pdp/russell-athletic/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/3.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/4.jpg","width":860,"height":206},{"src":"assets/work/pdp/russell-athletic/1/5.jpg","width":860,"height":259},{"src":"assets/work/pdp/russell-athletic/1/6.jpg","width":860,"height":278},{"src":"assets/work/pdp/russell-athletic/1/7.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/8.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/9.jpg","width":860,"height":289},{"src":"assets/work/pdp/russell-athletic/1/10.jpg","width":860,"height":699},{"src":"assets/work/pdp/russell-athletic/1/11.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/12.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/13.jpg","width":860,"height":217},{"src":"assets/work/pdp/russell-athletic/1/14.jpg","width":860,"height":448},{"src":"assets/work/pdp/russell-athletic/1/15.jpg","width":860,"height":1870},{"src":"assets/work/pdp/russell-athletic/1/16.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/17.jpg","width":860,"height":146},{"src":"assets/work/pdp/russell-athletic/1/18.jpg","width":860,"height":436},{"src":"assets/work/pdp/russell-athletic/1/19.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/20.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/21.jpg","width":860,"height":1},{"src":"assets/work/pdp/russell-athletic/1/22.jpg","width":860,"height":1},{"src":"assets/work/pdp/russell-athletic/1/23.jpg","width":860,"height":274},{"src":"assets/work/pdp/russell-athletic/1/24.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/25.jpg","width":860,"height":259},{"src":"assets/work/pdp/russell-athletic/1/26.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/27.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/28.jpg","width":860,"height":216},{"src":"assets/work/pdp/russell-athletic/1/29.jpg","width":860,"height":302},{"src":"assets/work/pdp/russell-athletic/1/30.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/31.jpg","width":860,"height":274},{"src":"assets/work/pdp/russell-athletic/1/32.jpg","width":860,"height":146},{"src":"assets/work/pdp/russell-athletic/1/33.jpg","width":860,"height":179},{"src":"assets/work/pdp/russell-athletic/1/34.jpg","width":860,"height":172},{"src":"assets/work/pdp/russell-athletic/1/35.jpg","width":860,"height":758},{"src":"assets/work/pdp/russell-athletic/1/36.jpg","width":860,"height":620},{"src":"assets/work/pdp/russell-athletic/1/37.jpg","width":860,"height":216},{"src":"assets/work/pdp/russell-athletic/1/38.jpg","width":860,"height":1290},{"src":"assets/work/pdp/russell-athletic/1/39.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/40.jpg","width":860,"height":216},{"src":"assets/work/pdp/russell-athletic/1/41.jpg","width":860,"height":391},{"src":"assets/work/pdp/russell-athletic/1/42.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/43.jpg","width":860,"height":152},{"src":"assets/work/pdp/russell-athletic/1/44.jpg","width":860,"height":218},{"src":"assets/work/pdp/russell-athletic/1/45.jpg","width":860,"height":260},{"src":"assets/work/pdp/russell-athletic/1/46.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/47.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/48.jpg","width":860,"height":274},{"src":"assets/work/pdp/russell-athletic/1/51.jpg","width":860,"height":148},{"src":"assets/work/pdp/russell-athletic/1/52.jpg","width":860,"height":215},{"src":"assets/work/pdp/russell-athletic/1/57.jpg","width":860,"height":1296}],"thumbnails":[{"src":"assets/work/pdp/russell-athletic/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/russell-athletic/1/26.jpg","width":860,"height":1296}]},{"id":"pdp-moonstar-1","name":"문스타","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/moonstar/1/0.jpg","width":1350,"height":2201},{"src":"assets/work/pdp/moonstar/1/1.jpg","width":1350,"height":858},{"src":"assets/work/pdp/moonstar/1/2.jpg","width":1350,"height":1800},{"src":"assets/work/pdp/moonstar/1/3.jpg","width":1350,"height":705},{"src":"assets/work/pdp/moonstar/1/4.jpg","width":1350,"height":411},{"src":"assets/work/pdp/moonstar/1/5.jpg","width":1350,"height":7290},{"src":"assets/work/pdp/moonstar/1/6.jpg","width":1351,"height":1487},{"src":"assets/work/pdp/moonstar/1/7.jpg","width":1350,"height":4146},{"src":"assets/work/pdp/moonstar/1/8.jpg","width":1350,"height":6519}],"thumbnails":[{"src":"assets/work/pdp/moonstar/1/0.jpg","width":1350,"height":2201}]},{"id":"pdp-baracuta-1","name":"바라쿠타","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/baracuta/1/1.jpg","width":860,"height":502},{"src":"assets/work/pdp/baracuta/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/3.jpg","width":860,"height":468},{"src":"assets/work/pdp/baracuta/1/4.jpg","width":860,"height":341},{"src":"assets/work/pdp/baracuta/1/5.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/6.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/7.jpg","width":860,"height":267},{"src":"assets/work/pdp/baracuta/1/8.jpg","width":860,"height":699},{"src":"assets/work/pdp/baracuta/1/9.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/10.jpg","width":860,"height":289},{"src":"assets/work/pdp/baracuta/1/11.jpg","width":860,"height":507},{"src":"assets/work/pdp/baracuta/1/12.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/13.jpg","width":860,"height":289},{"src":"assets/work/pdp/baracuta/1/14.jpg","width":860,"height":356},{"src":"assets/work/pdp/baracuta/1/15.jpg","width":860,"height":692},{"src":"assets/work/pdp/baracuta/1/15_1.jpg","width":860,"height":803},{"src":"assets/work/pdp/baracuta/1/16.jpg","width":860,"height":521},{"src":"assets/work/pdp/baracuta/1/17.jpg","width":860,"height":211},{"src":"assets/work/pdp/baracuta/1/18.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/19.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/20.jpg","width":860,"height":289},{"src":"assets/work/pdp/baracuta/1/21.jpg","width":860,"height":565},{"src":"assets/work/pdp/baracuta/1/22.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/23.jpg","width":860,"height":289},{"src":"assets/work/pdp/baracuta/1/24.jpg","width":860,"height":1296},{"src":"assets/work/pdp/baracuta/1/29.jpg","width":860,"height":1296}],"thumbnails":[{"src":"assets/work/pdp/baracuta/1/2.jpg","width":860,"height":1296}]},{"id":"pdp-thorogood-1","name":"쏘로굿","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/thorogood/1/1.jpg","width":860,"height":423},{"src":"assets/work/pdp/thorogood/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/3.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/4.jpg","width":860,"height":211},{"src":"assets/work/pdp/thorogood/1/5.jpg","width":860,"height":259},{"src":"assets/work/pdp/thorogood/1/6.jpg","width":860,"height":277},{"src":"assets/work/pdp/thorogood/1/7.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/8.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/9.jpg","width":860,"height":147},{"src":"assets/work/pdp/thorogood/1/10.jpg","width":860,"height":700},{"src":"assets/work/pdp/thorogood/1/11.jpg","width":860,"height":273},{"src":"assets/work/pdp/thorogood/1/12.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/13.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/14.jpg","width":860,"height":1},{"src":"assets/work/pdp/thorogood/1/15.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/16.jpg","width":860,"height":333},{"src":"assets/work/pdp/thorogood/1/17.jpg","width":860,"height":681},{"src":"assets/work/pdp/thorogood/1/18.jpg","width":860,"height":394},{"src":"assets/work/pdp/thorogood/1/19.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/20.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/21.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/22.jpg","width":860,"height":211},{"src":"assets/work/pdp/thorogood/1/23.jpg","width":860,"height":259},{"src":"assets/work/pdp/thorogood/1/24.jpg","width":860,"height":205},{"src":"assets/work/pdp/thorogood/1/25.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/26.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/27.jpg","width":860,"height":211},{"src":"assets/work/pdp/thorogood/1/28.jpg","width":860,"height":260},{"src":"assets/work/pdp/thorogood/1/29.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/30.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/31.jpg","width":860,"height":211},{"src":"assets/work/pdp/thorogood/1/32.jpg","width":860,"height":260},{"src":"assets/work/pdp/thorogood/1/33.jpg","width":860,"height":193},{"src":"assets/work/pdp/thorogood/1/34.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/35.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/36.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/37.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/38.jpg","width":860,"height":211},{"src":"assets/work/pdp/thorogood/1/39.jpg","width":860,"height":304},{"src":"assets/work/pdp/thorogood/1/40.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/41.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/42.jpg","width":860,"height":144},{"src":"assets/work/pdp/thorogood/1/43.jpg","width":860,"height":179},{"src":"assets/work/pdp/thorogood/1/44.jpg","width":860,"height":116},{"src":"assets/work/pdp/thorogood/1/45.jpg","width":860,"height":160},{"src":"assets/work/pdp/thorogood/1/46.jpg","width":860,"height":172},{"src":"assets/work/pdp/thorogood/1/47.jpg","width":860,"height":653},{"src":"assets/work/pdp/thorogood/1/48.jpg","width":860,"height":1944},{"src":"assets/work/pdp/thorogood/1/49.jpg","width":860,"height":216},{"src":"assets/work/pdp/thorogood/1/50.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/51.jpg","width":860,"height":268},{"src":"assets/work/pdp/thorogood/1/52.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/53.jpg","width":860,"height":611},{"src":"assets/work/pdp/thorogood/1/54.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/55.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/58.jpg","width":860,"height":148},{"src":"assets/work/pdp/thorogood/1/59.jpg","width":860,"height":569},{"src":"assets/work/pdp/thorogood/1/60.jpg","width":860,"height":148},{"src":"assets/work/pdp/thorogood/1/61.jpg","width":860,"height":259},{"src":"assets/work/pdp/thorogood/1/66.jpg","width":860,"height":1296},{"src":"assets/work/pdp/thorogood/1/67.jpg","width":860,"height":152},{"src":"assets/work/pdp/thorogood/1/68.jpg","width":860,"height":286},{"src":"assets/work/pdp/thorogood/1/69.jpg","width":860,"height":391},{"src":"assets/work/pdp/thorogood/1/70.jpg","width":860,"height":1296}],"thumbnails":[{"src":"assets/work/pdp/thorogood/1/2.jpg","width":860,"height":1296}]},{"id":"pdp-andersen-andersen-1","name":"안데르센안데르센","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/andersen-andersen/1/1.jpg","width":860,"height":461},{"src":"assets/work/pdp/andersen-andersen/1/2.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/3.jpg","width":860,"height":575},{"src":"assets/work/pdp/andersen-andersen/1/4.jpg","width":860,"height":349},{"src":"assets/work/pdp/andersen-andersen/1/5.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/6.jpg","width":860,"height":199},{"src":"assets/work/pdp/andersen-andersen/1/7.jpg","width":860,"height":1275},{"src":"assets/work/pdp/andersen-andersen/1/8.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/9.jpg","width":860,"height":785},{"src":"assets/work/pdp/andersen-andersen/1/10.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/11.jpg","width":860,"height":730},{"src":"assets/work/pdp/andersen-andersen/1/12.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/13.jpg","width":860,"height":479},{"src":"assets/work/pdp/andersen-andersen/1/14.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/15.jpg","width":860,"height":261},{"src":"assets/work/pdp/andersen-andersen/1/16.jpg","width":860,"height":1346},{"src":"assets/work/pdp/andersen-andersen/1/17.jpg","width":860,"height":934},{"src":"assets/work/pdp/andersen-andersen/1/18.jpg","width":860,"height":1490},{"src":"assets/work/pdp/andersen-andersen/1/19.jpg","width":860,"height":674},{"src":"assets/work/pdp/andersen-andersen/1/20.jpg","width":860,"height":603},{"src":"assets/work/pdp/andersen-andersen/1/21.jpg","width":860,"height":297},{"src":"assets/work/pdp/andersen-andersen/1/22.jpg","width":860,"height":773},{"src":"assets/work/pdp/andersen-andersen/1/23.jpg","width":860,"height":199},{"src":"assets/work/pdp/andersen-andersen/1/24.jpg","width":860,"height":1198},{"src":"assets/work/pdp/andersen-andersen/1/25.jpg","width":860,"height":773},{"src":"assets/work/pdp/andersen-andersen/1/26.jpg","width":860,"height":1795},{"src":"assets/work/pdp/andersen-andersen/1/27.jpg","width":860,"height":2136},{"src":"assets/work/pdp/andersen-andersen/1/30.jpg","width":860,"height":1490}],"thumbnails":[{"src":"assets/work/pdp/andersen-andersen/1/2.jpg","width":860,"height":1490}]},{"id":"pdp-alpha-industries-1","name":"알파인더스트리","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/alpha-industries/1/1.jpg","width":860,"height":500},{"src":"assets/work/pdp/alpha-industries/1/2.jpg","width":860,"height":306},{"src":"assets/work/pdp/alpha-industries/1/3.jpg","width":860,"height":392},{"src":"assets/work/pdp/alpha-industries/1/4.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/5.jpg","width":860,"height":476},{"src":"assets/work/pdp/alpha-industries/1/6.jpg","width":860,"height":307},{"src":"assets/work/pdp/alpha-industries/1/7.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/8.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/9.jpg","width":860,"height":1476},{"src":"assets/work/pdp/alpha-industries/1/10.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/11.jpg","width":860,"height":585},{"src":"assets/work/pdp/alpha-industries/1/12.jpg","width":860,"height":451},{"src":"assets/work/pdp/alpha-industries/1/13.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/14.jpg","width":860,"height":2980},{"src":"assets/work/pdp/alpha-industries/1/15.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/16.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/17.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/18.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/19.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/20.jpg","width":860,"height":392},{"src":"assets/work/pdp/alpha-industries/1/21.jpg","width":860,"height":761},{"src":"assets/work/pdp/alpha-industries/1/22.jpg","width":860,"height":735},{"src":"assets/work/pdp/alpha-industries/1/23.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/24.jpg","width":860,"height":317},{"src":"assets/work/pdp/alpha-industries/1/25.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/26.jpg","width":860,"height":637},{"src":"assets/work/pdp/alpha-industries/1/27.jpg","width":860,"height":4470},{"src":"assets/work/pdp/alpha-industries/1/28.jpg","width":860,"height":535},{"src":"assets/work/pdp/alpha-industries/1/29.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/30.jpg","width":860,"height":835},{"src":"assets/work/pdp/alpha-industries/1/31.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/32.jpg","width":860,"height":973},{"src":"assets/work/pdp/alpha-industries/1/33.jpg","width":860,"height":681},{"src":"assets/work/pdp/alpha-industries/1/34.jpg","width":860,"height":502},{"src":"assets/work/pdp/alpha-industries/1/35.jpg","width":860,"height":260},{"src":"assets/work/pdp/alpha-industries/1/36.jpg","width":860,"height":1839},{"src":"assets/work/pdp/alpha-industries/1/37.jpg","width":860,"height":392},{"src":"assets/work/pdp/alpha-industries/1/38.jpg","width":860,"height":317},{"src":"assets/work/pdp/alpha-industries/1/39.jpg","width":860,"height":1551},{"src":"assets/work/pdp/alpha-industries/1/40.jpg","width":860,"height":381},{"src":"assets/work/pdp/alpha-industries/1/41.jpg","width":860,"height":429},{"src":"assets/work/pdp/alpha-industries/1/42.jpg","width":860,"height":3698},{"src":"assets/work/pdp/alpha-industries/1/43.jpg","width":860,"height":392},{"src":"assets/work/pdp/alpha-industries/1/44.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/45.jpg","width":860,"height":678},{"src":"assets/work/pdp/alpha-industries/1/46.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/47.jpg","width":860,"height":392},{"src":"assets/work/pdp/alpha-industries/1/49.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/50.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/51.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/52.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/53.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/54.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/55.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/56.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/57.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/58.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/59.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/60.jpg","width":860,"height":692},{"src":"assets/work/pdp/alpha-industries/1/61.jpg","width":860,"height":307},{"src":"assets/work/pdp/alpha-industries/1/62.jpg","width":860,"height":277},{"src":"assets/work/pdp/alpha-industries/1/63.jpg","width":860,"height":516},{"src":"assets/work/pdp/alpha-industries/1/64.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/1/65.jpg","width":860,"height":1154},{"src":"assets/work/pdp/alpha-industries/1/66.jpg","width":860,"height":1490}],"thumbnails":[{"src":"assets/work/pdp/alpha-industries/1/4.jpg","width":860,"height":1490}]},{"id":"pdp-alpha-industries-2","name":"알파인더스트리","category":"pdp","type":"Product detail page","group":"2","slices":[{"src":"assets/work/pdp/alpha-industries/2/1.jpg","width":860,"height":296},{"src":"assets/work/pdp/alpha-industries/2/2.jpg","width":860,"height":240},{"src":"assets/work/pdp/alpha-industries/2/3.jpg","width":860,"height":121},{"src":"assets/work/pdp/alpha-industries/2/4.gif","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/5.jpg","width":860,"height":86},{"src":"assets/work/pdp/alpha-industries/2/6.jpg","width":860,"height":399},{"src":"assets/work/pdp/alpha-industries/2/7.jpg","width":860,"height":119},{"src":"assets/work/pdp/alpha-industries/2/8.jpg","width":860,"height":960},{"src":"assets/work/pdp/alpha-industries/2/9.jpg","width":860,"height":960},{"src":"assets/work/pdp/alpha-industries/2/10.jpg","width":860,"height":124},{"src":"assets/work/pdp/alpha-industries/2/11.jpg","width":860,"height":644},{"src":"assets/work/pdp/alpha-industries/2/12.jpg","width":860,"height":960},{"src":"assets/work/pdp/alpha-industries/2/13.jpg","width":860,"height":960},{"src":"assets/work/pdp/alpha-industries/2/14.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/15.jpg","width":860,"height":77},{"src":"assets/work/pdp/alpha-industries/2/16.jpg","width":860,"height":282},{"src":"assets/work/pdp/alpha-industries/2/17.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/18.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/19.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/20.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/21.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/22.jpg","width":860,"height":196},{"src":"assets/work/pdp/alpha-industries/2/23.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/24.jpg","width":860,"height":117},{"src":"assets/work/pdp/alpha-industries/2/25.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/26.jpg","width":860,"height":111},{"src":"assets/work/pdp/alpha-industries/2/27.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/28.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/29.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/30.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/31.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/32.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/33.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/34.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/35.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/36.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/37.jpg","width":860,"height":117},{"src":"assets/work/pdp/alpha-industries/2/38.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/39.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/40.jpg","width":860,"height":69},{"src":"assets/work/pdp/alpha-industries/2/41.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/42.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/43.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/44.jpg","width":860,"height":1196},{"src":"assets/work/pdp/alpha-industries/2/45.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/46.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/47.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/2/48.jpg","width":860,"height":1987},{"src":"assets/work/pdp/alpha-industries/2/49.jpg","width":860,"height":117},{"src":"assets/work/pdp/alpha-industries/2/50.jpg","width":860,"height":765},{"src":"assets/work/pdp/alpha-industries/2/51.jpg","width":860,"height":1309},{"src":"assets/work/pdp/alpha-industries/2/52.jpg","width":860,"height":117},{"src":"assets/work/pdp/alpha-industries/2/53.jpg","width":860,"height":585},{"src":"assets/work/pdp/alpha-industries/2/54.gif","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/55.jpg","width":860,"height":117},{"src":"assets/work/pdp/alpha-industries/2/56.jpg","width":860,"height":505},{"src":"assets/work/pdp/alpha-industries/2/57.jpg","width":860,"height":1216},{"src":"assets/work/pdp/alpha-industries/2/58.gif","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/60.jpg","width":860,"height":109},{"src":"assets/work/pdp/alpha-industries/2/61.jpg","width":860,"height":198},{"src":"assets/work/pdp/alpha-industries/2/62.jpg","width":860,"height":75},{"src":"assets/work/pdp/alpha-industries/2/63.jpg","width":860,"height":130},{"src":"assets/work/pdp/alpha-industries/2/64.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/65.jpg","width":860,"height":673},{"src":"assets/work/pdp/alpha-industries/2/66.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/67.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/68.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/69.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/70.jpg","width":860,"height":673},{"src":"assets/work/pdp/alpha-industries/2/71.jpg","width":860,"height":2493},{"src":"assets/work/pdp/alpha-industries/2/72.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/73.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/74.jpg","width":860,"height":673},{"src":"assets/work/pdp/alpha-industries/2/75.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/76.jpg","width":860,"height":1246},{"src":"assets/work/pdp/alpha-industries/2/77.jpg","width":860,"height":1919},{"src":"assets/work/pdp/alpha-industries/2/78.jpg","width":860,"height":1246}],"thumbnails":[{"src":"assets/work/pdp/alpha-industries/2/4.gif","width":860,"height":1246}]},{"id":"pdp-alpha-industries-3","name":"알파인더스트리","category":"pdp","type":"Product detail page","group":"3","slices":[{"src":"assets/work/pdp/alpha-industries/3/1.jpg","width":860,"height":530},{"src":"assets/work/pdp/alpha-industries/3/2.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/3.jpg","width":860,"height":519},{"src":"assets/work/pdp/alpha-industries/3/4.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/5.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/6.jpg","width":860,"height":339},{"src":"assets/work/pdp/alpha-industries/3/7.jpg","width":860,"height":312},{"src":"assets/work/pdp/alpha-industries/3/8.jpg","width":860,"height":661},{"src":"assets/work/pdp/alpha-industries/3/9.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/10.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/11.jpg","width":860,"height":339},{"src":"assets/work/pdp/alpha-industries/3/12.jpg","width":860,"height":399},{"src":"assets/work/pdp/alpha-industries/3/13.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/14.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/15.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/16.jpg","width":860,"height":339},{"src":"assets/work/pdp/alpha-industries/3/17.jpg","width":860,"height":380},{"src":"assets/work/pdp/alpha-industries/3/18.jpg","width":860,"height":360},{"src":"assets/work/pdp/alpha-industries/3/19.jpg","width":860,"height":2130},{"src":"assets/work/pdp/alpha-industries/3/20.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/21.jpg","width":860,"height":339},{"src":"assets/work/pdp/alpha-industries/3/22.jpg","width":860,"height":409},{"src":"assets/work/pdp/alpha-industries/3/23.jpg","width":860,"height":688},{"src":"assets/work/pdp/alpha-industries/3/24.jpg","width":860,"height":910},{"src":"assets/work/pdp/alpha-industries/3/25.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/26.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/27.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/28.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/29.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/30.jpg","width":860,"height":1},{"src":"assets/work/pdp/alpha-industries/3/31.jpg","width":860,"height":339},{"src":"assets/work/pdp/alpha-industries/3/32.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/33.jpg","width":860,"height":573},{"src":"assets/work/pdp/alpha-industries/3/34.jpg","width":860,"height":1490},{"src":"assets/work/pdp/alpha-industries/3/39.jpg","width":860,"height":1490}],"thumbnails":[{"src":"assets/work/pdp/alpha-industries/3/2.jpg","width":860,"height":1490}]},{"id":"pdp-autry-1","name":"오트리","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/autry/1/1.jpg","width":960,"height":1355},{"src":"assets/work/pdp/autry/1/2.jpg","width":960,"height":330},{"src":"assets/work/pdp/autry/1/3.jpg","width":960,"height":1290},{"src":"assets/work/pdp/autry/1/4.jpg","width":960,"height":1290},{"src":"assets/work/pdp/autry/1/5.jpg","width":960,"height":1290},{"src":"assets/work/pdp/autry/1/6.jpg","width":960,"height":1430},{"src":"assets/work/pdp/autry/1/7.jpg","width":960,"height":1490},{"src":"assets/work/pdp/autry/1/7_ln.jpg","width":960,"height":1490},{"src":"assets/work/pdp/autry/1/8.jpg","width":960,"height":1630},{"src":"assets/work/pdp/autry/1/8_ln.jpg","width":960,"height":3146},{"src":"assets/work/pdp/autry/1/9.jpg","width":960,"height":970},{"src":"assets/work/pdp/autry/1/10.jpg","width":960,"height":1170},{"src":"assets/work/pdp/autry/1/11.jpg","width":960,"height":970},{"src":"assets/work/pdp/autry/1/12.jpg","width":960,"height":1035},{"src":"assets/work/pdp/autry/1/13.jpg","width":960,"height":339},{"src":"assets/work/pdp/autry/1/13_ln.jpg","width":960,"height":339},{"src":"assets/work/pdp/autry/1/14.jpg","width":960,"height":94},{"src":"assets/work/pdp/autry/1/15.jpg","width":960,"height":182},{"src":"assets/work/pdp/autry/1/16.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/16_ln.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/17.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/17_ln.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/18.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/18_ln.jpg","width":960,"height":1208},{"src":"assets/work/pdp/autry/1/19.jpg","width":960,"height":1250},{"src":"assets/work/pdp/autry/1/19_ln.jpg","width":960,"height":1250}],"thumbnails":[{"src":"assets/work/pdp/autry/1/1.jpg","width":960,"height":1355}]},{"id":"pdp-jansport-1","name":"잔스포츠","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/jansport/1/1.jpg","width":860,"height":477},{"src":"assets/work/pdp/jansport/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/3.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/4.jpg","width":860,"height":190},{"src":"assets/work/pdp/jansport/1/5.jpg","width":860,"height":144},{"src":"assets/work/pdp/jansport/1/6.jpg","width":860,"height":276},{"src":"assets/work/pdp/jansport/1/7.jpg","width":860,"height":278},{"src":"assets/work/pdp/jansport/1/8.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/9.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/10.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/11.jpg","width":860,"height":194},{"src":"assets/work/pdp/jansport/1/12.jpg","width":860,"height":613},{"src":"assets/work/pdp/jansport/1/13.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/14.jpg","width":860,"height":179},{"src":"assets/work/pdp/jansport/1/15.jpg","width":860,"height":538},{"src":"assets/work/pdp/jansport/1/16.jpg","width":860,"height":450},{"src":"assets/work/pdp/jansport/1/17.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/18.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/19.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/20.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/21.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/22.jpg","width":860,"height":115},{"src":"assets/work/pdp/jansport/1/23.jpg","width":860,"height":174},{"src":"assets/work/pdp/jansport/1/24.jpg","width":860,"height":1183},{"src":"assets/work/pdp/jansport/1/25.jpg","width":860,"height":1183},{"src":"assets/work/pdp/jansport/1/26.jpg","width":860,"height":1223},{"src":"assets/work/pdp/jansport/1/27.jpg","width":860,"height":1183},{"src":"assets/work/pdp/jansport/1/28.jpg","width":860,"height":1183},{"src":"assets/work/pdp/jansport/1/29.jpg","width":860,"height":1183},{"src":"assets/work/pdp/jansport/1/30.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/31.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/32.jpg","width":860,"height":196},{"src":"assets/work/pdp/jansport/1/33.jpg","width":860,"height":1350},{"src":"assets/work/pdp/jansport/1/34.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/35.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/36.jpg","width":860,"height":101},{"src":"assets/work/pdp/jansport/1/37.jpg","width":860,"height":193},{"src":"assets/work/pdp/jansport/1/38.jpg","width":860,"height":613},{"src":"assets/work/pdp/jansport/1/39.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/40.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/41.jpg","width":860,"height":189},{"src":"assets/work/pdp/jansport/1/42.jpg","width":860,"height":305},{"src":"assets/work/pdp/jansport/1/43.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/44.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/45.jpg","width":860,"height":192},{"src":"assets/work/pdp/jansport/1/46.jpg","width":860,"height":393},{"src":"assets/work/pdp/jansport/1/47.jpg","width":860,"height":726},{"src":"assets/work/pdp/jansport/1/48.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/49.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/50.jpg","width":860,"height":176},{"src":"assets/work/pdp/jansport/1/51.jpg","width":860,"height":261},{"src":"assets/work/pdp/jansport/1/52.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/53.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/54.jpg","width":860,"height":192},{"src":"assets/work/pdp/jansport/1/55.jpg","width":860,"height":437},{"src":"assets/work/pdp/jansport/1/56.jpg","width":860,"height":416},{"src":"assets/work/pdp/jansport/1/57.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/58.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/59.jpg","width":860,"height":193},{"src":"assets/work/pdp/jansport/1/60.jpg","width":860,"height":487},{"src":"assets/work/pdp/jansport/1/61.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/62.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/63.jpg","width":860,"height":192},{"src":"assets/work/pdp/jansport/1/64.jpg","width":860,"height":349},{"src":"assets/work/pdp/jansport/1/65.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/66.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/67.jpg","width":860,"height":184},{"src":"assets/work/pdp/jansport/1/68.jpg","width":860,"height":349},{"src":"assets/work/pdp/jansport/1/69.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/70.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/71.jpg","width":860,"height":192},{"src":"assets/work/pdp/jansport/1/72.jpg","width":860,"height":569},{"src":"assets/work/pdp/jansport/1/73.jpg","width":860,"height":1296},{"src":"assets/work/pdp/jansport/1/74.jpg","width":860,"height":152},{"src":"assets/work/pdp/jansport/1/75.jpg","width":860,"height":123},{"src":"assets/work/pdp/jansport/1/76.jpg","width":860,"height":274},{"src":"assets/work/pdp/jansport/1/77.jpg","width":860,"height":193},{"src":"assets/work/pdp/jansport/1/82.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/83.jpg","width":860,"height":1},{"src":"assets/work/pdp/jansport/1/84.jpg","width":860,"height":1296}],"thumbnails":[{"src":"assets/work/pdp/jansport/1/13.jpg","width":860,"height":1296}]},{"id":"pdp-chaco-1","name":"차코","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/chaco/1/1.jpg","width":860,"height":429},{"src":"assets/work/pdp/chaco/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/3.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/4.jpg","width":860,"height":205},{"src":"assets/work/pdp/chaco/1/5.jpg","width":860,"height":208},{"src":"assets/work/pdp/chaco/1/6.jpg","width":860,"height":278},{"src":"assets/work/pdp/chaco/1/7.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/8.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/9.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/10.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/11.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/12.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/13.jpg","width":860,"height":567},{"src":"assets/work/pdp/chaco/1/14.jpg","width":860,"height":326},{"src":"assets/work/pdp/chaco/1/15.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/16.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/17.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/18.jpg","width":860,"height":347},{"src":"assets/work/pdp/chaco/1/19.jpg","width":860,"height":574},{"src":"assets/work/pdp/chaco/1/20.jpg","width":860,"height":1290},{"src":"assets/work/pdp/chaco/1/21.jpg","width":860,"height":279},{"src":"assets/work/pdp/chaco/1/22.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/23.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/24.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/25.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/26.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/27.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/28.jpg","width":860,"height":304},{"src":"assets/work/pdp/chaco/1/29.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/30.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/31.jpg","width":860,"height":279},{"src":"assets/work/pdp/chaco/1/32.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/33.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/34.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/35.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/36.jpg","width":860,"height":260},{"src":"assets/work/pdp/chaco/1/37.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/38.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/39.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/40.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/41.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/42.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/43.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/44.jpg","width":860,"height":259},{"src":"assets/work/pdp/chaco/1/45.jpg","width":860,"height":1290},{"src":"assets/work/pdp/chaco/1/46.jpg","width":860,"height":279},{"src":"assets/work/pdp/chaco/1/47.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/48.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/49.jpg","width":860,"height":146},{"src":"assets/work/pdp/chaco/1/50.jpg","width":860,"height":229},{"src":"assets/work/pdp/chaco/1/51.jpg","width":860,"height":216},{"src":"assets/work/pdp/chaco/1/52.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/53.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/54.jpg","width":860,"height":721},{"src":"assets/work/pdp/chaco/1/55.jpg","width":860,"height":616},{"src":"assets/work/pdp/chaco/1/56.jpg","width":860,"height":304},{"src":"assets/work/pdp/chaco/1/57.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/58.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/59.jpg","width":860,"height":147},{"src":"assets/work/pdp/chaco/1/60.jpg","width":860,"height":979},{"src":"assets/work/pdp/chaco/1/61.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/62.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/63.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/64.jpg","width":860,"height":347},{"src":"assets/work/pdp/chaco/1/65.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/66.jpg","width":860,"height":152},{"src":"assets/work/pdp/chaco/1/67.jpg","width":860,"height":217},{"src":"assets/work/pdp/chaco/1/68.jpg","width":860,"height":304},{"src":"assets/work/pdp/chaco/1/69.jpg","width":860,"height":1296},{"src":"assets/work/pdp/chaco/1/70.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/71.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/72.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/73.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/74.jpg","width":860,"height":1},{"src":"assets/work/pdp/chaco/1/75.jpg","width":860,"height":279},{"src":"assets/work/pdp/chaco/1/78.jpg","width":860,"height":147},{"src":"assets/work/pdp/chaco/1/79.jpg","width":860,"height":302},{"src":"assets/work/pdp/chaco/1/80.jpg","width":860,"height":148},{"src":"assets/work/pdp/chaco/1/81.jpg","width":860,"height":260},{"src":"assets/work/pdp/chaco/1/82.jpg","width":860,"height":148},{"src":"assets/work/pdp/chaco/1/83.jpg","width":860,"height":303},{"src":"assets/work/pdp/chaco/1/88.jpg","width":860,"height":1296}],"thumbnails":[{"src":"assets/work/pdp/chaco/1/2.jpg","width":860,"height":1296}]},{"id":"pdp-chums-1","name":"첨스","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/chums/1/1.jpg","width":860,"height":599},{"src":"assets/work/pdp/chums/1/2.jpg","width":860,"height":1524},{"src":"assets/work/pdp/chums/1/3.jpg","width":860,"height":759},{"src":"assets/work/pdp/chums/1/4.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/5.jpg","width":860,"height":1},{"src":"assets/work/pdp/chums/1/6.jpg","width":860,"height":793},{"src":"assets/work/pdp/chums/1/7.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/8.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/9.jpg","width":860,"height":503},{"src":"assets/work/pdp/chums/1/10.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/11.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/12.jpg","width":860,"height":530},{"src":"assets/work/pdp/chums/1/13.jpg","width":860,"height":1},{"src":"assets/work/pdp/chums/1/14.jpg","width":860,"height":1},{"src":"assets/work/pdp/chums/1/15.jpg","width":860,"height":1233},{"src":"assets/work/pdp/chums/1/16.jpg","width":860,"height":399},{"src":"assets/work/pdp/chums/1/17.jpg","width":860,"height":1890},{"src":"assets/work/pdp/chums/1/18.jpg","width":860,"height":1},{"src":"assets/work/pdp/chums/1/19.jpg","width":860,"height":1},{"src":"assets/work/pdp/chums/1/20.jpg","width":860,"height":1346},{"src":"assets/work/pdp/chums/1/21.jpg","width":860,"height":264},{"src":"assets/work/pdp/chums/1/22.jpg","width":860,"height":765},{"src":"assets/work/pdp/chums/1/23.jpg","width":860,"height":506},{"src":"assets/work/pdp/chums/1/24.jpg","width":860,"height":765},{"src":"assets/work/pdp/chums/1/25.jpg","width":860,"height":507},{"src":"assets/work/pdp/chums/1/26.jpg","width":860,"height":765},{"src":"assets/work/pdp/chums/1/27.jpg","width":860,"height":716},{"src":"assets/work/pdp/chums/1/28.jpg","width":860,"height":1490},{"src":"assets/work/pdp/chums/1/29.jpg","width":860,"height":800},{"src":"assets/work/pdp/chums/1/30.jpg","width":860,"height":1490},{"src":"assets/work/pdp/chums/1/31.jpg","width":860,"height":399},{"src":"assets/work/pdp/chums/1/33.jpg","width":860,"height":1490}],"thumbnails":[{"src":"assets/work/pdp/chums/1/2.jpg","width":860,"height":1524},{"src":"assets/work/pdp/chums/1/33.jpg","width":860,"height":1490}]},{"id":"pdp-kleman-1","name":"클레망","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/kleman/1/1.jpg","width":1280,"height":644},{"src":"assets/work/pdp/kleman/1/2.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/3.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/4.jpg","width":1280,"height":388},{"src":"assets/work/pdp/kleman/1/5.jpg","width":1280,"height":385},{"src":"assets/work/pdp/kleman/1/6.jpg","width":1280,"height":441},{"src":"assets/work/pdp/kleman/1/7.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/8.jpg","width":1280,"height":1},{"src":"assets/work/pdp/kleman/1/9.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/10.jpg","width":1280,"height":396},{"src":"assets/work/pdp/kleman/1/11.jpg","width":1280,"height":1106},{"src":"assets/work/pdp/kleman/1/12.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/13.jpg","width":1280,"height":1},{"src":"assets/work/pdp/kleman/1/14.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/15.jpg","width":1280,"height":293},{"src":"assets/work/pdp/kleman/1/16.jpg","width":1280,"height":320},{"src":"assets/work/pdp/kleman/1/17.jpg","width":1280,"height":262},{"src":"assets/work/pdp/kleman/1/18.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/19.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/20.jpg","width":1280,"height":397},{"src":"assets/work/pdp/kleman/1/21.jpg","width":1280,"height":387},{"src":"assets/work/pdp/kleman/1/22.jpg","width":1280,"height":298},{"src":"assets/work/pdp/kleman/1/23.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/24.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/25.jpg","width":1280,"height":397},{"src":"assets/work/pdp/kleman/1/26.jpg","width":1280,"height":321},{"src":"assets/work/pdp/kleman/1/27.jpg","width":1280,"height":298},{"src":"assets/work/pdp/kleman/1/28.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/29.jpg","width":1280,"height":421},{"src":"assets/work/pdp/kleman/1/30.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/31.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/32.jpg","width":1280,"height":399},{"src":"assets/work/pdp/kleman/1/33.jpg","width":1280,"height":321},{"src":"assets/work/pdp/kleman/1/34.jpg","width":1280,"height":1933},{"src":"assets/work/pdp/kleman/1/35.jpg","width":1280,"height":441},{"src":"assets/work/pdp/kleman/1/36.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/37.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/38.jpg","width":1280,"height":293},{"src":"assets/work/pdp/kleman/1/39.jpg","width":1280,"height":576},{"src":"assets/work/pdp/kleman/1/40.jpg","width":1280,"height":1067},{"src":"assets/work/pdp/kleman/1/41.jpg","width":1280,"height":993},{"src":"assets/work/pdp/kleman/1/42.jpg","width":1280,"height":321},{"src":"assets/work/pdp/kleman/1/43.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/44.jpg","width":1280,"height":286},{"src":"assets/work/pdp/kleman/1/45.jpg","width":1280,"height":1014},{"src":"assets/work/pdp/kleman/1/46.jpg","width":1280,"height":1171},{"src":"assets/work/pdp/kleman/1/47.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/48.jpg","width":1280,"height":280},{"src":"assets/work/pdp/kleman/1/49.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/50.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/51.jpg","width":1280,"height":1},{"src":"assets/work/pdp/kleman/1/54.jpg","width":1280,"height":146},{"src":"assets/work/pdp/kleman/1/55.jpg","width":1280,"height":516},{"src":"assets/work/pdp/kleman/1/60.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/61.jpg","width":1280,"height":283},{"src":"assets/work/pdp/kleman/1/62.jpg","width":1280,"height":1014},{"src":"assets/work/pdp/kleman/1/63.jpg","width":1280,"height":1014},{"src":"assets/work/pdp/kleman/1/64.jpg","width":1280,"height":426},{"src":"assets/work/pdp/kleman/1/65.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/66.jpg","width":1280,"height":292},{"src":"assets/work/pdp/kleman/1/67.jpg","width":1280,"height":1014},{"src":"assets/work/pdp/kleman/1/68.jpg","width":1280,"height":518},{"src":"assets/work/pdp/kleman/1/69.jpg","width":1280,"height":421},{"src":"assets/work/pdp/kleman/1/70.jpg","width":1280,"height":1929},{"src":"assets/work/pdp/kleman/1/74.jpg","width":1280,"height":1},{"src":"assets/work/pdp/kleman/1/75.jpg","width":1280,"height":226},{"src":"assets/work/pdp/kleman/1/76.jpg","width":1280,"height":384},{"src":"assets/work/pdp/kleman/1/77.jpg","width":1280,"height":256},{"src":"assets/work/pdp/kleman/1/78.jpg","width":1280,"height":2713}],"thumbnails":[{"src":"assets/work/pdp/kleman/1/2.jpg","width":1280,"height":1929}]},{"id":"pdp-kleman-2","name":"클레망","category":"pdp","type":"Product detail page","group":"2","slices":[{"src":"assets/work/pdp/kleman/2/1.jpg","width":1350,"height":419},{"src":"assets/work/pdp/kleman/2/2.jpg","width":1350,"height":1946},{"src":"assets/work/pdp/kleman/2/3.jpg","width":1350,"height":668},{"src":"assets/work/pdp/kleman/2/4.jpg","width":1350,"height":1950},{"src":"assets/work/pdp/kleman/2/5.jpg","width":1350,"height":2223},{"src":"assets/work/pdp/kleman/2/6.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/7.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/8.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/9.jpg","width":1350,"height":2009},{"src":"assets/work/pdp/kleman/2/10.jpg","width":1350,"height":1270},{"src":"assets/work/pdp/kleman/2/11.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/12.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/13.jpg","width":1350,"height":1815},{"src":"assets/work/pdp/kleman/2/14.jpg","width":1350,"height":1817},{"src":"assets/work/pdp/kleman/2/15.jpg","width":1350,"height":2000},{"src":"assets/work/pdp/kleman/2/16.jpg","width":1350,"height":435},{"src":"assets/work/pdp/kleman/2/17.jpg","width":1350,"height":759},{"src":"assets/work/pdp/kleman/2/18.jpg","width":1350,"height":770},{"src":"assets/work/pdp/kleman/2/19.jpg","width":1350,"height":948},{"src":"assets/work/pdp/kleman/2/20.jpg","width":1350,"height":545},{"src":"assets/work/pdp/kleman/2/21.jpg","width":1350,"height":1481},{"src":"assets/work/pdp/kleman/2/22.jpg","width":1350,"height":395},{"src":"assets/work/pdp/kleman/2/23.jpg","width":1350,"height":1997}],"thumbnails":[{"src":"assets/work/pdp/kleman/2/2.jpg","width":1350,"height":1946}]},{"id":"pdp-toms-1","name":"탐스","category":"pdp","type":"Product detail page","group":"1","slices":[{"src":"assets/work/pdp/toms/1/1.jpg","width":860,"height":400},{"src":"assets/work/pdp/toms/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/3.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/4.jpg","width":860,"height":203},{"src":"assets/work/pdp/toms/1/5.jpg","width":860,"height":258},{"src":"assets/work/pdp/toms/1/6.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/7.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/8.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/9.jpg","width":860,"height":147},{"src":"assets/work/pdp/toms/1/10.jpg","width":860,"height":568},{"src":"assets/work/pdp/toms/1/11.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/12.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/13.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/14.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/15.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/16.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/17.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/18.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/19.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/20.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/21.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/22.jpg","width":860,"height":250},{"src":"assets/work/pdp/toms/1/23.jpg","width":860,"height":217},{"src":"assets/work/pdp/toms/1/24.jpg","width":860,"height":302},{"src":"assets/work/pdp/toms/1/25.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/26.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/27.jpg","width":860,"height":218},{"src":"assets/work/pdp/toms/1/28.jpg","width":860,"height":214},{"src":"assets/work/pdp/toms/1/29.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/30.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/31.jpg","width":860,"height":217},{"src":"assets/work/pdp/toms/1/32.jpg","width":860,"height":216},{"src":"assets/work/pdp/toms/1/33.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/34.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/35.jpg","width":860,"height":216},{"src":"assets/work/pdp/toms/1/36.jpg","width":860,"height":260},{"src":"assets/work/pdp/toms/1/37.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/38.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/39.jpg","width":860,"height":217},{"src":"assets/work/pdp/toms/1/40.jpg","width":860,"height":260},{"src":"assets/work/pdp/toms/1/41.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/42.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/43.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/44.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/45.jpg","width":860,"height":146},{"src":"assets/work/pdp/toms/1/46.jpg","width":860,"height":367},{"src":"assets/work/pdp/toms/1/47.jpg","width":860,"height":609},{"src":"assets/work/pdp/toms/1/48.jpg","width":860,"height":488},{"src":"assets/work/pdp/toms/1/49.jpg","width":860,"height":216},{"src":"assets/work/pdp/toms/1/50.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/51.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/52.jpg","width":860,"height":218},{"src":"assets/work/pdp/toms/1/53.jpg","width":860,"height":347},{"src":"assets/work/pdp/toms/1/54.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/55.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/56.jpg","width":860,"height":217},{"src":"assets/work/pdp/toms/1/57.jpg","width":860,"height":347},{"src":"assets/work/pdp/toms/1/58.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/59.jpg","width":860,"height":250},{"src":"assets/work/pdp/toms/1/60.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/61.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/62.jpg","width":860,"height":152},{"src":"assets/work/pdp/toms/1/63.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/64.jpg","width":860,"height":1},{"src":"assets/work/pdp/toms/1/65.jpg","width":860,"height":148},{"src":"assets/work/pdp/toms/1/66.jpg","width":860,"height":259},{"src":"assets/work/pdp/toms/1/67.jpg","width":860,"height":148},{"src":"assets/work/pdp/toms/1/68.jpg","width":860,"height":303},{"src":"assets/work/pdp/toms/1/73.jpg","width":860,"height":1487}],"thumbnails":[{"src":"assets/work/pdp/toms/1/2.jpg","width":860,"height":1296},{"src":"assets/work/pdp/toms/1/73.jpg","width":860,"height":1487}]}];
+const ALL_PROJECTS=[...PROJECTS,...PDP_PROJECTS];
+const IMAGES=Object.fromEntries(PROJECTS.filter(p=>p.image).flatMap(p=>[[p.id+'-cover',p.coverImage||p.image],[p.id+'-detail-1',p.image]]));
 function imageMarkup(key,extra=''){
  const p=PROJECTS.find(p=>key===p.id+'-cover'||key===p.id+'-detail-1');
  if(p?.textCover)return `<div class="placeholder type-cover ${extra}"><small>PRODUCT CONTENT</small><strong>${p.name}</strong><span>${p.line}</span></div>`;
@@ -688,11 +809,28 @@ const WORK_POSTERS=[
  }
 ];
 const GALLERY_ITEMS=PROJECTS.flatMap((p,i)=>i%2===0&&WORK_POSTERS[i/2]?[p,WORK_POSTERS[i/2]]:[p]);
+GALLERY_ITEMS.splice(2,0,{
+ kind:'poster',image:'assets/work/posters/glass-poster.jpg',
+ name:'글래스포스터',width:600,height:771
+});
+// Campaign posters open the related website project.
+GALLERY_ITEMS.splice(7,0,{"kind": "poster", "projectId": "empty", "image": "assets/work/posters/empty-crocs-poster.jpg", "name": "MUSINSA EMPTY · 크록스 포스터", "width": 1080, "height": 1920});
+GALLERY_ITEMS.splice(20,0,{"kind": "poster", "projectId": "empty", "image": "assets/work/posters/empty-chuseok-poster.jpg", "name": "MUSINSA EMPTY · 추석 포스터", "width": 1920, "height": 983});
+// Each marked image opens its folder's complete PDP.
+const PDP_CARDS=PDP_PROJECTS.flatMap(p=>p.thumbnails.map((thumb,i)=>({...p,kind:'pdp',thumb,thumbnailIndex:i+1})));
+const existingWork=GALLERY_ITEMS.filter(p=>!p.textCover);
+GALLERY_ITEMS.length=0;
+for(let i=0;i<Math.max(existingWork.length,PDP_CARDS.length);i++){
+ if(existingWork[i])GALLERY_ITEMS.push(existingWork[i]);
+ if(PDP_CARDS[i])GALLERY_ITEMS.push(PDP_CARDS[i]);
+}
 const grid=document.getElementById('work-grid');
 function renderWork(){
  grid.innerHTML=Array.from({length:4},()=>GALLERY_ITEMS).flat().map((p,i)=>{
   // Replace a repeated card, keeping every original project's accessible entry.
   if(i===GALLERY_ITEMS.length)return `<a class="loop-card loop-film-card" href="#about/experiments" aria-label="Branden 패션 영상 자세히 보기"><video class="work-film" autoplay muted loop playsinline preload="metadata" poster="branden-lifestyle-poster.jpg" width="876" height="1108" aria-hidden="true"><source src="https://chknj.github.io/design-drafts/pf/branden-lifestyle-18s-720p-taller-5pct.mp4" type="video/mp4"></video><span class="loop-caption"><span><strong>Branden</strong><small>Fashion film</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></a>`;
+  if(p.kind==='pdp')return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card loop-pdp" data-project="${p.id}" aria-label="${p.name} 상세페이지 ${p.group} 썸네일 ${p.thumbnailIndex} 보기"><img src="${p.thumb.src}" alt="${p.name} 상세페이지" width="${p.thumb.width}" height="${p.thumb.height}" loading="lazy" decoding="async" draggable="false"><span class="loop-caption"><span><strong>${p.name}</strong><small>PDP ${p.group}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`;
+  if(p.kind==='poster'&&p.projectId)return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card loop-poster" data-project="${p.projectId}" aria-label="${p.name} · 엠프티 웹사이트 작업 보기"><img src="${p.image}" alt="${p.name}" width="${p.width}" height="${p.height}" loading="lazy" decoding="async" draggable="false"></button>`;
   if(p.kind==='poster')return `<figure class="loop-card loop-poster" ${i>=GALLERY_ITEMS.length?'aria-hidden="true"':''}><img src="${p.image}" alt="${p.name}" width="${p.width}" height="${p.height}" loading="lazy" decoding="async" draggable="false"></figure>`;
   return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card" data-project="${p.id}" aria-label="${p.name} ${p.type} 자세히 보기">${imageMarkup(p.id+'-cover')}<span class="loop-caption"><span><strong>${p.name}</strong><small>${p.type}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`;
  }).join('');populateImages(grid);
@@ -725,14 +863,18 @@ function closeProject(){
 dialog.addEventListener('cancel',e=>{e.preventDefault();closeProject()});
 document.getElementById('dialog-close').addEventListener('click',closeProject);dialog.addEventListener('close',()=>document.body.classList.remove('locked'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden)closeMenu()});
+function pdpDetailMarkup(p){
+ return `<div class="pdp-layout"><header class="pdp-heading"><p class="eyebrow">Product detail page / ${p.group}</p><h2 id="detail-title">${p.name}</h2><p class="pdp-subtitle">상품 상세페이지 디자인</p><p class="pdp-description">${p.overview||'상품 이미지와 제품 설명, 브랜드 콘텐츠를 하나의 흐름으로 구성한 상세페이지 작업입니다.'}</p><dl class="pdp-meta"><div><dt>브랜드</dt><dd>${p.name}</dd></div><div><dt>분야</dt><dd>상세페이지 · 콘텐츠 디자인</dd></div></dl></header><div class="pdp-slices">${p.slices.map((slice,i)=>`<img src="${slice.src}" alt="${p.name} 상세페이지 ${i+1}" width="${slice.width}" height="${slice.height}" loading="${i<2?'eager':'lazy'}" decoding="async">`).join('')}</div></div>`;
+}
 function openProjectView(p){
  if(dialog.open&&activeProjectId===p.id){document.body.classList.add('locked');return}
  activeProjectId=p.id;
- document.getElementById('detail-body').innerHTML=`<p class="eyebrow">${p.type}</p><h2 id="detail-title">${p.name}</h2><div class="detail-summary"><h3>${p.line}</h3><div><p>${p.desc}</p><p class="eyebrow">${p.role}</p><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer"><span>Visit website</span><span>↗</span></a></div></div><section class="detail-notes"><p class="eyebrow">${p.category==='pdp'?'Content direction':'Site overview'}</p><div><h3>${p.focusTitle}</h3><p>${p.focus}</p></div></section>${p.image?`<figure class="detail-capture ${p.archiveOnly?'is-archive':''}"><img src="${p.image}" alt="${p.name} ${p.archiveOnly?'브랜드 로고':'공식 사이트 메인 화면'}" loading="eager" decoding="async"><figcaption>${p.archiveOnly?'공식몰 휴점으로 기존 브랜드 로고 표시':'공식 사이트 메인 화면 · 2026.11.02 캡처'}</figcaption></figure>`:''}<div class="detail-bottom"><span>${p.category==='pdp'?'상품 상세 콘텐츠':'공식 사이트 디자인 · 구축'}</span><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer">${p.category==='pdp'?'상품 페이지 보기':'공식 사이트 방문'} ↗</a></div>`;populateImages(dialog);if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('locked');animateDetail('in').then(()=>{if(!detailClosing&&detailAnimation){detailAnimation.cancel();detailAnimation=null}})
+ document.getElementById('detail-body').classList.toggle('pdp-detail',!!p.slices);
+ document.getElementById('detail-body').innerHTML=p.slices?pdpDetailMarkup(p):`<p class="eyebrow">${p.type}</p><h2 id="detail-title">${p.name}</h2><div class="detail-summary"><h3>${p.line}</h3><div><p>${p.desc}</p><p class="eyebrow">${p.role}</p><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer"><span>Visit website</span><span>↗</span></a></div></div><section class="detail-notes"><p class="eyebrow">${p.category==='pdp'?'Content direction':'Site overview'}</p><div><h3>${p.focusTitle}</h3><p>${p.focus}</p></div></section>${p.image?`<figure class="detail-capture ${p.archiveOnly?'is-archive':''}"><img src="${p.image}" alt="${p.name} ${p.archiveOnly?'브랜드 로고':'공식 사이트 메인 화면'}" loading="eager" decoding="async"><figcaption>${p.archiveOnly?'공식몰 휴점으로 기존 브랜드 로고 표시':'공식 사이트 메인 화면'}</figcaption></figure>`:''}${p.listImage&&p.detailImage?`<div class="store-capture-pair"><figure class="detail-capture"><img src="${p.listImage}" alt="${p.name} 상품 리스트 페이지" loading="lazy" decoding="async"><figcaption>리스트 페이지</figcaption></figure><figure class="detail-capture"><img src="${p.detailImage}" alt="${p.name} 상품 상세페이지" loading="lazy" decoding="async"><figcaption>상품 상세페이지</figcaption></figure></div>`:''}<div class="detail-bottom"><span>${p.category==='pdp'?'상품 상세 콘텐츠':'공식 사이트 디자인 · 구축'}</span><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer">${p.category==='pdp'?'상품 페이지 보기':'공식 사이트 방문'} ↗</a></div>`;populateImages(dialog);if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('locked');animateDetail('in').then(()=>{if(!detailClosing&&detailAnimation){detailAnimation.cancel();detailAnimation=null}})
 }
 document.addEventListener('click',e=>{
  const button=e.target.closest('[data-project]');if(!button||e.defaultPrevented)return;
- const p=PROJECTS.find(x=>x.id===button.dataset.project);if(!p)return;
+ const p=ALL_PROJECTS.find(x=>x.id===button.dataset.project);if(!p)return;
  if(routeTarget().project?.id===p.id)return;
  history.pushState({chkProjectEntry:p.id},'','#work/project/'+p.id);
  route();
@@ -744,6 +886,8 @@ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let galleryActive=false,loopFrame=0,loopLayout=[];
 const loopPosition={x:0,y:0},loopTarget={x:0,y:0},loopCycle={x:1,y:1};
 let dragState=null,suppressClickUntil=0,lastFrameTime=0,driftPauseUntil=0;
+const glideVelocity={x:0,y:0};
+function stopGlide(){glideVelocity.x=0;glideVelocity.y=0}
 let driftAngle=Math.random()*Math.PI*2,driftTargetAngle=driftAngle,nextDriftTurn=0;
 function wakeGallery(){if(galleryActive&&!loopFrame&&!document.hidden)loopFrame=requestAnimationFrame(tickLoop)}
 const mod=(n,m)=>((n%m)+m)%m;
@@ -756,6 +900,7 @@ function drawLoop(){
   el.dataset.loopX=x.toFixed(2);el.dataset.loopY=y.toFixed(2);
  });
 }
+const WORK_IMAGE_SIZES={"thorogood":{"width":1440,"height":900},"jason-markk":{"width":1440,"height":900},"marine-serre":{"width":1440,"height":900},"bape":{"width":1440,"height":900},"empty":{"width":1440,"height":900},"noah":{"width":1440,"height":900},"champion-store":{"width":1440,"height":900},"tawntoe":{"width":1440,"height":900},"jansport":{"width":1440,"height":900},"dickies":{"width":1440,"height":900},"havaianas":{"width":1265,"height":712},"manhattan-portage":{"width":1440,"height":900},"novesta":{"width":1440,"height":900},"tenderate":{"width":1440,"height":900},"032c":{"width":1440,"height":900},"y-3":{"width":1440,"height":900},"sound-of-sunrise":{"width":1440,"height":900},"sleepy-jones":{"width":1440,"height":900}};
 function sizeLoop(){
  if(!galleryActive)return;
  const w=canvas.clientWidth,h=canvas.clientHeight,mobile=w<=560;
@@ -768,7 +913,8 @@ function sizeLoop(){
  const verticalGap=gap;
  const itemHeight=(row,col)=>{
   const item=GALLERY_ITEMS[row*3+col],width=unit*widths[row%3][col];
-  return item?.kind==='poster'?width*item.height/item.width:unit*heights[row%3][col];
+  const imageSize=item?.kind==='pdp'?item.thumb:item?.kind==='poster'?item:WORK_IMAGE_SIZES[item?.id];
+  return imageSize?width*imageSize.height/imageSize.width:unit*heights[row%3][col];
  };
  const slotHeight=(row,col)=>row===0&&col===0?Math.max(itemHeight(row,col),unit*widths[0][0]*1108/876):itemHeight(row,col);
  const columnHeights=[0,1,2].map(col=>Array.from({length:rows},(_,r)=>slotHeight(r,col)+verticalGap).reduce((a,b)=>a+b,0));
@@ -792,10 +938,21 @@ function sizeLoop(){
 }
 function tickLoop(time){
  loopFrame=0;if(!galleryActive)return;
- if(dialog.open||!menu.hidden||document.hidden){lastFrameTime=0;return}
+ if(dialog.open||!menu.hidden||document.hidden){stopGlide();lastFrameTime=0;return}
  const dt=lastFrameTime?Math.min(time-lastFrameTime,40):16.67;lastFrameTime=time;
  const autoMotion=!reducedMotion.matches;
- if(autoMotion&&!dragState&&time>=driftPauseUntil){
+ if(!autoMotion)stopGlide();
+ const gliding=!dragState&&Math.hypot(glideVelocity.x,glideVelocity.y)>.015;
+ if(gliding){
+  const decay=Math.exp(-dt/460);
+  for(const axis of ['x','y']){
+   loopTarget[axis]+=glideVelocity[axis]*460*(1-decay);
+   glideVelocity[axis]*=decay;
+  }
+  driftPauseUntil=time+1000;
+  if(Math.hypot(glideVelocity.x,glideVelocity.y)<=.015)stopGlide();
+ }
+ if(autoMotion&&!dragState&&!gliding&&time>=driftPauseUntil){
   if(time>=nextDriftTurn){driftTargetAngle=Math.random()*Math.PI*2;nextDriftTurn=time+8000+Math.random()*6000}
   const turn=Math.atan2(Math.sin(driftTargetAngle-driftAngle),Math.cos(driftTargetAngle-driftAngle));
   driftAngle+=turn*(1-Math.exp(-dt/2200));
@@ -805,7 +962,8 @@ function tickLoop(time){
  let moving=false;
  for(const axis of ['x','y']){
   const diff=loopTarget[axis]-loopPosition[axis];
-  loopPosition[axis]+=reducedMotion.matches?diff:diff*(1-Math.exp(-dt/70));
+  const response=dragState?.gain>1?28:70;
+  loopPosition[axis]+=reducedMotion.matches?diff:diff*(1-Math.exp(-dt/response));
   if(Math.abs(loopTarget[axis]-loopPosition[axis])<.1)loopPosition[axis]=loopTarget[axis];else moving=true;
   if(Math.abs(loopPosition[axis])>loopCycle[axis]*100){const shift=Math.trunc(loopPosition[axis]/loopCycle[axis])*loopCycle[axis];loopPosition[axis]-=shift;loopTarget[axis]-=shift}
  }
@@ -813,6 +971,7 @@ function tickLoop(time){
 }
 function moveLoop(dx,dy){
  if(!galleryActive||dialog.open||!menu.hidden||document.body.classList.contains('route-transitioning'))return;
+ stopGlide();
  driftPauseUntil=performance.now()+1800;
  loopTarget.x+=dx;loopTarget.y+=dy;
  if(!loopFrame)loopFrame=requestAnimationFrame(tickLoop);
@@ -820,10 +979,10 @@ function moveLoop(dx,dy){
 function activateGallery(active){
  galleryActive=active;
  if(active){sizeLoop();wakeGallery()}
- else{cancelAnimationFrame(loopFrame);loopFrame=0;lastFrameTime=0;dragState=null;canvas.classList.remove('dragging')}
+ else{stopGlide();cancelAnimationFrame(loopFrame);loopFrame=0;lastFrameTime=0;dragState=null;canvas.classList.remove('dragging')}
 }
 window.addEventListener('resize',sizeLoop);
-document.addEventListener('visibilitychange',wakeGallery);
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopGlide();dragState=null;canvas.classList.remove('dragging')}else wakeGallery()});
 reducedMotion.addEventListener('change',wakeGallery);
 window.addEventListener('wheel',e=>{
  if(!galleryActive||dialog.open||!menu.hidden||e.ctrlKey)return;
@@ -834,18 +993,41 @@ window.addEventListener('wheel',e=>{
  moveLoop(dx,dy);
 },{passive:false});
 canvas.addEventListener('pointerdown',e=>{
- if(!galleryActive||e.button!==0||!e.isPrimary)return;
- driftPauseUntil=performance.now()+1800;
- dragState={id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false};canvas.classList.add('dragging');
+ if(!galleryActive||e.button!==0||!e.isPrimary||dialog.open||!menu.hidden)return;
+ stopGlide();
+ loopTarget.x=loopPosition.x;loopTarget.y=loopPosition.y;
+ const now=performance.now();driftPauseUntil=now+1800;
+ dragState={id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,gain:e.pointerType==='touch'?2:1,moved:false,samples:[{time:now,x:e.clientX,y:e.clientY}]};canvas.classList.add('dragging');
 });
 window.addEventListener('pointermove',e=>{
  if(!dragState||e.pointerId!==dragState.id)return;
  const dx=dragState.x-e.clientX,dy=dragState.y-e.clientY;
  if(!dragState.moved&&Math.hypot(e.clientX-dragState.startX,e.clientY-dragState.startY)>7){dragState.moved=true;canvas.setPointerCapture(e.pointerId)}
  dragState.x=e.clientX;dragState.y=e.clientY;
- if(dragState.moved){moveLoop(dx,dy);e.preventDefault()}
+ const now=performance.now();
+ dragState.samples.push({time:now,x:e.clientX,y:e.clientY});
+ while(dragState.samples.length>2&&dragState.samples[0].time<now-100)dragState.samples.shift();
+ if(dragState.moved){moveLoop(dx*dragState.gain,dy*dragState.gain);e.preventDefault()}
 },{passive:false});
-function endDrag(e){if(!dragState||e.pointerId!==dragState.id)return;if(dragState.moved)suppressClickUntil=performance.now()+350;driftPauseUntil=performance.now()+1800;dragState=null;canvas.classList.remove('dragging')}
+function endDrag(e){
+ if(!dragState||e.pointerId!==dragState.id)return;
+ const now=performance.now(),state=dragState;
+ if(state.moved)suppressClickUntil=now+350;
+ stopGlide();
+ if(e.type==='pointerup'&&state.moved&&state.gain>1&&!reducedMotion.matches){
+  const recent=state.samples.filter(sample=>now-sample.time<=100);
+  const first=recent[0],last=recent[recent.length-1];
+  if(first&&last&&now-last.time<80){
+   const elapsed=Math.max(now-first.time,16);
+   let vx=(first.x-e.clientX)*state.gain/elapsed,vy=(first.y-e.clientY)*state.gain/elapsed;
+   const speed=Math.hypot(vx,vy),scale=speed>2.4?2.4/speed:1;
+   if(speed>.05){glideVelocity.x=vx*scale;glideVelocity.y=vy*scale}
+  }
+ }
+ driftPauseUntil=now+1800;dragState=null;canvas.classList.remove('dragging');
+ if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);
+ wakeGallery();
+}
 window.addEventListener('pointerup',endDrag);window.addEventListener('pointercancel',endDrag);
 canvas.addEventListener('click',e=>{if(performance.now()<suppressClickUntil){e.preventDefault();e.stopImmediatePropagation()}},true);
 window.addEventListener('keydown',e=>{
@@ -870,7 +1052,7 @@ function routeTarget(){
  const [requested,anchor,projectId]=(location.hash.slice(1)||'home').split('/');
  const normalized=requested==='practice'?'about':requested;
  const page=['home','work','about'].includes(normalized)?normalized:'home';
- const project=page==='work'&&anchor==='project'?PROJECTS.find(p=>p.id===projectId):null;
+ const project=page==='work'&&anchor==='project'?ALL_PROJECTS.find(p=>p.id===projectId):null;
  return {page,anchor,project,isGallery:page==='work'&&anchor!=='archive',surface:page==='work'&&anchor==='archive'?'archive':page};
 }
 function commitRoute(next){
@@ -879,9 +1061,9 @@ function commitRoute(next){
  document.body.classList.toggle('gallery-mode',isGallery);
  document.body.classList.toggle('archive-mode',page==='work'&&anchor==='archive');
  document.querySelectorAll('[data-page]').forEach(el=>{el.hidden=el.dataset.page!==page;el.classList.remove('route-enter')});
- document.querySelectorAll('[data-nav]').forEach(el=>{if(el.dataset.nav===page)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});
+ document.querySelectorAll('[data-nav]').forEach(el=>{if(el.dataset.nav===next.surface)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});
  activateGallery(isGallery);
- document.title=`CHK — ${page==='home'?'Portfolio':page==='work'?'Work':'About'} · v6`;
+ document.title=`CHK — ${next.surface==='archive'?'Archive':page==='home'?'Portfolio':page==='work'?'Work':'About'} · v6`;
  const target=!isGallery&&anchor&&document.getElementById(anchor);
  if(target&&!target.closest('[hidden]'))target.scrollIntoView({behavior:'instant'});
  else window.scrollTo({top:0,behavior:'instant'});
@@ -980,6 +1162,134 @@ new IntersectionObserver(entries=>{workFilmInView=entries[0].isIntersecting;sync
 document.addEventListener('visibilitychange',syncWorkFilm);
 filmMotion.addEventListener('change',syncWorkFilm);
 syncWorkFilm();
+
+</script>
+<script>
+
+    'use strict';
+    // Standalone reimplementation. No remote assets or dependencies.
+    (() => {
+      const stage = document.querySelector('values-constellation');
+      const canvas = stage.querySelector('canvas');
+      const ctx = canvas.getContext('2d');
+      const labels = [...stage.querySelectorAll('li')];
+      const motion = matchMedia('(prefers-reduced-motion: reduce)');
+      const identity = () => [1, 0, 0, 0, 1, 0, 0, 0, 1];
+      const multiply = (a, b) => Array.from({ length: 9 }, (_, i) => {
+        const row = Math.floor(i / 3) * 3, col = i % 3;
+        return a[row] * b[col] + a[row + 1] * b[col + 3] + a[row + 2] * b[col + 6];
+      });
+      const rotation = (x, y) => {
+        const cx = Math.cos(x), sx = Math.sin(x), cy = Math.cos(y), sy = Math.sin(y);
+        return [cy, 0, sy, sx * sy, cx, -sx * cy, -cx * sy, sx, cx * cy];
+      };
+      const apply = (m, x, y) => [m[0] * x + m[1] * y, m[3] * x + m[4] * y, m[6] * x + m[7] * y];
+      const rings = [[-.5, 2.1], [-4, -.2], [.5, .5], [.5, -.5]].map(([x, y]) => rotation(x, y));
+      let size = 0, radius = 0, ratio = 1, time = 1.2, speed = 1;
+      let orientation = identity(), pointer = null, last = null, frame = 0;
+      let paused = motion.matches, visible = true;
+      const project = p => ({ x: size / 2 + p[0], y: size / 2 - p[1], z: p[2] });
+
+      function resize() {
+        size = stage.getBoundingClientRect().width;
+        ratio = Math.min(window.devicePixelRatio || 1, 3);
+        canvas.width = Math.round(size * ratio);
+        canvas.height = Math.round(size * ratio);
+        // All drawing and labels use CSS pixels; DPR applies ONLY to the canvas transform.
+        const widest = Math.max(...labels.map(label => label.offsetWidth));
+        radius = Math.max(20, (size - widest - 24) / 2);
+        draw();
+      }
+
+      function draw() {
+        if (!size) return;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.setTransform(canvas.width / size, 0, 0, canvas.height / size, 0, 0);
+        const world = multiply(orientation, rotation(time, time));
+        const points = [];
+        ctx.lineWidth = .8;
+        ctx.strokeStyle = '#555';
+        ctx.setLineDash([1.2, 5]);
+        ctx.lineCap = 'round';
+        rings.forEach((ring, ringIndex) => {
+          const matrix = multiply(world, ring);
+          ctx.beginPath();
+          for (let i = 0; i <= 240; i++) {
+            const angle = i / 240 * Math.PI * 2;
+            const p = project(apply(matrix, Math.cos(angle) * radius, Math.sin(angle) * radius));
+            if (!i) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+          }
+          ctx.stroke();
+          for (let j = 0; j < 3; j++) {
+            const angle = (ringIndex + j + 1) / 3 * time * .3 + j * Math.PI * 2 / 3;
+            const p = project(apply(matrix, Math.cos(angle) * radius, Math.sin(angle) * radius));
+            points.push({ ...p, index: ringIndex * 3 + j });
+          }
+        });
+        ctx.setLineDash([]);
+        points.sort((a, b) => a.z - b.z).forEach((p, depth) => {
+          ctx.fillStyle = '#171717';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+          ctx.fill();
+          const label = labels[p.index];
+          label.style.transform = `translate3d(${p.x}px, ${p.y - 10}px, 0) translate(-50%, -100%)`;
+          label.style.zIndex = String(depth);
+          // DOM coordinates also make alignment easy to inspect without hidden runtime state.
+          label.dataset.pointX = p.x.toFixed(3);
+          label.dataset.pointY = p.y.toFixed(3);
+        });
+      }
+
+      function tick(now) {
+        frame = 0;
+        const delta = last === null ? 0 : Math.min((now - last) / 1000, .05);
+        last = now;
+        if (!paused && pointer === null) time += delta * .24 * speed;
+        draw();
+        if (!paused && visible && !document.hidden) frame = requestAnimationFrame(tick);
+      }
+      function schedule() {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        last = null;
+        draw();
+        if (!paused && visible && !document.hidden) frame = requestAnimationFrame(tick);
+      }
+      function updatePause() { schedule(); }
+      stage.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        pointer = { id: event.pointerId, x: event.clientX, y: event.clientY };
+        stage.setPointerCapture(event.pointerId);
+        stage.classList.add('is-dragging');
+      });
+      stage.addEventListener('pointermove', event => {
+        if (!pointer || pointer.id !== event.pointerId) return;
+        const dx = (event.clientX - pointer.x) / size * 3;
+        const dy = (event.clientY - pointer.y) / size * 3;
+        orientation = multiply(rotation(dy, dx), orientation);
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        draw();
+      });
+      const release = () => { pointer = null; stage.classList.remove('is-dragging'); last = null; };
+      ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => stage.addEventListener(type, release));
+      stage.addEventListener('keydown', event => {
+        const keys = { ArrowLeft: [0, -.12], ArrowRight: [0, .12], ArrowUp: [-.12, 0], ArrowDown: [.12, 0] };
+        if (!keys[event.key]) return;
+        event.preventDefault();
+        orientation = multiply(rotation(...keys[event.key]), orientation);
+        draw();
+      });
+      motion.addEventListener('change', () => { paused = motion.matches; updatePause(); });
+      document.addEventListener('visibilitychange', schedule);
+      window.addEventListener('resize', resize);
+      new ResizeObserver(resize).observe(stage);
+      new IntersectionObserver(entries => { visible = entries[0].isIntersecting; schedule(); }).observe(stage);
+      document.fonts.ready.then(resize);
+      resize(); updatePause();
+    })();
 
 </script>
 </body>
