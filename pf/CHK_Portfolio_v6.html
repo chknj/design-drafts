@@ -323,6 +323,9 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 /* Hide scrollbar chrome everywhere while retaining scrolling. */
 *{scrollbar-width:none}
 *::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* The detail heading receives initial dialog focus without a visual ring. */
+#detail-title:focus{outline:none}
 </style>
 </head>
 <body>
@@ -870,7 +873,14 @@ function openProjectView(p){
  if(dialog.open&&activeProjectId===p.id){document.body.classList.add('locked');return}
  activeProjectId=p.id;
  document.getElementById('detail-body').classList.toggle('pdp-detail',!!p.slices);
- document.getElementById('detail-body').innerHTML=p.slices?pdpDetailMarkup(p):`<p class="eyebrow">${p.type}</p><h2 id="detail-title">${p.name}</h2><div class="detail-summary"><h3>${p.line}</h3><div><p>${p.desc}</p><p class="eyebrow">${p.role}</p><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer"><span>Visit website</span><span>↗</span></a></div></div><section class="detail-notes"><p class="eyebrow">${p.category==='pdp'?'Content direction':'Site overview'}</p><div><h3>${p.focusTitle}</h3><p>${p.focus}</p></div></section>${p.image?`<figure class="detail-capture ${p.archiveOnly?'is-archive':''}"><img src="${p.image}" alt="${p.name} ${p.archiveOnly?'브랜드 로고':'공식 사이트 메인 화면'}" loading="eager" decoding="async"><figcaption>${p.archiveOnly?'공식몰 휴점으로 기존 브랜드 로고 표시':'공식 사이트 메인 화면'}</figcaption></figure>`:''}${p.listImage&&p.detailImage?`<div class="store-capture-pair"><figure class="detail-capture"><img src="${p.listImage}" alt="${p.name} 상품 리스트 페이지" loading="lazy" decoding="async"><figcaption>리스트 페이지</figcaption></figure><figure class="detail-capture"><img src="${p.detailImage}" alt="${p.name} 상품 상세페이지" loading="lazy" decoding="async"><figcaption>상품 상세페이지</figcaption></figure></div>`:''}<div class="detail-bottom"><span>${p.category==='pdp'?'상품 상세 콘텐츠':'공식 사이트 디자인 · 구축'}</span><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer">${p.category==='pdp'?'상품 페이지 보기':'공식 사이트 방문'} ↗</a></div>`;populateImages(dialog);if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('locked');animateDetail('in').then(()=>{if(!detailClosing&&detailAnimation){detailAnimation.cancel();detailAnimation=null}})
+ document.getElementById('detail-body').innerHTML=p.slices?pdpDetailMarkup(p):`<p class="eyebrow">${p.type}</p><h2 id="detail-title">${p.name}</h2><div class="detail-summary"><h3>${p.line}</h3><div><p>${p.desc}</p><p class="eyebrow">${p.role}</p><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer"><span>Visit website</span><span>↗</span></a></div></div><section class="detail-notes"><p class="eyebrow">${p.category==='pdp'?'Content direction':'Site overview'}</p><div><h3>${p.focusTitle}</h3><p>${p.focus}</p></div></section>${p.image?`<figure class="detail-capture ${p.archiveOnly?'is-archive':''}"><img src="${p.image}" alt="${p.name} ${p.archiveOnly?'브랜드 로고':'공식 사이트 메인 화면'}" loading="eager" decoding="async"><figcaption>${p.archiveOnly?'공식몰 휴점으로 기존 브랜드 로고 표시':'공식 사이트 메인 화면'}</figcaption></figure>`:''}${p.listImage&&p.detailImage?`<div class="store-capture-pair"><figure class="detail-capture"><img src="${p.listImage}" alt="${p.name} 상품 리스트 페이지" loading="lazy" decoding="async"><figcaption>리스트 페이지</figcaption></figure><figure class="detail-capture"><img src="${p.detailImage}" alt="${p.name} 상품 상세페이지" loading="lazy" decoding="async"><figcaption>상품 상세페이지</figcaption></figure></div>`:''}<div class="detail-bottom"><span>${p.category==='pdp'?'상품 상세 콘텐츠':'공식 사이트 디자인 · 구축'}</span><a class="text-link" href="${p.url}" target="_blank" rel="noopener noreferrer">${p.category==='pdp'?'상품 페이지 보기':'공식 사이트 방문'} ↗</a></div>`;populateImages(dialog);
+ // Start on the project heading rather than auto-focusing the CHK home link.
+ const initialFocus=document.getElementById('detail-title');
+ initialFocus.tabIndex=-1;
+ initialFocus.setAttribute('autofocus','');
+ if(!dialog.open)dialog.showModal();
+ initialFocus.focus({preventScroll:true});
+ dialog.scrollTop=0;document.body.classList.add('locked');animateDetail('in').then(()=>{if(!detailClosing&&detailAnimation){detailAnimation.cancel();detailAnimation=null}})
 }
 document.addEventListener('click',e=>{
  const button=e.target.closest('[data-project]');if(!button||e.defaultPrevented)return;
