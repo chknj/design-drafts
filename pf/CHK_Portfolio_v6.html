@@ -326,6 +326,8 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 
 /* The detail heading receives initial dialog focus without a visual ring. */
 #detail-title:focus{outline:none}
+/* Pointer interaction must not inherit keyboard or restored-dialog focus rings. */
+html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:none}
 </style>
 </head>
 <body>
@@ -386,6 +388,17 @@ body.route-transitioning #main-content,body.route-transitioning .site-footer{poi
 <footer class="site-footer"><span>© 2026 CHK · 최현균</span><span>BRAND & COMMERCE DESIGN</span><span>PORTFOLIO</span></footer>
 <dialog class="project-dialog" id="project-dialog" aria-labelledby="detail-title"><div class="dialog-bar"><a class="logo" href="#home">CHK</a><button class="dialog-close" id="dialog-close" aria-label="프로젝트 닫기">CLOSE ×</button></div><article class="detail" id="detail-body"></article></dialog>
 <script>
+// Keep native keyboard focus indicators; suppress rings only for pointer input.
+const focusInputRoot=document.documentElement;
+focusInputRoot.dataset.focusInput='pointer';
+function usePointerFocus(){focusInputRoot.dataset.focusInput='pointer'}
+document.addEventListener('pointerdown',usePointerFocus,{capture:true,passive:true});
+document.addEventListener('touchstart',usePointerFocus,{capture:true,passive:true});
+document.addEventListener('keydown',event=>{
+ if(event.metaKey||event.ctrlKey||event.altKey||['Shift','Control','Alt','Meta'].includes(event.key))return;
+ focusInputRoot.dataset.focusInput='keyboard';
+},{capture:true});
+
 const PROJECTS=[
   {
     "id": "marine-serre",
