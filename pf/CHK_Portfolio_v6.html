@@ -340,7 +340,7 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 
 /* Home title and centered, responsive image stack. */
 @font-face{font-family:'CHK Inter Display';font-style:normal;font-weight:800;font-display:swap;src:url('assets/fonts/InterDisplay-ExtraBold.woff2') format('woff2')}
-.home-page .hero-word{font-family:'CHK Inter Display',Arial,sans-serif;font-weight:800}
+.home-page .hero-word{font-family:'CHK Inter Display',Arial,sans-serif;font-weight:800;font-size:min(24vw,480px,55dvh);white-space:nowrap}
 .home-page .stack{--pointer-x:0px;--pointer-y:0px;--pointer-rotation:0deg;width:min(28.125vw,50dvh,480px);height:auto;aspect-ratio:3/4;left:50%;top:50%;transform:translate(-50%,-50%);perspective:none;animation:home-stack-enter .9s cubic-bezier(.16,1,.3,1) both}
 .home-page .stack .placeholder:nth-child(n){inset:auto;left:50%;top:50%;width:100%;height:auto;transform:translate(calc(-50% + var(--pointer-x)),calc(-50% + var(--pointer-y))) rotate(calc(var(--card-angle) + var(--pointer-rotation)));transform-origin:center;transition:transform .75s cubic-bezier(.2,.75,.2,1);backface-visibility:hidden}
 .home-page .stack .placeholder:nth-child(1){--card-angle:5deg;--hover-angle:13deg;z-index:3}
@@ -352,7 +352,7 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 .home-page .stack:focus-visible .placeholder{--card-angle:var(--hover-angle)}
 @keyframes home-stack-enter{from{opacity:0;transform:translate(-50%,-47%) scale(.94)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @media(max-width:800px){.home-page .stack{width:min(38vw,43dvh);top:53%}}
-@media(max-width:560px){.home-page .hero-word{font-size:41vw}.home-page .stack{width:min(48vw,34dvh);top:54%}}
+@media(max-width:560px){.home-page .hero-word{font-size:26vw}.home-page .stack{width:min(48vw,34dvh);top:54%}}
 @media(max-height:500px) and (min-width:561px){.home-page .stack{width:43dvh;top:51%}}
 /* Decorative artwork remains part of the draggable canvas, without a link cue. */
 .loop-card.loop-decoration{cursor:inherit}
@@ -384,7 +384,7 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 <nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><div class="mobile-menu-links"><a data-nav="home" href="#home">Main</a><a data-nav="work" href="#work">Work</a><a data-nav="about" href="#about">About</a><a data-nav="archive" href="#work/archive">Archive ↗</a></div><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
 <main id="main-content">
 <div class="page home-page" data-page="home">
-<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
+<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 온라인 경험을 디자인하고,<br>공식몰과 제작 도구를 직접 만듭니다.</p><h1 class="hero-word" id="home-title">Builder</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
 <span class="stack-go" aria-hidden="true">GO <span>→</span></span></a></section>
 </div>
 <div class="page" data-page="work" hidden>
