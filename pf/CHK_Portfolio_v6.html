@@ -335,6 +335,26 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 .stack:hover .stack-go,.stack:focus-visible .stack-go{opacity:1;transform:translate(-50%,-50%) scale(1)}
 @media(hover:none){.stack-go{opacity:1;top:auto;bottom:12px;font-size:16px;padding:12px 17px;gap:8px;transform:translateX(-50%)}.stack-go>span{font-size:22px}.stack:hover .stack-go,.stack:focus-visible .stack-go{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.stack-go{transition:none}}
+
+/* Home title and centered, responsive image stack. */
+@font-face{font-family:'CHK Inter Display';font-style:normal;font-weight:800;font-display:swap;src:url('assets/fonts/InterDisplay-ExtraBold.woff2') format('woff2')}
+.home-page .hero-word{font-family:'CHK Inter Display',Arial,sans-serif;font-weight:800}
+.home-page .stack{--pointer-x:0px;--pointer-y:0px;--pointer-rotation:0deg;width:min(28.125vw,50dvh,480px);height:auto;aspect-ratio:3/4;left:50%;top:50%;transform:translate(-50%,-50%);perspective:none;animation:home-stack-enter .9s cubic-bezier(.16,1,.3,1) both}
+.home-page .stack .placeholder:nth-child(n){inset:auto;left:50%;top:50%;width:100%;height:auto;transform:translate(calc(-50% + var(--pointer-x)),calc(-50% + var(--pointer-y))) rotate(calc(var(--card-angle) + var(--pointer-rotation)));transform-origin:center;transition:transform .75s cubic-bezier(.2,.75,.2,1);backface-visibility:hidden}
+.home-page .stack .placeholder:nth-child(1){--card-angle:5deg;--hover-angle:13deg;z-index:3}
+.home-page .stack .placeholder:nth-child(2){--card-angle:-10deg;--hover-angle:-14deg;z-index:2}
+.home-page .stack .placeholder:nth-child(3){--card-angle:-20deg;--hover-angle:-25deg;z-index:1}
+.home-page .stack .placeholder:nth-child(4){--card-angle:-5deg;--hover-angle:-8deg;width:75%;z-index:0}
+.home-page .stack .placeholder img{display:block;width:100%;height:auto;object-fit:contain}
+@media(hover:hover){.home-page .stack:hover .placeholder{--card-angle:var(--hover-angle)}}
+.home-page .stack:focus-visible .placeholder{--card-angle:var(--hover-angle)}
+@keyframes home-stack-enter{from{opacity:0;transform:translate(-50%,-47%) scale(.94)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@media(max-width:800px){.home-page .stack{width:min(38vw,43dvh);top:53%}}
+@media(max-width:560px){.home-page .hero-word{font-size:41vw}.home-page .stack{width:min(48vw,34dvh);top:54%}}
+@media(max-height:500px) and (min-width:561px){.home-page .stack{width:43dvh;top:51%}}
+/* Decorative artwork remains part of the draggable canvas, without a link cue. */
+.loop-card.loop-decoration{cursor:inherit}
+
 </style>
 </head>
 <body>
@@ -343,7 +363,7 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 <nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><a data-nav="home" href="#home">Main</a><a data-nav="work" href="#work">Work</a><a data-nav="about" href="#about">About</a><a data-nav="archive" href="#work/archive">Archive ↗</a><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
 <main id="main-content">
 <div class="page home-page" data-page="home">
-<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder" style="z-index:3"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder" style="z-index:2"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder" style="z-index:1"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder" style="z-index:0;width:80%;left:10%;right:auto"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
+<section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
 <span class="stack-go" aria-hidden="true">GO <span>→</span></span></a></section>
 </div>
 <div class="page" data-page="work" hidden>
@@ -861,7 +881,7 @@ function renderWork(){
   if(i===GALLERY_ITEMS.length)return `<a class="loop-card loop-film-card" href="#about/experiments" aria-label="Branden 패션 영상 자세히 보기"><video class="work-film" autoplay muted loop playsinline preload="metadata" poster="branden-lifestyle-poster.jpg" width="876" height="1108" aria-hidden="true"><source src="https://chknj.github.io/design-drafts/pf/branden-lifestyle-18s-720p-taller-5pct.mp4" type="video/mp4"></video><span class="loop-caption"><span><strong>Branden</strong><small>Fashion film</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></a>`;
   if(p.kind==='pdp')return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card loop-pdp" data-project="${p.id}" aria-label="${p.name} 상세페이지 ${p.group} 썸네일 ${p.thumbnailIndex} 보기"><img src="${p.thumb.src}" alt="${p.name} 상세페이지" width="${p.thumb.width}" height="${p.thumb.height}" loading="lazy" decoding="async" draggable="false"><span class="loop-caption"><span><strong>${p.name}</strong><small>PDP ${p.group}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`;
   if(p.kind==='poster'&&p.projectId)return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card loop-poster" data-project="${p.projectId}" aria-label="${p.name} · 엠프티 웹사이트 작업 보기"><img src="${p.image}" alt="${p.name}" width="${p.width}" height="${p.height}" loading="lazy" decoding="async" draggable="false"></button>`;
-  if(p.kind==='poster')return `<figure class="loop-card loop-poster" ${i>=GALLERY_ITEMS.length?'aria-hidden="true"':''}><img src="${p.image}" alt="${p.name}" width="${p.width}" height="${p.height}" loading="lazy" decoding="async" draggable="false"></figure>`;
+  if(p.kind==='poster')return `<figure class="loop-card loop-poster loop-decoration" ${i>=GALLERY_ITEMS.length?'aria-hidden="true"':''}><img src="${p.image}" alt="${p.name}" width="${p.width}" height="${p.height}" loading="lazy" decoding="async" draggable="false"></figure>`;
   return `<button ${i>=GALLERY_ITEMS.length?'aria-hidden="true" tabindex="-1" ':''}class="loop-card" data-project="${p.id}" aria-label="${p.name} ${p.type} 자세히 보기">${imageMarkup(p.id+'-cover')}<span class="loop-caption"><span><strong>${p.name}</strong><small>${p.type}</small></span><span class="loop-arrow" aria-hidden="true">↗</span></span></button>`;
  }).join('');populateImages(grid);
 }renderWork();
@@ -920,6 +940,32 @@ document.addEventListener('click',e=>{
 const canvas=document.getElementById('work-canvas');
 const loopCards=[...grid.children];
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+// A restrained pointer response on the home stack; touch keeps the static layout.
+const homeStack=document.querySelector('.home-page .stack');
+let homePointerFrame=0;
+function resetHomeStack(){
+ cancelAnimationFrame(homePointerFrame);homePointerFrame=0;
+ homeStack.style.removeProperty('--pointer-x');
+ homeStack.style.removeProperty('--pointer-y');
+ homeStack.style.removeProperty('--pointer-rotation');
+}
+homeStack.addEventListener('pointermove',event=>{
+ if(event.pointerType==='touch'||reducedMotion.matches)return;
+ const rect=homeStack.getBoundingClientRect();
+ const x=Math.max(-1,Math.min(1,(event.clientX-rect.left)/rect.width*2-1));
+ const y=Math.max(-1,Math.min(1,(event.clientY-rect.top)/rect.height*2-1));
+ cancelAnimationFrame(homePointerFrame);
+ homePointerFrame=requestAnimationFrame(()=>{
+  homeStack.style.setProperty('--pointer-x',`${x*7}px`);
+  homeStack.style.setProperty('--pointer-y',`${y*5}px`);
+  homeStack.style.setProperty('--pointer-rotation',`${x*2}deg`);
+  homePointerFrame=0;
+ });
+},{passive:true});
+homeStack.addEventListener('pointerleave',resetHomeStack);
+homeStack.addEventListener('pointercancel',resetHomeStack);
+reducedMotion.addEventListener('change',resetHomeStack);
+
 let galleryActive=false,loopFrame=0,loopLayout=[];
 const loopPosition={x:0,y:0},loopTarget={x:0,y:0},loopCycle={x:1,y:1};
 let dragState=null,suppressClickUntil=0,lastFrameTime=0,driftPauseUntil=0;
@@ -942,18 +988,27 @@ function sizeLoop(){
  if(!galleryActive)return;
  const w=canvas.clientWidth,h=canvas.clientHeight,mobile=w<=560;
  const unit=mobile?w*.33:Math.min(w*.21,310),gap=mobile?72:Math.max(140,unit*.54);
- const widths=[[.95,1.12,.83],[1.08,.82,1.02],[.86,1.02,1.12]];
+ // Stable random sizes: resize and route changes keep each artwork's scale.
+ const widthScale=GALLERY_ITEMS.map((item,index)=>{
+  const key=item.thumb?.src||item.image||item.id||String(index);
+  let seed=2166136261;
+  for(let i=0;i<key.length;i++)seed=Math.imul(seed^key.charCodeAt(i),16777619);
+  const random=(seed>>>0)/4294967295;
+  const decorative=item.kind==='poster'&&!item.projectId;
+  return decorative?.48+random*.20:.95+random*.30;
+ });
+ const itemWidth=(row,col)=>unit*(widthScale[row*3+col]||1);
  const heights=[[1.35,.90,1.10],[.85,1.40,.75],[1.05,.95,1.40]];
- const colStep=Math.max(unit*1.12+gap,(w+unit*1.12+24)/6);
+ const colStep=Math.max(unit*1.25+gap,(w+unit*1.25+24)/6);
  const breathingRoom=unit*(mobile?.80:.95);
  const rows=Math.ceil(GALLERY_ITEMS.length/3);
  const verticalGap=gap;
  const itemHeight=(row,col)=>{
-  const item=GALLERY_ITEMS[row*3+col],width=unit*widths[row%3][col];
+  const item=GALLERY_ITEMS[row*3+col],width=itemWidth(row,col);
   const imageSize=item?.kind==='pdp'?item.thumb:item?.kind==='poster'?item:WORK_IMAGE_SIZES[item?.id];
   return imageSize?width*imageSize.height/imageSize.width:unit*heights[row%3][col];
  };
- const slotHeight=(row,col)=>row===0&&col===0?Math.max(itemHeight(row,col),unit*widths[0][0]*1108/876):itemHeight(row,col);
+ const slotHeight=(row,col)=>row===0&&col===0?Math.max(itemHeight(row,col),itemWidth(0,0)*1108/876):itemHeight(row,col);
  const columnHeights=[0,1,2].map(col=>Array.from({length:rows},(_,r)=>slotHeight(r,col)+verticalGap).reduce((a,b)=>a+b,0));
  const tileHeight=Math.max(...columnHeights)+breathingRoom;
  const offsetsX=[[-.10,.16,-.12],[.14,-.16,.12],[-.08,.12,-.15]];
@@ -965,8 +1020,8 @@ function sizeLoop(){
  }
  loopLayout=loopCards.map((el,i)=>{
   const item=i%GALLERY_ITEMS.length,col=item%3,row=Math.floor(item/3),tile=Math.floor(i/GALLERY_ITEMS.length);
-  const width=unit*widths[row%3][col],height=el.classList.contains('loop-film-card')?width*1108/876:itemHeight(row,col);
-  const x=w*.055+(col+(tile%2)*3)*colStep+(unit*1.12-width)/2+unit*offsetsX[row%3][col];
+  const width=itemWidth(row,col),height=el.classList.contains('loop-film-card')?width*1108/876:itemHeight(row,col);
+  const x=w*.055+(col+(tile%2)*3)*colStep+(unit*1.25-width)/2+unit*offsetsX[row%3][col];
   let y=h*.65+Math.floor(tile/2)*tileHeight+[0,-unit*1.20,-unit*.70][col]+unit*offsetsY[row%3][col];
   for(let r=0;r<row;r++)y+=slotHeight(r,col)+verticalGap+(r===[2,0,1][col]?breathingRoom:0);
   el.style.width=`${width}px`;el.style.height=`${height}px`;
