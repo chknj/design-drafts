@@ -357,12 +357,31 @@ html[data-focus-input="pointer"] :is(a,button,summary,[tabindex]):focus{outline:
 /* Decorative artwork remains part of the draggable canvas, without a link cue. */
 .loop-card.loop-decoration{cursor:inherit}
 
+
+/* Full-screen mobile navigation, centered independently of its footer. */
+@media(max-width:560px){
+ .menu-panel{inset:0;z-index:40;width:100%;height:100dvh;padding:78px var(--pad);border:0;background:#000;color:#fff;overflow-y:auto;overscroll-behavior:contain}
+ .menu-panel:not([hidden]){display:flex;align-items:center;justify-content:center}
+ .mobile-menu-links{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;text-align:center}
+ .menu-panel a{font-size:clamp(34px,9vw,48px);line-height:1.35;font-weight:500;padding:3px 12px}
+ .menu-panel p{position:absolute;left:var(--pad);right:var(--pad);bottom:max(24px,env(safe-area-inset-bottom));margin:0;text-align:center;font-size:11px;line-height:1.8;color:#929292}
+ body.menu-open>.topbar{position:fixed;z-index:45;color:#fff}
+ body.menu-open .menu-button{color:#fff}
+ .menu-panel a:focus-visible,body.menu-open .topbar :is(a,button):focus-visible{outline-color:#fff}
+}
+@media(max-width:560px) and (max-height:480px){
+ .menu-panel{padding-top:70px;padding-bottom:70px}
+ .mobile-menu-links{gap:2px}
+ .menu-panel a{font-size:26px;line-height:1.25}
+ .menu-panel p{display:none}
+}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#main-content">본문으로 이동</a>
 <header class="topbar"><a class="logo" href="#home" aria-label="CHK 홈">CHK</a><nav class="nav" aria-label="주 메뉴"><a data-nav="home" href="#home">MAIN</a><a data-nav="work" href="#work">WORK</a><a data-nav="about" href="#about">ABOUT</a><a data-nav="archive" href="#work/archive">ARCHIVE ↗</a></nav><button class="menu-button" id="menu-button" aria-expanded="false" aria-controls="mobile-menu">MENU ＋</button></header>
-<nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><a data-nav="home" href="#home">Main</a><a data-nav="work" href="#work">Work</a><a data-nav="about" href="#about">About</a><a data-nav="archive" href="#work/archive">Archive ↗</a><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
+<nav class="menu-panel" id="mobile-menu" aria-label="모바일 메뉴" hidden><div class="mobile-menu-links"><a data-nav="home" href="#home">Main</a><a data-nav="work" href="#work">Work</a><a data-nav="about" href="#about">About</a><a data-nav="archive" href="#work/archive">Archive ↗</a></div><p>Brand & Commerce Design<br>최현균 · CHK</p></nav>
 <main id="main-content">
 <div class="page home-page" data-page="home">
 <section class="hero" aria-labelledby="home-title"><p class="hero-intro">브랜드의 판매 공간을 만들고,<br>디자인이 이어지는 방식을<br>설계합니다.</p><h1 class="hero-word" id="home-title">CHK</h1><a class="stack" href="#work" aria-label="디자인 작업물 보기"><div class="placeholder"><img src="assets/work/posters/glass-poster.jpg" alt="글래스 포스터" width="600" height="771" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-5.jpg" alt="챔피온 포스터 5" width="900" height="1200" loading="eager" decoding="async"></div><div class="placeholder"><img src="assets/work/posters/champion-poster-7.jpg" alt="챔피온 포스터 7" width="900" height="1200" loading="eager" decoding="async"></div>  <div class="placeholder"><img src="assets/work/posters/empty-crocs-poster.jpg" alt="엠프티 크록스 포스터" width="1080" height="1920" loading="eager" decoding="async"></div>
@@ -889,8 +908,16 @@ function renderWork(){
 }renderWork();
 
 const dialog=document.getElementById('project-dialog');const menuButton=document.getElementById('menu-button');const menu=document.getElementById('mobile-menu');
-function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false');menuButton.textContent='MENU ＋';document.body.classList.remove('locked');wakeGallery()}
-menuButton.addEventListener('click',()=>{const open=menu.hidden;menu.hidden=!open;menuButton.setAttribute('aria-expanded',String(open));menuButton.textContent=open?'CLOSE ×':'MENU ＋';document.body.classList.toggle('locked',open)});
+function setMenuState(open){
+ menu.hidden=!open;menuButton.setAttribute('aria-expanded',String(open));menuButton.textContent=open?'CLOSE ×':'MENU ＋';
+ document.body.classList.toggle('menu-open',open);document.body.classList.toggle('locked',open||dialog.open);
+ document.getElementById('main-content').inert=open;
+ document.querySelector('.site-footer').inert=open;
+}
+function closeMenu(){setMenuState(false);wakeGallery()}
+menuButton.addEventListener('click',()=>{if(menu.hidden)setMenuState(true);else closeMenu()});
+ document.querySelector('.topbar .logo').addEventListener('click',()=>{if(!menu.hidden)closeMenu()});
+ matchMedia('(max-width:560px)').addEventListener('change',event=>{if(!event.matches&&!menu.hidden)closeMenu()});
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 let detailAnimation=null,detailClosing=null,activeProjectId=null;
 function animateDetail(phase){
